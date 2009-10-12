@@ -86,10 +86,36 @@ sub add_join_columns {
 
 =head1 METHODS
 
-=head2 add_join_columns
-=head2 generate_primary_key
-=head2 generate_relationships
+All the methods take a configuration hashref that looks like the following:
+ {
+    left_class   => 'Foo',
+    left_method  => 'foo',
+    right_class  => 'Bar',
+    right_method => 'bar',
+    namespace    => 'MyApp',
+ }
+
 =head2 join_table
+
+This is the method that you probably want.  It will set your table, add
+columns, set the primary key, and set up the relationships.
+
+=head2 add_join_columns
+
+Adds two non-nullable integer fields named C<"${left_method}_id"> and
+C<"${right_method}_id"> respectively.
+
+=head2 generate_primary_key
+
+Sets C<"${left_method}_id"> and C<"${right_method}_id"> to be the primary key.
+
+=head2 generate_relationships
+
+This adds relationships to C<"${namespace}::Schema::Result::$left_class"> and
+C<"${namespace}::Schema::Result::$left_class"> respectively.
+
 =head2 set_table
+
+This method sets the table to "${left_class}_${right_class}".
 
 =end
