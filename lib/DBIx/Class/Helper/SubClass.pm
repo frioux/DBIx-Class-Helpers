@@ -16,6 +16,12 @@ sub generate_relationships {
    foreach my $rel ($self->relationships) {
       my $rel_info = $self->relationship_info($rel);
       my $class = $rel_info->{class};
+      if ($class =~ m/([A-Za-z0-9_:]+)::Result::([A-Za-z0-9_]+)/) {
+         warn $1;
+         warn $2;
+      } else {
+         die qq{$class doesn't look like}.'${namespace}::Result::$resultclass';
+      }
       $self->add_relationship(
          $rel,
          $class,
