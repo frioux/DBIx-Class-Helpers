@@ -1,5 +1,8 @@
 package DBIx::Class::Helper::SubClass;
 
+use strict;
+use warnings;
+
 sub subclass {
    my $self = shift;
    my $namespace = shift;
@@ -10,14 +13,16 @@ sub subclass {
 sub generate_relationships {
    my $self = shift;
    my $namespace = shift;
-   foreach my $relationship_type (keys %{$self->relationship_definitions}) {
-      foreach my $relationship (@{$self->relationship_definitions->{$relationship_type}}) {
-         if ($relationship->[1] =~ m/^::/ ) {
-            $relationship->[1] = $namespace.$relationship->[1];
-         }
-         $self->$relationship_type(@{$relationship});
-      }
-   }
+   foreach my $rel ($self->relationships) {
+      my $rel_info = $self->relationship_info($rel);
+      my $class = $rel_info->{class};
+      $self->add_relationship(
+         $rel,
+         $class,
+         $rel_info->{cond},
+         $rel_info->{attrs}
+      );
+   };
 }
 
 sub set_table {
