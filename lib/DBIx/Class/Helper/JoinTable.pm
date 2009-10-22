@@ -1,12 +1,22 @@
 package DBIx::Class::Helper::JoinTable;
 
+sub _guess_namespace {
+   my $self = shift;
+   if ($self =~ m/([A-Za-z0-9_:]+)::Result::[A-Za-z0-9_]+/) {
+      return $1;
+   } else {
+      die "$self doesn't look like".'${namespace}::Result::$resultclass';
+   }
+}
+
 sub join_table {
    my $self   = shift;
    my $params = shift;
+   $params->{namespace} ||= $self->_guess_namespace;
    $self->set_table($params);
+   $self->add_join_columns($params);
    $self->generate_relationships($params);
    $self->generate_primary_key($params);
-   $self->generate_constraints($params);
 }
 
 sub generate_primary_key {
@@ -16,14 +26,15 @@ sub generate_primary_key {
 
 sub generate_relationships {
    my ($self, $params) = @_;
+   $params->{namespace} ||= $self->_guess_namespace;
    $self->belongs_to(
       $params->{left_method} =>
-      "$params->{namespace}::Schema::Result::$params->{left_class}",
+      "$params->{namespace}::Result::$params->{left_class}",
       "$params->{left_method}_id"
    );
    $self->belongs_to(
       $params->{right_method} =>
-      "$params->{namespace}::Schema::Result::$params->{right_class}",
+      "$params->{namespace}::Result::$params->{right_class}",
       "$params->{right_method}_id"
    );
 }
@@ -39,10 +50,12 @@ sub add_join_columns {
       "$params->{left_method}_id" => {
          data_type         => 'integer',
          is_nullable       => 0,
+         is_numeric        => 1,
       },
       "$params->{right_method}_id" => {
          data_type         => 'integer',
          is_nullable       => 0,
+         is_numeric        => 1,
       },
    );
 }
@@ -53,7 +66,7 @@ sub add_join_columns {
 
 =head1 SYNOPSIS
 
- package MyApp::Schema::Result::Foo;
+ package MyApp::Schema::Result::Foo_Bar;
 
  __PACKAGE__->load_components(qw{Helper::JoinTable Core});
 
@@ -62,7 +75,6 @@ sub add_join_columns {
     left_method  => 'foo',
     right_class  => 'Bar',
     right_method => 'bar',
-    namespace    => 'MyApp',
  });
 
  # the above is the same as:
@@ -72,10 +84,12 @@ sub add_join_columns {
     foo_id => {
        data_type         => 'integer',
        is_nullable       => 0,
+       is_numeric        => 1,
     },
     bar_id => {
        data_type         => 'integer',
        is_nullable       => 0,
+       is_numeric        => 1,
     },
  );
 
@@ -92,7 +106,7 @@ All the methods take a configuration hashref that looks like the following:
     left_method  => 'foo',
     right_class  => 'Bar',
     right_method => 'bar',
-    namespace    => 'MyApp',
+    namespace    => 'MyApp', # default is guessed via *::Result::Foo
  }
 
 =head2 join_table
