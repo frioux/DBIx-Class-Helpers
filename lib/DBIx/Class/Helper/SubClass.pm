@@ -53,6 +53,36 @@ sub set_table {
 
 =head1 SYNOPSIS
 
+ # define parent class
+ package ParentSchema::Result::Bar;
+
+ use strict;
+ use warnings;
+
+ use parent 'DBIx::Class';
+
+ __PACKAGE__->load_components('Core');
+
+ __PACKAGE__->table('Bar');
+
+ __PACKAGE__->add_columns(qw/ id foo_id /);
+
+ __PACKAGE__->set_primary_key('id');
+
+ __PACKAGE__->belongs_to( foo => 'ParentSchema::Result::Foo', 'foo_id' );
+
+ # define subclass
+ package MySchema::Result::Bar;
+
+ use strict;
+ use warnings;
+
+ use parent 'ParentSchema::Result::Bar';
+
+ __PACKAGE__->load_components(qw{Helper::SubClass Core});
+
+ __PACKAGE__->subclass;
+
 =head1 DESCRIPTION
 
 This component is to allow simple subclassing of L<DBIx::Class> Result classes.
