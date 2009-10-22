@@ -132,4 +132,3 @@ C<"${namespace}::Schema::Result::$left_class"> respectively.
 
 This method sets the table to "${left_class}_${right_class}".
 
-=end

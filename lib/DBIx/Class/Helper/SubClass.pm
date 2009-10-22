@@ -77,4 +77,3 @@ will automatically get the relationship to C<MyApp::Schema::Result::Bar>.
 This is a super basic method that just sets the current classes' table to the
 parent classes' table.
 
-=end
