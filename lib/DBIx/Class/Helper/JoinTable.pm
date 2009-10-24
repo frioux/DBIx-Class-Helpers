@@ -7,9 +7,37 @@ use warnings;
 
 use DBIx::Class::Helpers::Util 'get_namespace_parts';
 
+BEGIN {
+    our $has_camel_case;
+
+    sub _has_camel_case {
+        return $has_camel_case if defined $has_camel_case;
+
+        $has_camel_case = 0;
+        eval {
+            require String::CamelCase;
+            $has_camel_case = 1;
+        };
+
+        return $has_camel_case;
+    }
+}
+
+sub _defaults {
+   my ($self, $params) = @_;
+
+   $params->{namespace}     ||= [ get_namespace_parts($self) ]->[0];
+   if (_has_camel_case) {
+      $params->{left_method}   ||= String::CamelCase::decamelize($params->{left_class});
+      $params->{right_method}  ||= String::CamelCase::decamelize($params->{right_class});
+   }
+
+   return $params;
+}
+
 sub join_table {
-   my $self   = shift;
-   my $params = shift;
+   my ($self, $params) = @_;
+
    $self->set_table($params);
    $self->add_join_columns($params);
    $self->generate_relationships($params);
@@ -18,12 +46,15 @@ sub join_table {
 
 sub generate_primary_key {
    my ($self, $params) = @_;
+
+   $self->_defaults($params);
    $self->set_primary_key("$params->{left_method}_id", "$params->{right_method}_id");
 }
 
 sub generate_relationships {
    my ($self, $params) = @_;
-   $params->{namespace} ||= [ get_namespace_parts($self) ]->[0];
+
+   $params = $self->_defaults($params);
    $self->belongs_to(
       $params->{left_method} =>
       "$params->{namespace}::$params->{left_class}",
@@ -38,11 +69,14 @@ sub generate_relationships {
 
 sub set_table {
    my ($self, $params) = @_;
+
    $self->table("$params->{left_class}_$params->{right_class}");
 }
 
 sub add_join_columns {
    my ($self, $params) = @_;
+
+   $params = $self->_defaults($params);
    $self->add_columns(
       "$params->{left_method}_id" => {
          data_type         => 'integer',
