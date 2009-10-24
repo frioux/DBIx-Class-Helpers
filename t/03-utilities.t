@@ -15,18 +15,18 @@ is $ns, 'Project::Schema::Result',
    'namespace part of get_namespace_parts works';
 is $class, 'Child', 'result part of get_namespace_parts works';
 
-assert_load_namespaces: {
-   ok assert_load_namespaces('P::Result::Foo'),
-      'assert_load_namespaces works when correct';
-   ok !assert_load_namespaces('P::Foo'),
-      'assert_load_namespaces works when incorrect';
+is_load_namespaces: {
+   ok is_load_namespaces('P::Result::Foo'),
+      'is_load_namespaces works when correct';
+   ok !is_load_namespaces('P::Foo'),
+      'is_load_namespaces works when incorrect';
 }
 
-assert_not_load_namespaces: {
-   ok assert_not_load_namespaces('P::Foo'),
-      'assert_not_load_namespaces works correct';
-   ok !assert_not_load_namespaces('P::Result::Foo'),
-      'assert_not_load_namespaces works when incorrect';
+is_not_load_namespaces: {
+   ok is_not_load_namespaces('P::Foo'),
+      'is_not_load_namespaces works correct';
+   ok !is_not_load_namespaces('P::Result::Foo'),
+      'is_not_load_namespaces works when incorrect';
 }
 
 assert_similar_namespaces: {
