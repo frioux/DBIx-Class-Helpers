@@ -163,3 +163,8 @@ C<"${namespace}::Schema::Result::$left_class"> respectively.
 
 This method sets the table to "${left_class}_${right_class}".
 
+=head2 NOTE
+
+This module uses L<String::CamelCase> to default the method names if it is
+installed.  Currently it fails pod tests, so I'm not making it a requirement.
+
