@@ -5,7 +5,7 @@ use warnings;
 
 # ABSTRACT: Convenient subclassing with DBIx::Class
 
-use DBIx::Class::Helpers::Util 'get_namespace_parts';
+use DBIx::Class::Helpers::Util qw{get_namespace_parts assert_similar_namespaces};
 
 sub subclass {
    my $self = shift;
@@ -21,8 +21,8 @@ sub generate_relationships {
       my $rel_info = $self->relationship_info($rel);
       my $class = $rel_info->{class};
 
+      assert_similar_namespaces($self, $class);
       my (undef, $result) = get_namespace_parts($class);
-
 
       $self->add_relationship(
          $rel,

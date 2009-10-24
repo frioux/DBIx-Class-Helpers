@@ -132,6 +132,7 @@ sub add_join_columns {
 =head1 METHODS
 
 All the methods take a configuration hashref that looks like the following:
+
  {
     left_class   => 'Foo',
     left_method  => 'foo',   # see L</NOTE>
