@@ -16,19 +16,17 @@ sub subclass {
 
 sub generate_relationships {
    my $self = shift;
-   my $namespace = shift;
+   my ($namespace) = get_namespace_parts($self);
    foreach my $rel ($self->relationships) {
       my $rel_info = $self->relationship_info($rel);
       my $class = $rel_info->{class};
 
-      my ($namespace) = get_namespace_parts($self);
       my (undef, $result) = get_namespace_parts($class);
 
-      $class = "${namespace}::$result";
 
       $self->add_relationship(
          $rel,
-         $class,
+         "${namespace}::$result",
          $rel_info->{cond},
          $rel_info->{attrs}
       );
