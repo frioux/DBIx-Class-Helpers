@@ -26,10 +26,10 @@ BEGIN {
 sub _defaults {
    my ($self, $params) = @_;
 
-   $params->{namespace}     ||= [ get_namespace_parts($self) ]->[0];
+   $params->{namespace}       ||= [ get_namespace_parts($self) ]->[0];
    if (_has_camel_case) {
-      $params->{left_method}   ||= String::CamelCase::decamelize($params->{left_class});
-      $params->{right_method}  ||= String::CamelCase::decamelize($params->{right_class});
+      $params->{left_method}  ||= String::CamelCase::decamelize($params->{left_class});
+      $params->{right_method} ||= String::CamelCase::decamelize($params->{right_class});
    }
 
    return $params;
@@ -134,10 +134,10 @@ sub add_join_columns {
 All the methods take a configuration hashref that looks like the following:
  {
     left_class   => 'Foo',
-    left_method  => 'foo',
+    left_method  => 'foo',   # see L</NOTE>
     right_class  => 'Bar',
-    right_method => 'bar',
-    namespace    => 'MyApp', # default is guessed via *::Result::Foo
+    right_method => 'bar',   # see L</NOTE>
+    namespace    => 'MyApp', # default is guessed via *::Foo
  }
 
 =head2 join_table
