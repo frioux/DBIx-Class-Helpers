@@ -16,25 +16,17 @@ is $ns, 'Project::Schema::Result',
 is $class, 'Child', 'result part of get_namespace_parts works';
 
 assert_load_namespaces: {
-   ok assert_load_namespaces('P::Result::Foo', 'L::Result::Bar'),
-      'assert_load_namespaces works when true';
-   ok !assert_load_namespaces('P::Foo', 'L::Result::Bar'),
-      'assert_load_namespaces works when left is false';
-   ok !assert_load_namespaces('P::Result::Foo', 'L::Bar'),
-      'assert_load_namespaces works when right is false';
-   ok !assert_load_namespaces('P::Foo', 'L::Bar'),
-      'assert_load_namespaces works when both are false';
+   ok assert_load_namespaces('P::Result::Foo'),
+      'assert_load_namespaces works when correct';
+   ok !assert_load_namespaces('P::Foo'),
+      'assert_load_namespaces works when incorrect';
 }
 
 assert_not_load_namespaces: {
-   ok assert_not_load_namespaces('P::Foo', 'L::Bar'),
-      'assert_not_load_namespaces works true';
-   ok !assert_not_load_namespaces('P::Result::Foo', 'L::Result::Bar'),
-      'assert_not_load_namespaces works when both false';
-   ok !assert_not_load_namespaces('P::Foo', 'L::Result::Bar'),
-      'assert_not_load_namespaces works when right is false';
-   ok !assert_not_load_namespaces('P::Result::Foo', 'L::Bar'),
-      'assert_not_load_namespaces works when left is false';
+   ok assert_not_load_namespaces('P::Foo'),
+      'assert_not_load_namespaces works correct';
+   ok !assert_not_load_namespaces('P::Result::Foo'),
+      'assert_not_load_namespaces works when incorrect';
 }
 
 assert_similar_namespaces: {

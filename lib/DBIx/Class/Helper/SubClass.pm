@@ -3,6 +3,8 @@ package DBIx::Class::Helper::SubClass;
 use strict;
 use warnings;
 
+use DBIx::Class::Helpers::Util 'get_namespace_parts';
+
 sub subclass {
    my $self = shift;
    my $namespace = shift;
@@ -17,21 +19,10 @@ sub generate_relationships {
       my $rel_info = $self->relationship_info($rel);
       my $class = $rel_info->{class};
 
-      my ($namespace, $result);
+      my ($namespace) = get_namespace_parts($self);
+      my (undef, $result) = get_namespace_parts($class);
 
-      if ($self =~ m/([A-Za-z0-9_:]+)::Result::[A-Za-z0-9_]+/) {
-         $namespace = $1;
-      } else {
-         die "$self doesn't look like".'${namespace}::Result::$resultclass';
-      }
-
-      if ($class =~ m/[A-Za-z0-9_:]+::Result::([A-Za-z0-9_]+)/) {
-         $result = $1;
-      } else {
-         die "$class doesn't look like".'${namespace}::Result::$resultclass';
-      }
-
-      $class = $namespace . '::Result::' . $result;
+      $class = "${namespace}::$result";
 
       $self->add_relationship(
          $rel,

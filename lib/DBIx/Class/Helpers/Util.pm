@@ -2,8 +2,6 @@ package DBIx::Class::Helpers::Util;
 use strict;
 use warnings;
 
-use feature ':5.10';
-
 use Sub::Exporter -setup => {
     exports => [
       qw(
@@ -24,18 +22,13 @@ sub get_namespace_parts {
 }
 
 sub assert_load_namespaces {
-   my $namespace_1 = shift;
-   my $namespace_2 = shift;
-   $namespace_1 =~ /^[\w:]+::Result::[\w]+$/ and
-   $namespace_2 =~ /^[\w:]+::Result::[\w]+$/;
+   my $namespace = shift;
+   $namespace =~ /^[\w:]+::Result::[\w]+$/;
 }
 
 sub assert_not_load_namespaces {
-   my $namespace_1 = shift;
-   my $namespace_2 = shift;
-      $namespace_1 =~ /^([\w:]+)::[\w]+$/ and
-      $1           !~ /::Result/        and
-      $namespace_2 =~ /^([\w:]+)::[\w]+$/ and
+   my $namespace = shift;
+      $namespace =~ /^([\w:]+)::[\w]+$/ and
       $1           !~ /::Result/;
 }
 
@@ -44,8 +37,8 @@ sub assert_similar_namespaces {
    my $ns2 = shift;
 
    die "Namespaces $ns1 and $ns2 are dissimilar"
-      unless assert_load_namespaces($ns1, $ns2) or
-             assert_not_load_namespaces($ns1, $ns2);
+      unless assert_load_namespaces($ns1) and assert_load_namespaces($ns2) or
+             assert_not_load_namespaces($ns1) and assert_not_load_namespaces($ns2);
 }
 
 1;
@@ -53,4 +46,27 @@ sub assert_similar_namespaces {
 __END__
 
 =pod
+
+=head1 SYNOPSIS
+
+ my ($namespace, $class) = get_namespace_parts('MyApp:Schema::Person');
+ is $namespace, 'MyApp::Schema';
+ is $class, 'Person';
+
+=head1 DESCRIPTION
+
+A collection of various helper utilities for L<DBIx::Class> stuff.  Probably
+only useful for components.
+
+=head1 METHODS
+
+=head2 get_namespace_parts
+
+
+
+=head2 assert_load_namespaces
+
+=head2 assert_not_load_namespaces
+
+=head2 assert_similar_namespaces
 

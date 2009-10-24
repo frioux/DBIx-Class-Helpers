@@ -1,18 +1,13 @@
 package DBIx::Class::Helper::JoinTable;
 
-sub _guess_namespace {
-   my $self = shift;
-   if ($self =~ m/([A-Za-z0-9_:]+)::Result::[A-Za-z0-9_]+/) {
-      return $1;
-   } else {
-      die "$self doesn't look like".'${namespace}::Result::$resultclass';
-   }
-}
+use strict;
+use warnings;
+
+use DBIx::Class::Helpers::Util 'get_namespace_parts';
 
 sub join_table {
    my $self   = shift;
    my $params = shift;
-   $params->{namespace} ||= $self->_guess_namespace;
    $self->set_table($params);
    $self->add_join_columns($params);
    $self->generate_relationships($params);
@@ -26,15 +21,15 @@ sub generate_primary_key {
 
 sub generate_relationships {
    my ($self, $params) = @_;
-   $params->{namespace} ||= $self->_guess_namespace;
+   $params->{namespace} ||= [ get_namespace_parts($self) ]->[0];
    $self->belongs_to(
       $params->{left_method} =>
-      "$params->{namespace}::Result::$params->{left_class}",
+      "$params->{namespace}::$params->{left_class}",
       "$params->{left_method}_id"
    );
    $self->belongs_to(
       $params->{right_method} =>
-      "$params->{namespace}::Result::$params->{right_class}",
+      "$params->{namespace}::$params->{right_class}",
       "$params->{right_method}_id"
    );
 }
