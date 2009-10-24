@@ -1,6 +1,9 @@
 package DBIx::Class::Helpers::Util;
+
 use strict;
 use warnings;
+
+# ABSTRACT: Helper utilities for DBIx::Class components
 
 use Sub::Exporter -setup => {
     exports => [

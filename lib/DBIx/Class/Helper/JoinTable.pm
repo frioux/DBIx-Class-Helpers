@@ -3,6 +3,8 @@ package DBIx::Class::Helper::JoinTable;
 use strict;
 use warnings;
 
+# ABSTRACT: Easily set up join tables with DBIx::Class
+
 use DBIx::Class::Helpers::Util 'get_namespace_parts';
 
 sub join_table {

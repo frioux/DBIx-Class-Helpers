@@ -3,6 +3,8 @@ package DBIx::Class::Helper::SubClass;
 use strict;
 use warnings;
 
+# ABSTRACT: Convenient subclassing with DBIx::Class
+
 use DBIx::Class::Helpers::Util 'get_namespace_parts';
 
 sub subclass {
