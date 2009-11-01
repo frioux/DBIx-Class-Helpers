@@ -1,4 +1,4 @@
-package TestSchema::ResultSet::Bar;
+package TestSchema::ResultSet::Foo;
 use strict;
 use warnings;
 

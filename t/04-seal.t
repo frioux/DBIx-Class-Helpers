@@ -6,17 +6,20 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/../lib", "$FindBin::Bin/lib";
 use Test::More;
+use Test::Exception;
 
 use TestSchema;
+my $schema = TestSchema->connect('dbi:SQLite:dbname=dbfile');
+$schema->deploy();
 
-sub foo {
-   my $art_rs = $schema->resultset('Artist');
-   my $art2_rs = $art_rs->search({'cds.title' => { LIKE => 'a%' }}, {join => 'cds'});
-
-   my $art3_rs = $art2_rs->seal();
-
-   my $art4_rs = $art3_rs->search({'cds.title' => { LIKE => '%a' }}, {join => 'cds'});
-
-   is($art4_rs->count, 0);
-}
+my $new_rs = $schema->resultset('Foo')->search({
+   'bar.foo_id' => 1
+}, {
+   join => 'bar'
+});
+lives_ok { $new_rs->count } 'regular search works';
+lives_ok { $new_rs->search({'bar.id' => 1})->count } '... and chaining off that using join works';
+dies_ok  { $new_rs->seal->search({'bar.id' => 1})->count } q{... but chaining off of a seal using join doesn't work};
 done_testing;
+
+END { unlink 'dbfile' }
