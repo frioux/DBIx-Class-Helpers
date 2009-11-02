@@ -81,18 +81,18 @@ sub generate_has_manys {
 
 sub generate_many_to_manys {
    my ($self, $params) = @_;
-
    $params = $self->_defaults($params);
+
    "$params->{namespace}::$params->{left_class}"->many_to_many(
       $params->{right_method_plural} =>
-      $params->{right_class},
-      "$params->{self_method}"
+      $params->{self_method},
+      $params->{right_method}
    );
 
    "$params->{namespace}::$params->{right_class}"->many_to_many(
       $params->{left_method_plural} =>
-      $params->{left_class},
-      "$params->{self_method}"
+      $params->{self_method},
+      $params->{left_method}
    );
 }
 
