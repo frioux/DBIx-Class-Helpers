@@ -207,7 +207,16 @@ C<"${right_method}_id"> respectively.
 
 =head2 generate_has_manys
 
-Sets C<"${left_method}_id"> and C<"${right_method}_id"> to be the primary key.
+Installs methods into C<left_class> and C<right_class> to get to the join table.
+The methods will be named what's passed into the configuration hashref as
+C<self_method>.
+
+=head2 generate_many_to_manys
+
+Installs many_to_many methods into C<left_class> and C<right_class>.  The
+methods will be named what's passed into the configuration hashref as
+C<left_method_plural> for the C<right_class> and C<right_method_plural> for the
+C<left_class>.
 
 =head2 generate_primary_key
 
