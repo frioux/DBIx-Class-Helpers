@@ -65,7 +65,7 @@ $schema->populate( Gnarly_Station => [
       is $g_rs->result_source->relationship_info('gnarly_stations')->{class},
          'TestSchema::Result::Gnarly_Station',
          'Right has_many defaulted correctly';
-      use Data::Dump 'pp';
+
       cmp_deeply [ map $_->id, $s_rs->find(1)->gnarlies ],
          [ 1, 2, 3 ],
          'Left many_to_many defaulted correctly';
