@@ -42,16 +42,14 @@ use TestSchema;
       is $g_rs->result_source->relationship_info('gnarly_stations')->{class},
          'TestSchema::Result::Gnarly_Station',
          'Right has_many defaulted correctly';
-      SKIP: {
-         skip 'many_to_many is broken', 2;
-         is $s_rs->result_source->relationship_info('gnarlies')->{class},
-            'TestSchema::Result::Gnarly',
-            'Left many_to_many defaulted correctly';
 
-         is $g_rs->result_source->relationship_info('stations')->{class},
-            'TestSchema::Result::Station',
-            'Right many_to_many defaulted correctly';
-      }
+      is $s_rs->result_source->relationship_info('gnarlies')->{class},
+         'TestSchema::Result::Gnarly',
+         'Left many_to_many defaulted correctly';
+
+      is $g_rs->result_source->relationship_info('stations')->{class},
+         'TestSchema::Result::Station',
+         'Right many_to_many defaulted correctly';
 
    }
 }

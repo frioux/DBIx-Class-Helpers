@@ -18,8 +18,10 @@ my $new_rs = $schema->resultset('Foo')->search({
    join => 'bar'
 });
 lives_ok { $new_rs->count } 'regular search works';
-lives_ok { $new_rs->search({'bar.id' => 1})->count } '... and chaining off that using join works';
-dies_ok  { $new_rs->seal->search({'bar.id' => 1})->count } q{... but chaining off of a seal using join doesn't work};
+lives_ok { $new_rs->search({'bar.id' => 1})->count }
+   '... and chaining off that using join works';
+dies_ok  { $new_rs->as_virtual_view->search({'bar.id' => 1})->count }
+   q{... but chaining off of a virtual view using join doesn't work};
 done_testing;
 
 END { unlink 'dbfile' }

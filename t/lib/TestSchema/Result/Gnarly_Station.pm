@@ -18,5 +18,4 @@ my $config = {
 __PACKAGE__->join_table($config);
 __PACKAGE__->generate_has_manys($config);
 __PACKAGE__->generate_many_to_manys($config);
-__PACKAGE__->many_to_many( 'robots', 'foo_bar_baz', 'robot' );
 1;
