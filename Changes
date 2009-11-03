@@ -1,7 +1,7 @@
 Revision history for DBIx-Class-Helpers
 
-       - Add seal method to clean SQL namespace
-       - Add methods to generate has_many and many_to_many fo join tables
+       - Add virtual view method to clean SQL namespace
+       - Add methods to generate has_many and many_to_many for join tables
        - Hopefully fix deps for real
 
 0.093000 Sat Oct 26 19:40:00 CDT 2009
