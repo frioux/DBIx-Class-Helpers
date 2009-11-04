@@ -1,4 +1,4 @@
-package DBIx::Class::Helper::VirtaulView;
+package DBIx::Class::Helper::VirtualView;
 
 use strict;
 use warnings;
