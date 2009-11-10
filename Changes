@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-Helpers
 
+0.093140 Tue Nov 10 09:32:00 CDT 2009
+       - Fix DBIC version dep
+
 0.093071 Tue Nov 03 20:53:00 CDT 2009
        - Fix package of VirtualView
        - Add test so that won't happen again
