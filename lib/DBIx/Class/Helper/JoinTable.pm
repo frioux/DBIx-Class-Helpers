@@ -25,7 +25,8 @@ BEGIN {
 }
 
 sub _pluralize {
-   my ($self, $original) = @_;
+   my $self = shift;
+   my $original = shift or return;
    return join q{_}, split /\s+/,
       Lingua::EN::Inflect::PL(join q{ }, split /_/, $original);
 }
