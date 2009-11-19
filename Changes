@@ -1,5 +1,7 @@
 Revision history for DBIx-Class-Helpers
 
+       - Clean up as_virtual_view with recommendation from ijw and ribasushi
+
 0.093140 Tue Nov 10 09:32:00 CDT 2009
        - Fix DBIC version dep
        - Get rid of some warnings from the test suite

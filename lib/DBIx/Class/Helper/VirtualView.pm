@@ -10,7 +10,11 @@ sub as_virtual_view {
 
    return $self->result_source->resultset->search( undef, {
       alias => 'me',
-      from => [{ me => $self->as_query }]
+      from => [{
+            me => $self->as_query,
+            -alias         => 'me',
+            -source_handle => $self->result_source->handle,
+         }]
    });
 }
 
@@ -73,3 +77,8 @@ in the following manner:
  use DBIx::Class:Helper::VirtualView;
 
  my $new_rs = DBIx::Class::Helper::VirtualView::as_virtual_view($rs);
+
+=head1 THANKS
+
+Thanks to ijw from #dbix-class for the idea for this (originally called seal),
+most of the code, and most of the documentation.
