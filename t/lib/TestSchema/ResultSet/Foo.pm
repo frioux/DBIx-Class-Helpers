@@ -4,6 +4,6 @@ use warnings;
 
 use parent 'DBIx::Class::ResultSet';
 
-__PACKAGE__->load_components('Helper::VirtualView');
+__PACKAGE__->load_components(qw{ Helper::Random Helper::VirtualView });
 
 1;

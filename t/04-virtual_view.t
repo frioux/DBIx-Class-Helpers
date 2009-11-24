@@ -26,4 +26,4 @@ dies_ok  { $new_rs->as_virtual_view->search({'bar.id' => 1})->count }
    q{... but chaining off of a virtual view using join doesn't work};
 done_testing;
 
-END { unlink 'dbfile' }
+END { unlink 'dbfile' unless $^O eq 'Win32' }

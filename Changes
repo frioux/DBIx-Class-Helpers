@@ -1,25 +1,27 @@
 Revision history for DBIx-Class-Helpers
 
+0.093270 Mon Nov 23 10:45 2009
+       - Add Random helper
        - Clean up as_virtual_view with recommendation from ijw and ribasushi
 
-0.093140 Tue Nov 10 09:32:00 CDT 2009
+0.093140 Tue Nov 10 09:32 2009
        - Fix DBIC version dep
        - Get rid of some warnings from the test suite
 
-0.093071 Tue Nov 03 20:53:00 CDT 2009
+0.093071 Tue Nov 03 20:53 2009
        - Fix package of VirtualView
        - Add test so that won't happen again
 
-0.093070 Mon Nov 02 23:16:00 CDT 2009
+0.093070 Mon Nov 02 23:16 2009
        - Add virtual view method to clean SQL namespace
        - Add methods to generate has_many and many_to_many for join tables
        - Hopefully fix deps for real
 
-0.093000 Sat Oct 26 19:40:00 CDT 2009
+0.093000 Sat Oct 26 19:40 2009
        - Add parent as a dependency
        - Super basic POD cleanup
        - Tighter Restrictions on the namespaces of parent classes
 
-0.092970 Sat Oct 24 02:41:00 CDT 2009
+0.092970 Sat Oct 24 02:41 2009
        - Initial Release
 

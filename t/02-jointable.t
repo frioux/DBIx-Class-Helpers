@@ -78,4 +78,4 @@ $schema->populate( Gnarly_Station => [
 }
 
 done_testing;
-END { unlink 'dbfile' }
+END { unlink 'dbfile' unless $^O eq 'Win32' }

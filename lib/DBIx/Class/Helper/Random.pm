@@ -3,7 +3,7 @@ package DBIx::Class::Helper::Random;
 use strict;
 use warnings;
 
-use Scalar::Defer;
+use Carp 'croak';
 
 # ABSTRACT: Get random rows from a ResultSet
 
@@ -12,9 +12,9 @@ sub rand {
    my $amount = shift || 1;
 
    if ($amount == 1) {
-      return $self->slice (int rand defer { $self->count } );
+      return $self->slice( int rand $self->count );
    } else {
-
+      croak 'rand is not yet implemented for multiple random values';
    }
 }
 
@@ -34,14 +34,17 @@ sub rand {
 
  __PACKAGE__->load_components('Helper::Random');
 
- my $row  = $schema->resultset('Bar')->rand->single;
-
- my @rows = $schema->resultset('Bar')->rand(4)->all;
+ # in code using resultset:
+ my $random_row  = $schema->resultset('Bar')->rand->single;
 
 =head1 DESCRIPTION
 
+This component allows convenient selection of random rows.
 
 =head1 METHODS
 
 =head2 rand
 
+Currently this method will return a ResultSet containing a single random row
+from the given ResultSet.  In the future it will take an argument of how many
+random rows should be included in the ResultSet.

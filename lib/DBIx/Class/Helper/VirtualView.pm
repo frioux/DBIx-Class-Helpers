@@ -80,5 +80,5 @@ in the following manner:
 
 =head1 THANKS
 
-Thanks to ijw from #dbix-class for the idea for this (originally called seal),
-most of the code, and most of the documentation.
+Thanks to ijw from #dbix-class for the idea for this helper (originally called
+seal), most of the code, and most of the documentation.
