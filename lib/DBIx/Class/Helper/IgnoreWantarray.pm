@@ -19,9 +19,13 @@ sub search {
 
  __PACKAGE__->load_components(qw{Helper::IgnoreWantarray});
 
- # elsewhere:
+ ...
 
- my $rs = $self->foo_method(
+ 1;
+
+And then else where, like in a controller:
+
+ my $rs = $self->paginate(
    $schema->resultset('Foo')->search({
       name => 'frew'
    })
