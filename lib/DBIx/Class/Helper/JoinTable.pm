@@ -130,15 +130,22 @@ sub _add_join_column {
       is_nullable => 0,
       is_numeric  => 1,
    };
-   my @datas = (qw{data_type extra size});
 
    $self->ensure_class_loaded($class);
+   my @datas = qw{is_nullable extra data_type size is_numeric};
 
    my @class_column_info = (
       map {
          my $info = $class->column_info($_);
-         my $result = +{ map { $_ => $info->{$_} } qw{extra data_type size is_numeric} };
-         $result = $default unless $result->{extra} || $result->{data_type} || $result->{size};
+         my $result = {};
+	 my $defined = undef;
+	 for (@datas) {
+	    if (defined $info->{$_}) {
+	       $defined = 1;
+	       $result->{$_} = $info->{$_};
+	    }
+	 }
+         $result = $default unless $defined;
          $result;
       } $class->primary_columns
    );
@@ -245,7 +252,9 @@ columns, set the primary key, and set up the relationships.
 =head2 add_join_columns
 
 Adds two non-nullable integer fields named C<"${left_method}_id"> and
-C<"${right_method}_id"> respectively.
+C<"${right_method}_id"> respectively.  If the either left or right class
+has a multi primary key C<"${left_method}_${i}_id"> or
+C<"${right_method}_${i}_id"> will be used respectively.
 
 =head2 generate_has_manys
 
@@ -279,3 +288,15 @@ This module uses L<String::CamelCase> to default the method names if it is
 installed.  Currently it fails pod tests, so I'm not making it a requirement.
 Also will use L<Lingua::EN::Inflect> for pluralization.
 
+=head1 CHANGES BETWEEN RELEASES
+
+=head2 Changes since 0.*
+
+Originally this module would use
+
+       data_type         => 'integer',
+       is_nullable       => 0,
+       is_numeric        => 1,
+
+for all joining columns.  It now infers C<data_type>, C<is_nullable>,
+C<is_numeric>, and C<extra> from the foreign tables.
