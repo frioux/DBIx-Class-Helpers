@@ -253,6 +253,7 @@ columns, set the primary key, and set up the relationships.
 
 Adds two non-nullable integer fields named C<"${left_method}_id"> and
 C<"${right_method}_id"> respectively.
+
 =head2 generate_has_manys
 
 Installs methods into C<left_class> and C<right_class> to get to the join table.
