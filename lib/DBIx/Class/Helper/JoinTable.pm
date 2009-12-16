@@ -252,10 +252,7 @@ columns, set the primary key, and set up the relationships.
 =head2 add_join_columns
 
 Adds two non-nullable integer fields named C<"${left_method}_id"> and
-C<"${right_method}_id"> respectively.  If the either left or right class
-has a multi primary key C<"${left_method}_${i}_id"> or
-C<"${right_method}_${i}_id"> will be used respectively.
-
+C<"${right_method}_id"> respectively.
 =head2 generate_has_manys
 
 Installs methods into C<left_class> and C<right_class> to get to the join table.
