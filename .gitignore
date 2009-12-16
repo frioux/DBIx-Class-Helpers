@@ -2,3 +2,4 @@
 Makefile
 *.gz
 .build
+DBIx-Class-Helpers-*
