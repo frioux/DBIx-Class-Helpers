@@ -1,4 +1,9 @@
-Revision history for DBIx-Class-Helpers
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
+       - Add IgnoreWantarray helper
+       - Pull column def information from foreign tables
+         for JoinTable helper, see pod in helper for details
 
 0.093270 Mon Nov 23 10:45 2009
        - Add Random helper
