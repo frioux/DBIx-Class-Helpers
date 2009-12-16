@@ -50,6 +50,12 @@ $schema->populate( Gnarly_Station => [
 
    cmp_deeply [ $bar_rs->result_source->primary_columns ], [qw{foo_id bar_id}],
       'set primary keys works';
+
+   cmp_deeply $bar_rs->result_source->column_info('bar_id'), {
+      data_type => 'integer',
+      size => 12,
+   }, 'bar_id infers column info correctly';
+
 }
 
 {
@@ -57,6 +63,12 @@ $schema->populate( Gnarly_Station => [
       my $g_rs = $schema->resultset('Gnarly');
       my $s_rs = $schema->resultset('Station');
       my $g_s_rs = $schema->resultset('Gnarly_Station');
+
+      cmp_deeply $g_s_rs->result_source->column_info('gnarly_id'), {
+	 data_type => 'integer',
+	 is_nullable => 0,
+	 is_numeric => 1,
+      }, 'gnarly_id defaults column info correctly';
 
       is $s_rs->result_source->relationship_info('gnarly_stations')->{class},
          'TestSchema::Result::Gnarly_Station',
