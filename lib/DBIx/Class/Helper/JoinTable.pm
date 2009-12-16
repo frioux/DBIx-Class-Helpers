@@ -119,22 +119,63 @@ sub set_table {
    $self->table("$params->{left_class}_$params->{right_class}");
 }
 
+sub _add_join_column {
+   my ($self, $params) = @_;
+
+   my $class = $params->{class};
+   my $method = $params->{method};
+
+   my $default = {
+      data_type   => 'integer',
+      is_nullable => 0,
+      is_numeric  => 1,
+   };
+   my @datas = (qw{data_type extra size});
+
+   $self->ensure_class_loaded($class);
+
+   my @class_column_info = (
+      map {
+         my $info = $class->column_info($_);
+         my $result = +{ map { $_ => $info->{$_} } qw{extra data_type size is_numeric} };
+         $result = $default unless $result->{extra} || $result->{data_type} || $result->{size};
+         $result;
+      } $class->primary_columns
+   );
+
+   if (@class_column_info == 1) {
+      $self->add_columns(
+         "${method}_id" => $class_column_info[0],
+      );
+   } else {
+      my $i = 0;
+      for (@class_column_info) {
+         $i++;
+         $self->add_columns(
+            "${method}_${i}_id" => $_
+         );
+      }
+   }
+
+}
+
 sub add_join_columns {
    my ($self, $params) = @_;
 
    $params = $self->_defaults($params);
-   $self->add_columns(
-      "$params->{left_method}_id" => {
-         data_type         => 'integer',
-         is_nullable       => 0,
-         is_numeric        => 1,
-      },
-      "$params->{right_method}_id" => {
-         data_type         => 'integer',
-         is_nullable       => 0,
-         is_numeric        => 1,
-      },
-   );
+
+   my $l_class = "$params->{namespace}::$params->{left_class}";
+   my $r_class = "$params->{namespace}::$params->{right_class}";
+
+   $self->_add_join_column({
+      class => $l_class,
+      method => $params->{left_method}
+   });
+
+   $self->_add_join_column({
+      class => $r_class,
+      method => $params->{right_method}
+   });
 }
 
 1;
