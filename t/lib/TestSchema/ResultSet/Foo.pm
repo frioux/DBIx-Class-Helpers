@@ -4,6 +4,6 @@ use warnings;
 
 use parent 'TestSchema::ResultSet';
 
-__PACKAGE__->load_components(qw{ Helper::Random Helper::VirtualView });
+__PACKAGE__->load_components(qw{ Helper::ResultSet::Union Helper::Random Helper::VirtualView });
 
 1;

@@ -16,5 +16,6 @@ __PACKAGE__->add_columns(id => {
 __PACKAGE__->set_primary_key('id');
 
 __PACKAGE__->belongs_to( foo => 'ParentSchema::Result::Foo', 'foo_id' );
+__PACKAGE__->has_many(  foos => 'ParentSchema::Result::Foo', 'bar_id' );
 
 1;
