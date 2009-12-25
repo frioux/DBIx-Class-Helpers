@@ -12,7 +12,7 @@ sub as_virtual_view {
       alias => 'me',
       from => [{
             me => $self->as_query,
-            -alias         => 'me',
+            -alias         => $self->current_source_alias,
             -source_handle => $self->result_source->handle,
          }]
    });
