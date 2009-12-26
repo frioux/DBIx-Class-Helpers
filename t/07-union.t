@@ -10,25 +10,8 @@ use Test::Deep;
 use Test::Exception;
 
 use TestSchema;
-my $schema = TestSchema->connect('dbi:SQLite:dbname=dbfile');
-$schema->deploy();
-$schema->populate(Foo => [
-   [qw{id bar_id}],
-   [1,1],
-   [2,2],
-   [3,3],
-   [4,4],
-   [5,5],
-]);
-
-$schema->populate(Bar => [
-   [qw{id foo_id}],
-   [1,1],
-   [2,2],
-   [3,3],
-   [4,4],
-   [5,5],
-]);
+my $schema = TestSchema->deploy_or_connect();
+$schema->prepopulate;
 
 my $rs = $schema->resultset('Foo')->search({ id => 1 });
 my $rs2 = $schema->resultset('Foo')->search({ id => { '>=' => 3 } });
@@ -54,5 +37,3 @@ dies_ok { $rs->union($schema->resultset('Bar')) } 'unioning differing ResultSets
 }
 
 done_testing;
-
-END { unlink 'dbfile' unless $^O eq 'Win32' }

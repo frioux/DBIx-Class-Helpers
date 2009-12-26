@@ -9,8 +9,7 @@ use Test::More;
 use Test::Exception;
 
 use TestSchema;
-my $schema = TestSchema->connect('dbi:SQLite:dbname=dbfile');
-$schema->deploy();
+my $schema = TestSchema->deploy_or_connect();
 
 my $new_rs = $schema->resultset('Foo')->search({
    'bar.foo_id' => 1
@@ -25,5 +24,3 @@ lives_ok { $new_rs->search({'bar.id' => 1})->as_virtual_view->count }
 dies_ok  { $new_rs->as_virtual_view->search({'bar.id' => 1})->count }
    q{... but chaining off of a virtual view using join doesn't work};
 done_testing;
-
-END { unlink 'dbfile' unless $^O eq 'Win32' }

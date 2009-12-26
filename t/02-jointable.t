@@ -9,29 +9,8 @@ use Test::More;
 use Test::Deep;
 
 use TestSchema;
-my $schema = TestSchema->connect('dbi:SQLite:dbname=dbfile');
-$schema->deploy();
-$schema->populate( Gnarly => [
-   [qw{id name}],
-   [1,'frew'],
-   [2,'frioux'],
-   [3,'frooh'],
-]);
-
-$schema->populate( Station => [
-   [qw{id name}],
-   [1,'frew'],
-   [2,'frioux'],
-   [3,'frooh'],
-]);
-
-$schema->populate( Gnarly_Station => [
-   [qw{gnarly_id station_id}],
-   [1,1],
-   [1,3],
-   [2,1],
-   [3,1],
-]);
+my $schema = TestSchema->deploy_or_connect();
+$schema->prepopulate;
 
 {
    my $bar_rs = TestSchema->resultset('Foo_Bar');
@@ -90,4 +69,3 @@ $schema->populate( Gnarly_Station => [
 }
 
 done_testing;
-END { unlink 'dbfile' unless $^O eq 'Win32' }
