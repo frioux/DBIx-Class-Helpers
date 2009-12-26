@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - No longer depend on SQLT
        - Switch to more user friendly versioning
        - Allow multiple random rows from Random
        - Add the most excellent Helper::ResultSet::Union
