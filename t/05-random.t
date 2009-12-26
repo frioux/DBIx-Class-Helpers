@@ -25,6 +25,10 @@ my $row = $schema->resultset('Foo')->rand->single;
 # so suck it.
 ok $row->id >= 1 && $row->id <= 5, 'row is one of the rows from the database';
 
+use Devel::Dwarn;
+my @rows = Dwarn map $_->id, $schema->resultset('Foo')->rand(4)->all;
+
+
 done_testing;
 
 END { unlink 'dbfile' unless $^O eq 'Win32' }

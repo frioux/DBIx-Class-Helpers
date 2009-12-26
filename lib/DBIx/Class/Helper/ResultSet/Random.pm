@@ -7,12 +7,34 @@ use warnings;
 
 sub rand {
    my $self   = shift;
+   $self->load_components(qw{Helper::ResultSet::Union});
+
    my $amount = shift || 1;
+
+   $self->throw_exception('rand can only return a positive amount of rows')
+      unless $amount > 0;
+
+   $self->throw_exception('rand can only return an integer amount of rows')
+      unless $amount == int $amount;
 
    if ($amount == 1) {
       return $self->slice( int rand $self->count );
    } else {
-      $self->throw_exception('rand is not yet implemented for multiple random values');
+      my $count = $self->count;
+
+      $self->throw_exception('rand cannot select more rows than exist')
+         unless $amount <= $count;
+
+      my %rows;
+
+      while ($amount) {
+         next if $rows{1 + int rand $count}++;
+         $amount--;
+      }
+
+      return $self->union([
+         map $self->slice($_), keys %rows
+      ]);
    }
 }
 
