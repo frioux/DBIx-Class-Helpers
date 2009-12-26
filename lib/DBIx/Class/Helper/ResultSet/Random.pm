@@ -18,7 +18,7 @@ my %rand_order_by = (
 );
 
 sub rand_order_by {
-   return $rand_order_by{ref shift->result_source->storage} || 'RANDOM()';
+   return $rand_order_by{ref shift->result_source->storage} || 'RAND()';
 }
 
 sub rand {
@@ -60,6 +60,19 @@ sub rand {
 This component allows convenient selection of random rows.  See
 L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it to your
 entire schema.
+
+Currently this works by doing something akin to
+
+ SELECT TOP($x) from $table ORDER BY RANDOM()
+
+Lots of people think this is slow.  My own benchmarks show that doing the above,
+for 10 rows in a table with just over 8 million rows, is nearly instant.
+Although that was with SQL Server, and different databases will handle that
+differently.
+
+So please, if you have performance issues and want this to work with your
+database, get in touch and I will do what I can to get it to work quickly enough
+to suite your needs.
 
 =head1 METHODS
 
