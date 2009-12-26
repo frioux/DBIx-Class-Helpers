@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Switch to more user friendly versioning
        - Add the most excellent Helper::ResultSet::Union
        - namespace helpers
 
