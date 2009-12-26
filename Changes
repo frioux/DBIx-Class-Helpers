@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add the most excellent Helper::ResultSet::Union
+       - namespace helpers
+
+1.093501  2009-12-16 16:32:55 CST6CDT
        - Fix deps list
 
 1.093500  2009-12-16 16:12:00 CST6CDT

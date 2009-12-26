@@ -3,7 +3,7 @@ use parent 'DBIx::Class';
 use strict;
 use warnings;
 
-__PACKAGE__->load_components(qw{Helper::JoinTable Core});
+__PACKAGE__->load_components(qw{Helper::Row::JoinTable Core});
 
 my $config = {
    left_class          => 'Gnarly',

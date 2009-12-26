@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class::ResultSet';
 
-__PACKAGE__->load_components('Helper::IgnoreWantarray');
+__PACKAGE__->load_components('Helper::ResultSet::IgnoreWantarray');
 
 1;
 
