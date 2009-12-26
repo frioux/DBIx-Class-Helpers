@@ -3,6 +3,8 @@ package TestSchema;
 use strict;
 use warnings;
 
+use File::Spec;
+
 our $VERSION = 0.001;
 use parent 'DBIx::Class::Schema';
 
@@ -12,9 +14,13 @@ __PACKAGE__->load_namespaces(
 
 __PACKAGE__->load_components(qw/Schema::Versioned/);
 
-__PACKAGE__->upgrade_directory('./t/lib');
-
 sub dbfile { 'dbfile' }
+
+sub upgrade_directory { './t/lib' }
+
+sub ddl_filename {
+   return File::Spec->catfile(shift->upgrade_directory, 'ddl.sql');
+}
 
 sub deploy_or_connect {
    my $self = shift;
@@ -31,7 +37,11 @@ sub connect {
 sub generate_ddl {
    my $self = shift;
    my $schema = $self->connect;
-   $schema->create_ddl_dir( 'SQLite', $schema->schema_version, $self->upgrade_directory );
+   $schema->create_ddl_dir(
+      'SQLite',
+      $schema->schema_version,
+      $self->upgrade_directory,
+   );
 }
 
 sub prepopulate {
