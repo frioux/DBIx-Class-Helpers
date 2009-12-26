@@ -3,8 +3,6 @@ package DBIx::Class::Helper::Random;
 use strict;
 use warnings;
 
-use Carp 'croak';
-
 # ABSTRACT: Get random rows from a ResultSet
 
 sub rand {
@@ -14,7 +12,7 @@ sub rand {
    if ($amount == 1) {
       return $self->slice( int rand $self->count );
    } else {
-      croak 'rand is not yet implemented for multiple random values';
+      $self->throw_exception('rand is not yet implemented for multiple random values');
    }
 }
 
