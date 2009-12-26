@@ -34,39 +34,13 @@ And then else where, like in a controller:
 =head1 DESCRIPTION
 
 This component makes search always return a ResultSet, instead of
-returning an array of your database in array context.
+returning an array of your database in array context. See
+L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it to your
+entire schema.
 
 =head1 METHODS
 
 =head2 search
 
 Override of the default search method to force it to return a ResultSet.
-
-=head2 NOTE
-
-You probably want this applied to your entire schema.  The most convenient
-way to do that is to make a base ResultSet and inherit from that in all of
-your custom ResultSets as well has make it the default ResultSet for the
-non-custom ResultSets.  Example:
-
- package My::App::Schema::ResultSet;
-
- use strict;
- use warnings;
-
- use base 'DBIx::Class::ResultSet';
-
- __PACKAGE__->load_components('Helper::IgnoreWantarray');
-
- 1;
-
- package My::App::Schema;
-
- use base 'DBIx::Class::Schema';
-
- My::App::Schema->load_namespaces(
-    default_resultset_class => 'ResultSet',
- );
-
- 1;
 

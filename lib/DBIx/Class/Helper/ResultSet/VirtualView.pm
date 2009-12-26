@@ -57,7 +57,9 @@ sub as_virtual_view {
 
 =head1 DESCRIPTION
 
-This component is will allow you to clean up your SQL namespace.
+This component is will allow you to clean up your SQL namespace.  See
+L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it to your
+entire schema.
 
 =head1 METHODS
 

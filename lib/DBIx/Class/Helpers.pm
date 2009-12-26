@@ -55,5 +55,5 @@ __END__
 
 =head1 SEE ALSO
 
-L<DBIx::Class::Helper::JoinTable>, L<DBIx::Class::Helper::SubClass>, L<DBIx::Class::Helpers::Util>
+L<DBIx::Class::Helper::Row::JoinTable>, L<DBIx::Class::Helper::ResultSet::SubClass>, L<DBIx::Class::Helpers::Util>
 

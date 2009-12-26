@@ -57,7 +57,9 @@ sub rand {
 
 =head1 DESCRIPTION
 
-This component allows convenient selection of random rows.
+This component allows convenient selection of random rows.  See
+L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it to your
+entire schema.
 
 =head1 METHODS
 
