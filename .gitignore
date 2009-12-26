@@ -3,3 +3,5 @@ Makefile
 *.gz
 .build
 DBIx-Class-Helpers-*
+dbfile
+t/lib/TestSchema-0.001-SQLite.sql
