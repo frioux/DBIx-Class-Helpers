@@ -1,7 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
-       - Allow multiple random rows from Random, thanks to Union
+       - Allow multiple random rows from Random
        - Add the most excellent Helper::ResultSet::Union
        - namespace helpers
 

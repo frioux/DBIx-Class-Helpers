@@ -25,8 +25,11 @@ my $row = $schema->resultset('Foo')->rand->single;
 # so suck it.
 ok $row->id >= 1 && $row->id <= 5, 'row is one of the rows from the database';
 
-use Devel::Dwarn;
-my @rows = Dwarn map $_->id, $schema->resultset('Foo')->rand(4)->all;
+my @rows = map $_->id, $schema->resultset('Foo')->rand(4)->all;
+ok @rows == 4, 'correct amount of rows selected';
+for (@rows) {
+   ok $_ >= 1 && $_ <= 5, 'row is one of the rows from the database';
+}
 
 
 done_testing;
