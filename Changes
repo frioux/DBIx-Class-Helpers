@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.00000_1 2009-12-28 11:40:43 CST6CDT
        - No longer depend on SQLT
        - Switch to more user friendly versioning
        - Allow multiple random rows from Random
