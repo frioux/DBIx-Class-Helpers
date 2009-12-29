@@ -7,7 +7,6 @@ use warnings;
 
  __PACKAGE__->join_table({
     left_class   => 'Foo',
-    left_method  => 'foo',
     right_class  => 'Bar',
     right_method => 'bar',
  });

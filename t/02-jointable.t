@@ -24,7 +24,7 @@ $schema->prepopulate;
 
       my $foo_info = $bar_rs->result_source->relationship_info('foo');
       is $foo_info->{class}, 'TestSchema::Result::Foo',
-         'namespace correctly defaulted';
+         'namespace and method name correctly defaulted';
    }
 
    cmp_deeply [ $bar_rs->result_source->primary_columns ], [qw{foo_id bar_id}],

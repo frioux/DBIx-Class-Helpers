@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Depend on String::CamelCase now that it's fixed
 
 2.00000_1 2009-12-28 11:40:43 CST6CDT
        - No longer depend on SQLT
