@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - note added to SubClass disambiguating it from
+         DBIx::Class::DynamicSubclass (thanks jnap)
        - random_order_by is now private (_random_order_by)
        - Depend on String::CamelCase now that it's fixed
 

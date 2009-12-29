@@ -98,3 +98,11 @@ will automatically get the relationship to C<MyApp::Schema::Result::Bar>.
 This is a super basic method that just sets the current classes' table to the
 parent classes' table.
 
+=head1 NOTE
+
+This Component is mostly aimed at those who want to subclass parts of a schema,
+maybe for sharing a login system in a few different projects.  Do not confuse
+it with L<DBIx::Class::DynamicSubclass>, which solves an entirely different
+problem.  DBIx::Class::DynamicSubclass is for when you want to store a few very
+similar classes in the same table (Employee, Person, Boss, etc) whereas this
+component is merely for reusing an existing schema.
