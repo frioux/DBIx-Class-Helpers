@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - No new changes since dev release
+
+2.00000_2 2009-12-29 18:45:15 CST6CDT
        - note added to SubClass disambiguating it from
          DBIx::Class::DynamicSubclass (thanks jnap)
        - random_order_by is now private (_random_order_by)
