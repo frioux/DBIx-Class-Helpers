@@ -22,7 +22,7 @@ sub union {
 
    $other = [$other] if ref $other ne 'ARRAY';
 
-   push @{$other}, $self;
+   unshift @{$other}, $self;
 
    my @sql;
    my @params;
@@ -50,9 +50,9 @@ sub union {
 
    return $self->result_source->resultset->search(undef, {
       from => [{
-         me             => \[ $query, @params ],
-         -alias         => $self->current_source_alias,
-         -source_handle => $self->result_source->handle,
+         $self->current_source_alias => \[ $query, @params ],
+         -alias                      => $self->current_source_alias,
+         -source_handle              => $self->result_source->handle,
       }]
    });
 }
