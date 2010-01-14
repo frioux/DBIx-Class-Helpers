@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.00100   2010-01-13 23:37:34 CST6CDT
        - fix 'me' in RS::Union
        - change order in RS::Union so Unioning RS is first instead of last
        - add Row::NumifyGet
