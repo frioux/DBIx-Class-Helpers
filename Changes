@@ -3,8 +3,9 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
        - fix 'me' in RS::Union
        - change order in RS::Union so Unioning RS is first instead of last
-       + add docs to RS::Union to clarify some of the awesomeness that can be had
-       + add Row::NumifyGet
+       - add Row::NumifyGet
+       - add docs to RS::Union to clarify some of the awesomeness that can be had
+       - fixed union because it didn't actually work before (!!!)
 
 2.00000   2009-12-30 13:02:23 CST6CDT
        - No new changes since dev release

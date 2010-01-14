@@ -7,7 +7,12 @@ __PACKAGE__->load_components('Core');
 
 __PACKAGE__->table('Foo');
 
-__PACKAGE__->add_columns(qw/ id bar_id /);
+__PACKAGE__->add_columns(
+   id => {
+      is_numeric => 1,
+   },
+   'bar_id'
+);
 
 __PACKAGE__->set_primary_key('id');
 
