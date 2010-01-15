@@ -18,7 +18,9 @@ my %rand_order_by = (
 );
 
 sub _rand_order_by {
-   return $rand_order_by{ref shift->result_source->storage} || 'RAND()';
+   my $self = shift;
+   $self->result_source->storage->ensure_connected;
+   return $rand_order_by{ref $self->result_source->storage} || 'RAND()';
 }
 
 sub rand {
