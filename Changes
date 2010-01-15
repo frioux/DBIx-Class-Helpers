@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Better performance for some cases in NumifyGet
 
 2.00101   2010-01-15 02:14:55 CST6CDT
        - fix bug in Random where if a user calls random and schema isn't
