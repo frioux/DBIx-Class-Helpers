@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - fix NumifyGet for nullable and autoinc columns
 
 2.00100   2010-01-13 23:37:34 CST6CDT
        - fix 'me' in RS::Union
