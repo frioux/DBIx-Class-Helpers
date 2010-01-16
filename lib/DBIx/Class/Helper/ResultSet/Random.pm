@@ -19,7 +19,7 @@ my %rand_order_by = (
 
 sub _rand_order_by {
    my $self = shift;
-   $self->result_source->storage->ensure_connected;
+   $self->result_source->storage->_determine_driver;
    return $rand_order_by{ref $self->result_source->storage} || 'RAND()';
 }
 
