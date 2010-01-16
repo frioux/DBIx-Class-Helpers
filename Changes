@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.00102   2010-01-15 21:50:20 CST6CDT
        - Better performance for some cases in NumifyGet
        - _determine_driver is better than _ensure_connected ( Random )
 
