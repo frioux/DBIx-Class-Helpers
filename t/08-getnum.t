@@ -19,34 +19,23 @@ sub is_numeric {
    my $value = shift;
    my $b_obj = B::svref_2object(\$value);
    my $flags = $b_obj->FLAGS;
-   ok( ((    $flags & B::SVf_IOK or $flags & B::SVp_IOK
+   return ( $flags & B::SVf_IOK or $flags & B::SVp_IOK
           or $flags & B::SVf_NOK or $flags & B::SVp_NOK
-        ) and !($flags & B::SVf_POK )), "id $value has been 'numified'"
-   );
+        ) and !($flags & B::SVf_POK )
 }
 
-sub is_numeric2 {
-   my $value = shift;
-   my $b_obj = B::svref_2object(\$value);
-   my $flags = $b_obj->FLAGS;
-   ok( ((    $flags & B::SVf_IOK or $flags & B::SVp_IOK
-          or $flags & B::SVf_NOK or $flags & B::SVp_NOK
-        ) and !($flags & B::SVf_POK )), "id $value has been 'numified' w/o is_numeric"
-   );
-}
-
-is_numeric2($schema->resultset('Foo')->first->bar_id);
+ok(is_numeric($schema->resultset('Foo')->first->bar_id),"bar_id has been 'numified' w/o is_numeric set");
 
 for (map $_->id, $schema->resultset('Foo')->all) {
-   is_numeric($_);
+   ok(is_numeric($_), "id $_ has been 'numified'");
 }
 
 for (map +{$_->get_columns}, $schema->resultset('Foo')->all) {
-   is_numeric($_->{id});
+   ok(is_numeric($_->{id}), "id $_->{id} has been 'numified'");
 }
 
 for (map +{$_->get_inflated_columns}, $schema->resultset('Foo')->all) {
-   is_numeric($_->{id});
+   ok(is_numeric($_->{id}), "id $_->{id} has been 'numified'");
 }
 
 done_testing;
