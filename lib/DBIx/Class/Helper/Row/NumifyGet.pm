@@ -11,7 +11,7 @@ sub get_column {
    my $value = $self->next::method($col);
 
    $value += 0 if defined($value) and # for nullable and autoinc fields
-                  $self->result_source->column_info($col)->{is_numeric};
+                  $self->_is_numeric($col);
 
    return $value;
 }
@@ -24,7 +24,7 @@ sub get_columns {
    for (keys %columns) {
       $columns{$_} += 0
          if defined($columns{$_}) and # for nullable and autoinc fields
-            $self->result_source->column_info($_)->{is_numeric};
+            $self->_is_numeric($_);
    }
 
    return %columns;

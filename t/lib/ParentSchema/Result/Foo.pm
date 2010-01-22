@@ -11,7 +11,9 @@ __PACKAGE__->add_columns(
    id => {
       is_numeric => 1,
    },
-   'bar_id'
+   bar_id => {
+      data_type => 'integer'
+   },
 );
 
 __PACKAGE__->set_primary_key('id');
