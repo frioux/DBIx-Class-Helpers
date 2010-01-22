@@ -10,7 +10,7 @@ use parent 'DBIx::Class::Helper::ResultSet::Union';
 # this is ghetto
 my %rand_order_by = (
    'DBIx::Class::Storage::DBI::SQLite'                     => 'RANDOM()',
-   'DBIx::Class::Storage::DBI::mysql'                      => 'RANDOM()',
+   'DBIx::Class::Storage::DBI::mysql'                      => 'RAND()',
    'DBIx::Class::Storage::DBI::ODBC::Microsoft_SQL_Server' => 'RAND()',
    'DBIx::Class::Storage::DBI::MSSQL'                      => 'RAND()',
    'DBIx::Class::Storage::DBI::Pg'                         => 'RAND()',
