@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add Helper::Row::ToJSON
        - Autopopulate is_numeric correcly with NumifyGet
        - Fix mssql Random to use RAND() (pldoh, #RT53885)
 
