@@ -3,8 +3,7 @@
 use strict;
 use warnings;
 
-use FindBin;
-use lib "$FindBin::Bin/lib";
+use lib 't/lib';
 use Test::More;
 use Test::Deep;
 use Test::Exception;
