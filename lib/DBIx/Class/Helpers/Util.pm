@@ -17,7 +17,7 @@ use Sub::Exporter -setup => {
 sub get_namespace_parts {
    my $package = shift;
 
-   if ($package =~ m/([\w:]+)::(\w+)/) {
+   if ($package =~ m/(^[\w:]+::Result)::([\w:]+)$/) {
       return ($1, $2);
    } else {
       die "$package doesn't look like".'$namespace::$resultclass';

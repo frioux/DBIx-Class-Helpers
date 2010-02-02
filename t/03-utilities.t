@@ -14,6 +14,11 @@ is $ns, 'Project::Schema::Result',
    'namespace part of get_namespace_parts works';
 is $class, 'Child', 'result part of get_namespace_parts works';
 
+($ns, $class) = get_namespace_parts('Project::Schema::Result::HouseHold::Child');
+is $ns, 'Project::Schema::Result',
+   'namespace part of get_namespace_parts works';
+is $class, 'HouseHold::Child', 'result part of get_namespace_parts works';
+
 is_load_namespaces: {
    ok is_load_namespaces('P::Result::Foo'),
       'is_load_namespaces works when correct';
