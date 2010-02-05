@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.00200   2010-02-05 14:15:06 CST6CDT
        - Allow multiple levels for result in namespace for get_namespace_parts
          (aka, Foo::Schema::Result::Baz::Biff) (for melo)
        - Add Helper::Row::ToJSON
