@@ -1,0 +1,5 @@
+
+To Generate ddl.sql which will allow you to run prove -l use the following command:
+perl -Ilib -It/lib -MTestSchema -E'TestSchema->generate_ddl; my $t = TestSchema->connect; $t->deploy'
+
+Eventually that will be migrated into it's own Dzil plugin, but for now that should work
