@@ -3,24 +3,28 @@ package DBIx::Class::Helper::ResultSet::VirtualView;
 use strict;
 use warnings;
 
-# ABSTRACT: Clean up your SQL namespace
+# ABSTRACT: Clean up your SQL namespace (DEPRECATED)
 
 sub as_virtual_view {
    my $self = shift;
 
-   return $self->result_source->resultset->search( undef, {
-      alias => 'me',
-      from => [{
-            me => $self->as_query,
-            -alias         => $self->current_source_alias,
-            -source_handle => $self->result_source->handle,
-         }]
-   });
+   return $self->as_subselect_rs;
 }
+
+use Carp::Clan;
+carp 'This module is deprecated!  Pleause use DBIx::Class::ResultSet::as_subselect_rs instead!' if $VERSION >= 3;
+croak 'This module is deprecated!  Pleause use DBIx::Class::ResultSet::as_subselect_rs instead!' if $VERSION >= 4;
 
 1;
 
 =pod
+
+=head1 DEPRECATED
+
+This component has been suplanted by
+L<DBIx::Class::ResultSet::as_subselect_rs>.  In the next major version
+(3) we will begin issuing a warning on it's use.  In the major version after
+that (4) we will remove it entirely.
 
 =head1 SYNOPSIS
 
