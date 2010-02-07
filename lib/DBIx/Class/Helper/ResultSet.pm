@@ -7,7 +7,7 @@ use parent qw{
    DBIx::Class::Helper::ResultSet::VirtualView
 };
 
-# ABSTRACT: All the He
+# ABSTRACT: All the ResultSet Helpers in one place
 
 1;
 

@@ -1,6 +1,9 @@
 package DBIx::Class::Helper::SubClass;
 
 use parent 'DBIx::Class::Helper::Row::SubClass';
+use Carp::Clan;
+carp 'This module is deprecated!  Pleause use the namespaced version instead!' if $VERSION >= 3;
+croak 'This module is deprecated!  Pleause use the namespaced version instead!' if $VERSION >= 4;
 
 # ABSTRACT: (DEPRECATED) Convenient subclassing with DBIx::Class
 

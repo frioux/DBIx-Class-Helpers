@@ -1,6 +1,9 @@
 package DBIx::Class::Helper::VirtualView;
 
 use parent 'DBIx::Class::Helper::ResultSet::VirtualView';
+use Carp::Clan;
+carp 'This module is deprecated!  Pleause use the namespaced version instead!' if $VERSION >= 3;
+croak 'This module is deprecated!  Pleause use the namespaced version instead!' if $VERSION >= 4;
 
 # ABSTRACT: (DEPRECATED) Clean up your SQL namespace
 
