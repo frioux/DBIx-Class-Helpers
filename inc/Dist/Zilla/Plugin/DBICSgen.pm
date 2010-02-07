@@ -25,6 +25,8 @@ has lib => (
 
 sub mvp_multivalue_args { qw(lib) }
 
+unlink 't/lib/ddl.sql';
+
 sub gather_files {
    my $self = shift;
 
