@@ -16,8 +16,8 @@ my $rs = $schema->resultset('Foo')->search({ id => 1 });
 my $rs2 = $schema->resultset('Foo')->search({ id => { '>=' => 3 } });
 
 
-#cmp_deeply [ map $_->id, $rs2->union($rs)->all ], [1, 3, 4, 5],
-   #'union returns correct values';
+cmp_deeply [ map $_->id, $rs2->union($rs)->all ], [1, 3, 4, 5],
+   'union returns correct values';
 
 dies_ok {
    my $rs3 = $rs->search(undef, { columns => ['id'] });
