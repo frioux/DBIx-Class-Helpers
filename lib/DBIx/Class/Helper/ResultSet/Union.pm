@@ -50,6 +50,7 @@ sub union {
 
    my $attrs = $self->_resolved_attrs;
    my $new_rs = $self->result_source->resultset->search(undef, {
+      alias => $self->current_source_alias,
       from => [{
          $self->current_source_alias => \[ $query, @params ],
          -alias                      => $self->current_source_alias,
