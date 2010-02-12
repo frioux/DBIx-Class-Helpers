@@ -20,7 +20,7 @@ sub get_namespace_parts {
    if ($package =~ m/(^[\w:]+::Result)::([\w:]+)$/) {
       return ($1, $2);
    } else {
-      die "$package doesn't look like".'$namespace::$resultclass';
+      die "$package doesn't look like ".'$namespace::Result::$resultclass';
    }
 }
 
