@@ -36,7 +36,7 @@ that (4) we will remove it entirely.
 
  use parent 'DBIx::Class::ResultSet';
 
- __PACKAGE__->load_components('Helper::VirtualView');
+ __PACKAGE__->load_components('Helper::ResultSet::VirtualView');
 
  # and then in code that uses the ResultSet Join with relation x
  my $rs = $schema->resultset('Bar')->search({'x.name' => 'abc'},{ join => 'x' });

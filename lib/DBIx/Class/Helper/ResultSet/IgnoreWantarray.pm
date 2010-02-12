@@ -17,7 +17,7 @@ sub search {
 
  package MyApp::Schema::ResultSet::Foo;
 
- __PACKAGE__->load_components(qw{Helper::IgnoreWantarray});
+ __PACKAGE__->load_components(qw{Helper::ResultSet::IgnoreWantarray});
 
  ...
 

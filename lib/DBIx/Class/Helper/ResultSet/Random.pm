@@ -52,7 +52,7 @@ sub rand {
 
  use parent 'DBIx::Class::ResultSet';
 
- __PACKAGE__->load_components('Helper::Random');
+ __PACKAGE__->load_components('Helper::ResultSet::Random');
 
  # in code using resultset:
  my $random_row  = $schema->resultset('Bar')->rand->single;

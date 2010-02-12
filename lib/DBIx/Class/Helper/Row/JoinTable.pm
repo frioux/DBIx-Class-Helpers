@@ -121,13 +121,13 @@ sub _add_join_column {
       map {
          my $info = $class->column_info($_);
          my $result = {};
-	 my $defined = undef;
-	 for (@datas) {
-	    if (defined $info->{$_}) {
-	       $defined = 1;
-	       $result->{$_} = $info->{$_};
-	    }
-	 }
+         my $defined = undef;
+         for (@datas) {
+            if (defined $info->{$_}) {
+               $defined = 1;
+               $result->{$_} = $info->{$_};
+            }
+         }
          $result = $default unless $defined;
          $result;
       } $class->primary_columns
@@ -146,7 +146,6 @@ sub _add_join_column {
          );
       }
    }
-
 }
 
 sub add_join_columns {
@@ -176,7 +175,7 @@ sub add_join_columns {
 
  package MyApp::Schema::Result::Foo_Bar;
 
- __PACKAGE__->load_components(qw{Helper::JoinTable Core});
+ __PACKAGE__->load_components(qw{Helper::Row::JoinTable Core});
 
  __PACKAGE__->join_table({
     left_class   => 'Foo',
