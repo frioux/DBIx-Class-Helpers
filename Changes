@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Fix my silly Union code
+       - Fix error message from Util for incorrectly design namespace
+       - Fix SYNOPSES to point to correct Components
        - Change as_virtual_view to just pass through to the cored version, as_subselect_rs
 
 2.00200   2010-02-05 14:15:06 CST6CDT
