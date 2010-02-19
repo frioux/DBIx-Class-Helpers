@@ -61,7 +61,9 @@ sub TO_JSON {
 
  package MyApp::Schema::Result::KittenRobot;
 
- __PACKAGE__->load_components(qw{Helper::Row::ToJSON Core});
+ use base 'DBIx::Class::Core';
+
+ __PACKAGE__->load_components(qw{Helper::Row::ToJSON});
 
  __PACKAGE__->table('KittenRobot');
  __PACKAGE__->add_columns(
