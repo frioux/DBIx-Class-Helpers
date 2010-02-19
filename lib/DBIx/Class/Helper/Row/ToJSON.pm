@@ -101,7 +101,7 @@ This helper adds a JSON method like the following:
 
  $self->_is_column_serializable('kitten')
 
-returns true if a column should be serializabel or not.  Currently this marks
+returns true if a column should be serializable or not.  Currently this marks
 everything as serializable unless C<is_serializable> is set to false, or
 C<data_type> is a C<blob>, C<text>, or C<ntext> columns.  If you wanted to only
 have explicit serialization you might override this method to look like this:
