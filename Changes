@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.002001  2010-03-13 00:46:30 CST6CDT
        - Fix my silly Union code
        - Fix error message from Util for incorrectly design namespace
        - Fix SYNOPSES to point to correct Components
