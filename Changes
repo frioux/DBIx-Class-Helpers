@@ -2,6 +2,10 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+       - DBIx::Class::Helper::ResultSet::Random declared RAND() as the
+         random function for PostgreSQL when Pg uses RANDOM(). This
+         broke any use of that resultset on PostgreSQL. -avar
+
 2.002001  2010-03-13 00:46:30 CST6CDT
        - Fix my silly Union code
        - Fix error message from Util for incorrectly design namespace

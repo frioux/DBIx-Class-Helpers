@@ -13,7 +13,7 @@ my %rand_order_by = (
    'DBIx::Class::Storage::DBI::mysql'                      => 'RAND()',
    'DBIx::Class::Storage::DBI::ODBC::Microsoft_SQL_Server' => 'RAND()',
    'DBIx::Class::Storage::DBI::MSSQL'                      => 'RAND()',
-   'DBIx::Class::Storage::DBI::Pg'                         => 'RAND()',
+   'DBIx::Class::Storage::DBI::Pg'                         => 'RANDOM()',
    'DBIx::Class::Storage::DBI::Oracle'                     => 'dbms_random.value',
 );
 
