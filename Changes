@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.002002  2010-03-14 20:18:59 CST6CDT
        - DBIx::Class::Helper::ResultSet::Random declared RAND() as the
          random function for PostgreSQL when Pg uses RANDOM(). This
          broke any use of that resultset on PostgreSQL. -avar
