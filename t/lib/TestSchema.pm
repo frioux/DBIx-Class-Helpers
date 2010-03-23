@@ -24,8 +24,14 @@ sub ddl_filename {
 
 sub deploy_or_connect {
    my $self = shift;
-   my $schema = $self->connect;
-   $schema->deploy unless -e $self->dbfile;
+
+   my $schema;
+   unless ( -e $self->dbfile ) {
+      $schema = $self->connect;
+      $schema->deploy();
+   } else {
+      $schema = $self->connect
+   }
    return $schema;
 }
 
