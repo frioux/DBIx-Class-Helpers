@@ -69,6 +69,10 @@ dies_ok {
    $rs->union($rs3) ;
 } 'unioning differing ColSpecs dies';
 
+dies_ok {
+   $rs->union($rs->search_rs(undef, { result_class => 'DBIx::Class::ResultClass::HashRefInflator'})) ;
+} 'unioning with differing ResultClasses dies';
+
 dies_ok { $rs->union($schema->resultset('Bar')) } 'unioning differing ResultSets dies';
 
 {
