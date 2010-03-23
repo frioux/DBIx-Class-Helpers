@@ -26,7 +26,7 @@ sub deploy_or_connect {
    my $self = shift;
 
    my $schema;
-   unless ( -e $self->dbfile ) {
+   unless ( -e $self->dbfile && [stat $self->dbfile]->[7] > 0 ) {
       $schema = $self->connect;
       $schema->deploy();
    } else {
