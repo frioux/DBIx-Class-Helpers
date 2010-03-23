@@ -60,8 +60,8 @@ sub _set_operation {
    my @operands = ( $self, ref $other eq 'ARRAY' ? @$other : $other );
 
    for (@operands) {
-      $self->throw_exception('ResultClass of queries passed to union do not match!')
-         unless ref $self->_result_class eq ref $_->_result_class;
+      $self->throw_exception("ResultClass of ResultSets do not match!")
+         unless $self->result_class eq $_->result_class;
 
       my $attrs = $_->_resolved_attrs;
 
@@ -79,7 +79,7 @@ sub _set_operation {
    my $query = q<(> . join(" $operation ", @sql). q<)>;
 
    my $attrs = $self->_resolved_attrs;
-   my $new_rs = $self->result_source->resultset->search(undef, {
+   return $self->result_source->resultset->search(undef, {
       alias => $self->current_source_alias,
       from => [{
          $self->current_source_alias => \[ $query, @params ],
@@ -87,11 +87,8 @@ sub _set_operation {
          -source_handle              => $self->result_source->handle,
       }],
       columns => $attrs->{as},
+      result_class => $self->result_class,
    });
-
-   $new_rs->result_class($self->result_class);
-
-   return $new_rs;
 }
 
 1;
