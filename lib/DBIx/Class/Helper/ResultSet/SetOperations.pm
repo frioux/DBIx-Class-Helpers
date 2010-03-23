@@ -113,23 +113,23 @@ And then elsewhere, like in a controller:
 
 =head1 DESCRIPTION
 
-This component allows you to create unions with your ResultSets.  See
-L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it to your
+This component allows you to use various set operations with your ResultSets.
+See L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it to your
 entire schema.
 
 Component throws exceptions if ResultSets have different ResultClasses or
 different "Columns Specs."
 
-The basic idea here is that in SQL if you union two queries they must be
-selecting the same columns names, so that the results will all match.  The
-deal with the ResultClasses is that DBIC needs to inflate the results the same
-for the entire ResultSet, so if one were to try to union in a table with the
-same column name but different classes DBIC wouldn't be doing what you would
-expect.
+The basic idea here is that in SQL if you use a set operation they must be
+selecting the same columns names, so that the results will all match.  The deal
+with the ResultClasses is that DBIC needs to inflate the results the same for
+the entire ResultSet, so if one were to try to apply something like a union in
+a table with the same column name but different classes DBIC wouldn't be doing
+what you would expect.
 
 A nice way to use this is with L<DBIx::Class::ResultClass::HashRefInflator>.
 
-So you might have something like the following sketch autocompletion code:
+You might have something like the following sketch autocompletion code:
 
  my $rs1 = $schema->resultset('Album')->search({
     name => { -like => "$input%" }
