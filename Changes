@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Fix tests to correctly generate test database
+       - Stop bundling sqlite database with distribution!
+       - Change DBICH::Union into DBICH::SetOperations (nothingmuch)
 
 2.002002  2010-03-14 20:18:59 CST6CDT
        - DBIx::Class::Helper::ResultSet::Random declared RAND() as the
