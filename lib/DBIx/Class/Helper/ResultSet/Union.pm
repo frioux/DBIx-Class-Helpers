@@ -1,21 +1,20 @@
 package DBIx::Class::Helper::ResultSet::Union;
 
-use strict;
-use warnings;
+use parent 'DBIx::Class::Helper::ResultSet::SetOperations';
 
-use parent qw(DBIx::Class::Helper::ResultSet::SetOperations);
+use Carp::Clan;
+carp 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 3;
+croak 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 4;
+
+# ABSTRACT: (DEPRECATED) Get rid of search context issues
 
 1;
 
 =pod
 
-=head1 SYNOPSIS
-
- # use DBIx::Class::Helper::ResultSet::SetOperations instead
-
 =head1 DESCRIPTION
 
-This component has been renamed
-L<DBIx::Class::Helper::ResultSet::SetOperations>.
-
-This class is still available for compatibility purposes.
+This component has been suplanted by
+L<DBIx::Class::Helper::ResultSet::SetOperations>.  In the next major version
+(3) we will begin issuing a warning on it's use.  In the major version after
+that (4) we will remove it entirely.

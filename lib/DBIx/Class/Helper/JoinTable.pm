@@ -2,8 +2,8 @@ package DBIx::Class::Helper::JoinTable;
 
 use parent 'DBIx::Class::Helper::Row::JoinTable';
 use Carp::Clan;
-carp 'This module is deprecated!  Pleause use the namespaced version instead!' if $VERSION >= 3;
-croak 'This module is deprecated!  Pleause use the namespaced version instead!' if $VERSION >= 4;
+carp 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 3;
+croak 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 4;
 
 # ABSTRACT: (DEPRECATED) Easily set up join tables with DBIx::Class
 
