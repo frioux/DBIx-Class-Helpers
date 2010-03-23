@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.003000  2010-03-22 21:27:14 CST6CDT
        - Fix tests to correctly generate test database
        - Stop bundling sqlite database with distribution!
        - Change DBICH::Union into DBICH::SetOperations (nothingmuch)
