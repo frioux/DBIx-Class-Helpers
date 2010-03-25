@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.003002  2010-03-24 23:48:52 CST6CDT
        - Give up on generating test database; I need to test this out
          with development releases
 
