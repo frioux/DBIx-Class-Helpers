@@ -4,6 +4,6 @@ use warnings;
 
 use parent 'TestSchema::ResultSet';
 
-__PACKAGE__->load_components(qw{ Helper::ResultSet::Union Helper::ResultSet::Random });
+__PACKAGE__->load_components(qw{ Helper::ResultSet::RemoveColumns Helper::ResultSet::Union Helper::ResultSet::Random });
 
 1;
