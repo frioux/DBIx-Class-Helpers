@@ -52,7 +52,7 @@ sub generate_ddl {
 
 sub prepopulate {
    my $self = shift;
-   $self->resultset($_)->delete for qw{Bar Foo Gnarly_Station Gnarly Station};
+   $self->resultset($_)->delete for qw{Bar Foo Gnarly_Station Bloaty Gnarly Station};
 
    $self->populate( Gnarly => [
       [qw{id name}],
@@ -74,6 +74,15 @@ sub prepopulate {
       [1,3],
       [2,1],
       [3,1],
+   ]);
+
+   $self->populate(Bloaty => [
+      [qw{id name}],
+      [1,1],
+      [2,2],
+      [3,3],
+      [4,4],
+      [5,5],
    ]);
 
    $self->populate(Foo => [
