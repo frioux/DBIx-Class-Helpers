@@ -12,7 +12,7 @@ __PACKAGE__->add_columns(id => {
       size => 12,
    },
    foo_id => {
-      is_delta => 1,
+      keep_storage_value => 1,
    },
 );
 
