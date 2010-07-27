@@ -10,7 +10,10 @@ __PACKAGE__->table('Bar');
 __PACKAGE__->add_columns(id => {
       data_type => 'integer',
       size => 12,
-   }, qw/foo_id /
+   },
+   foo_id => {
+      is_delta => 1,
+   },
 );
 
 __PACKAGE__->set_primary_key('id');
