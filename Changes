@@ -2,6 +2,11 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+2.004000  2010-07-29 21:06:58 CST6CDT
+       - Add Row::StorageValues
+       - Add Row::OnColumnChange
+       - Add Candy exports
+
 2.003002  2010-03-24 23:48:52 CST6CDT
        - Give up on generating test database; I need to test this out
          with development releases
