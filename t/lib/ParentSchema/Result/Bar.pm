@@ -1,24 +1,21 @@
 package ParentSchema::Result::Bar;
-use parent 'DBIx::Class';
-use strict;
-use warnings;
 
-__PACKAGE__->load_components('Core');
+use DBIx::Class::Candy;
 
-__PACKAGE__->table('Bar');
+table 'Bar';
 
-__PACKAGE__->add_columns(id => {
-      data_type => 'integer',
-      size => 12,
-   },
-   foo_id => {
-      keep_storage_value => 1,
-   },
-);
+column id => {
+   data_type => 'integer',
+   size => 12,
+};
 
-__PACKAGE__->set_primary_key('id');
+column foo_id => {
+   keep_storage_value => 1,
+};
 
-__PACKAGE__->belongs_to( foo => 'ParentSchema::Result::Foo', 'foo_id' );
-__PACKAGE__->has_many(  foos => 'ParentSchema::Result::Foo', 'bar_id' );
+primary_key 'id';
+
+belongs_to foo => 'ParentSchema::Result::Foo', 'foo_id';
+has_many  foos => 'ParentSchema::Result::Foo', 'bar_id';
 
 1;

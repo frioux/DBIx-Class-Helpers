@@ -1,14 +1,12 @@
 package TestSchema::Result::Station;
-use parent 'DBIx::Class';
-use strict;
-use warnings;
 
-__PACKAGE__->load_components('Core');
+use DBIx::Class::Candy;
 
-__PACKAGE__->table('Station');
+table 'Station';
 
-__PACKAGE__->add_columns(qw/ id name /);
+column 'id';
+column 'name';
 
-__PACKAGE__->set_primary_key('id');
+primary_key 'id';
 
 1;

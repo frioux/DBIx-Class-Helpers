@@ -1,12 +1,8 @@
 package TestSchema::Result::Foo;
 
-use strict;
-use warnings;
+use DBIx::Class::Candy -base => 'ParentSchema::Result::Foo',
+   -components => [qw(Helper::Row::NumifyGet Helper::Row::SubClass)];
 
-use parent 'ParentSchema::Result::Foo';
-
-__PACKAGE__->load_components(qw{Helper::Row::NumifyGet Helper::Row::SubClass Core});
-
-__PACKAGE__->subclass;
+subclass;
 
 1;

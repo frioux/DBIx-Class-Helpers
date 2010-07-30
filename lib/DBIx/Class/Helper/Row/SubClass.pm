@@ -6,6 +6,9 @@ use warnings;
 # ABSTRACT: Convenient subclassing with DBIx::Class
 
 use DBIx::Class::Helpers::Util qw{get_namespace_parts assert_similar_namespaces};
+use DBIx::Class::Candy::Exports;
+
+export_methods [qw(subclass generate_relationships set_table)];
 
 sub subclass {
    my $self = shift;
@@ -74,6 +77,17 @@ sub set_table {
 
  __PACKAGE__->subclass;
 
+or with L<DBIx::Class::Candy>:
+
+ # define subclass
+ package MySchema::Result::Bar;
+
+ use DBIx::Class::Candy
+    -base => 'ParentSchema::Result::Bar',
+    -components => ['Helper::Row::SubClass'];
+
+ subclass;
+
 =head1 DESCRIPTION
 
 This component is to allow simple subclassing of L<DBIx::Class> Result classes.
@@ -97,6 +111,22 @@ will automatically get the relationship to C<MyApp::Schema::Result::Bar>.
 
 This is a super basic method that just sets the current classes' table to the
 parent classes' table.
+
+=head1 CANDY EXPORTS
+
+If used in conjunction with L<DBIx::Class::Candy> this component will export:
+
+=over
+
+=item join_table
+
+=item subclass
+
+=item generate_relationships
+
+=item set_table
+
+=back
 
 =head1 NOTE
 

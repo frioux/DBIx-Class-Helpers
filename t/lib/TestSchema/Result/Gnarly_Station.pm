@@ -1,9 +1,7 @@
 package TestSchema::Result::Gnarly_Station;
-use parent 'DBIx::Class';
-use strict;
-use warnings;
 
-__PACKAGE__->load_components(qw{Helper::Row::JoinTable Core});
+use DBIx::Class::Candy
+   -components => ['Helper::Row::JoinTable'];
 
 my $config = {
    left_class          => 'Gnarly',
@@ -15,7 +13,8 @@ my $config = {
    self_method         => 'gnarly_stations',
 };
 
-__PACKAGE__->join_table($config);
-__PACKAGE__->generate_has_manys($config);
-__PACKAGE__->generate_many_to_manys($config);
+join_table $config;
+generate_has_manys $config;
+generate_many_to_manys $config;
+
 1;

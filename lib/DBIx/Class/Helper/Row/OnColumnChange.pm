@@ -7,6 +7,9 @@ use warnings;
 
 use parent 'DBIx::Class::Helper::Row::StorageValues';
 use List::Util 'first';
+use DBIx::Class::Candy::Exports;
+
+export_methods [qw(before_column_change around_column_change after_column_change)];
 
 __PACKAGE__->mk_group_accessors(inherited => $_)
    for qw(_before_change _around_change _after_change);
@@ -152,6 +155,42 @@ sub update {
 
  1;
 
+or with L<DBIx::Class::Candy>:
+
+ package MyApp::Schema::Result::Account;
+
+ use DBIx::Class::Candy -components => ['Helper::Row::OnColumnChange'];
+
+ table 'Account';
+
+ column id => {
+    data_type         => 'integer',
+    is_auto_increment => 1,
+ };
+
+ column amount => {
+    data_type          => 'float',
+    keep_storage_value => 1,
+ };
+
+ before_column_change amount => {
+    method   => 'bank_transfer',
+    txn_wrap => 1,
+ };
+
+ sub bank_transfer {
+   my ($self, $old_value, $new_value) = @_;
+
+   my $delta = abs($old_value - $new_value);
+   if ($old_value < $new_value) {
+      Bank->subtract($delta)
+   } else {
+      Bank->add($delta)
+   }
+ }
+
+ 1;
+
 =head1 DESCRIPTION
 
 This module codifies a pattern that I've used in a number of projects, namely
@@ -230,3 +269,16 @@ Also Note: you don't get to change the args to C<$next>.  If you think you
 should be able to, you probably don't understand what this component is for.
 That or you know something I don't (equally likely.)
 
+=head1 CANDY EXPORTS
+
+If used in conjunction with L<DBIx::Class::Candy> this component will export:
+
+=over
+
+=item before_column_change
+
+=item around_column_change
+
+=item after_column_change
+
+=back

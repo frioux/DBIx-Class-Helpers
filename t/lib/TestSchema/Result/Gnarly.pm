@@ -1,27 +1,23 @@
 package TestSchema::Result::Gnarly;
-use parent 'DBIx::Class';
-use strict;
-use warnings;
 
-__PACKAGE__->load_components(qw{Helper::Row::ToJSON Core});
+use DBIx::Class::Candy
+   -components => ['Helper::Row::ToJSON'];
 
-__PACKAGE__->table('Gnarly');
+table 'Gnarly';
 
-__PACKAGE__->add_columns(qw/ id name /);
+column 'id';
+column 'name';
 
-__PACKAGE__->add_columns(
-   literature => {
-      data_type => 'text',
-      is_nullable => 1,
-   },
-   your_mom => {
-      data_type => 'blob',
-      is_nullable => 1,
-      is_serializable => 1,
-   },
-);
+column literature => {
+   data_type => 'text',
+   is_nullable => 1,
+};
+column your_mom => {
+   data_type => 'blob',
+   is_nullable => 1,
+   is_serializable => 1,
+};
 
-__PACKAGE__->set_primary_key('id');
-
+primary_key 'id';
 
 1;
