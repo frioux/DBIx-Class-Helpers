@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Fix DBIx::Class::Helper::ResultSet::Random for MSSQL
 
 2.004000  2010-07-29 21:06:58 CST6CDT
        - Add Row::StorageValues
