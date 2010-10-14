@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add ResultSet::Me to define predefined searches a more nicely
        - Fix DBIx::Class::Helper::ResultSet::Random to not base off Union
        - Fix DBIx::Class::Helper::ResultSet::Random for MSSQL
 
