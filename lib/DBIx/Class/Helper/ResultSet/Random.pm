@@ -3,8 +3,6 @@ package DBIx::Class::Helper::ResultSet::Random;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Helper::ResultSet::Union';
-
 # ABSTRACT: Get random rows from a ResultSet
 
 # this is ghetto
