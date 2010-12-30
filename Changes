@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add Schema::GenerateSource for handy addition of subclassed results
 
 2.005000  2010-10-13 19:39:56 CST6CDT
        - Add ResultSet::Me to define predefined searches a more nicely
