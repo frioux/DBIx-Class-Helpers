@@ -1,20 +1,26 @@
 package DBIx::Class::Helper::ResultSet::RemoveColumns;
 
+use List::Util 'first';
+
 # ABSTRACT: Remove columns from a ResultSet
 
-sub _resolved_attrs {
-   my $self = $_[0];
+sub new {
+   my $class = shift;
 
-   my $attrs  = $self->{attrs}; # not copying on purpose...
+   return $class->new_result(@_) if ref $class;
 
-   if ( $attrs->{remove_columns} ) {
+   my ($source, $attrs) = @_;
+
+   if (
+      exists $attrs->{remove_columns} &&
+      !first { exists $attrs->{$_} }
+         qw(columns cols select as _trailing_select)
+   ) {
       my %rc = map { $_ => 1 } @{$attrs->{remove_columns}};
-      $attrs->{columns} = [
-         grep { !$rc{$_} } $self->result_source->columns
-      ]
+      $attrs->{columns} = [ grep { !$rc{$_} } $source->columns ]
    }
 
-   return $self->next::method;
+   return $class->next::method(@_);
 }
 
 1;
