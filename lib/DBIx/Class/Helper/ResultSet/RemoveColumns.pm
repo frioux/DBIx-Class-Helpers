@@ -1,6 +1,6 @@
 package DBIx::Class::Helper::ResultSet::RemoveColumns;
 
-use List::Util 'first';
+use List::Util;
 
 # ABSTRACT: Remove columns from a ResultSet
 
@@ -13,7 +13,7 @@ sub new {
 
    if (
       exists $attrs->{remove_columns} &&
-      !first { exists $attrs->{$_} }
+      !List::Util::first { exists $attrs->{$_} }
          qw(columns cols select as _trailing_select)
    ) {
       my %rc = map { $_ => 1 } @{$attrs->{remove_columns}};
