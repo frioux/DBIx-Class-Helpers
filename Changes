@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add ResultSet::ResultClassDWIM to allow ::HashRefInflator (or ::HRI)
        - Add Schema::GenerateSource for handy addition of subclassed results
 
 2.005000  2010-10-13 19:39:56 CST6CDT
