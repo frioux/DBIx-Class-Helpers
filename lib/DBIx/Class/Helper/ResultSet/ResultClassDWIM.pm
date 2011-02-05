@@ -5,37 +5,17 @@ package DBIx::Class::Helper::ResultSet::ResultClassDWIM;
 use strict;
 use warnings;
 
-sub _calculate_result_class {
-   my ($self, $r_c) = @_;
-
-   if (defined $r_c && !ref $r_c) {
-      if ($r_c eq '::HRI') {
-         return 'DBIx::Class::ResultClass::HashRefInflator'
-      } elsif ($r_c =~ /^::/) {
-         return "DBIx::Class::ResultClass$r_c"
-      }
-   }
-}
-
-sub search {
-   my ($self, $query, $meta) = @_;
-
-   return $self->next::method($query) unless defined $meta;
-
-   if (my $r_c = $self->_calculate_result_class($meta->{result_class})) {
-      $meta->{result_class} = $r_c
-   }
-
-   $self->next::method($query, $meta);
-}
-
 sub result_class {
    my ($self, $result_class) = @_;
 
    return $self->next::method unless defined $result_class;
 
-   if (my $r_c = $self->_calculate_result_class($result_class)) {
-      $result_class = $r_c
+   if (!ref $result_class) {
+      if ($result_class eq '::HRI') {
+         $result_class = 'DBIx::Class::ResultClass::HashRefInflator'
+      } else {
+         $result_class =~ s/^::/DBIx::Class::ResultClass::/;
+      }
    }
 
    $self->next::method($result_class);
