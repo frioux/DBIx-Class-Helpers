@@ -1,6 +1,6 @@
 package ParentSchema::Result::Bar;
 
-use DBIx::Class::Candy;
+use DBIx::Class::Candy -base => 'ParentSchema::Result';
 
 table 'Bar';
 
@@ -15,7 +15,7 @@ column foo_id => {
 
 primary_key 'id';
 
-belongs_to foo => 'ParentSchema::Result::Foo', 'foo_id';
-has_many  foos => 'ParentSchema::Result::Foo', 'bar_id';
+belongs_to foo => '::Foo', 'foo_id';
+has_many  foos => '::Foo', 'bar_id';
 
 1;

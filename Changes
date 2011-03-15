@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add Helper::Row::RelationshipDWIM for handy definition of relationships
        - Significantly simplify implementation of ResultSet::ResultClassDWIM
          (thanks ribasushi)
 
