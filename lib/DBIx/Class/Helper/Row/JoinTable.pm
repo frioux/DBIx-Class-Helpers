@@ -46,8 +46,8 @@ sub join_table {
 
    $self->set_table($params);
    $self->add_join_columns($params);
-   $self->generate_relationships($params);
    $self->generate_primary_key($params);
+   $self->generate_relationships($params);
 }
 
 sub generate_primary_key {
