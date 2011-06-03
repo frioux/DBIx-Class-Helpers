@@ -11,7 +11,7 @@ sub set_column {
       $column => $value,
    };
 
-   $state = $self->state_hook($state);
+   $state = $self->state_hook(accessor => $state);
 
    $value = $state->{$column};
 

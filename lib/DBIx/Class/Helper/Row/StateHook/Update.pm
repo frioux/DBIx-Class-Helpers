@@ -11,7 +11,7 @@ sub update {
       %{ $state || {} },
    };
 
-   $state = $self->state_hook($state);
+   $state = $self->state_hook(update => $state);
 
    $self->next::method($state, @rest)
 }

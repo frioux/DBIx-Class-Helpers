@@ -6,7 +6,7 @@ use warnings;
 sub insert {
    my ($self, $state, @rest) = @_;
 
-   $state = $self->state_hook($state || {});
+   $state = $self->state_hook(insert => $state || {});
 
    $self->next::method($state, @rest)
 }

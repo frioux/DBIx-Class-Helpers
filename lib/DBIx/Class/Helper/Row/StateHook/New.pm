@@ -8,7 +8,7 @@ sub new {
 
    my $self = $class->next::method($state, @rest);
 
-   $self->state_hook($state);
+   $self->state_hook(new => $state);
 
    return $self
 }

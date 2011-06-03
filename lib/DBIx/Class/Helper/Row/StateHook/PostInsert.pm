@@ -8,7 +8,7 @@ sub insert {
 
    my $ret = $self->next::method(@rest);
 
-   $self->state_hook({ $self->get_inflated_columns });
+   $self->state_hook('post-insert' => { $self->get_inflated_columns });
 
    return $ret
 }
