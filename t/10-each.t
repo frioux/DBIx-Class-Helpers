@@ -5,11 +5,10 @@ use warnings;
 
 use lib 't/lib';
 use Test::More;
-use Test::Deep;
-
 use TestSchema;
-my $schema = TestSchema->deploy_or_connect();
-$schema->prepopulate;
+
+ok my $schema = TestSchema->deploy_or_connect();
+ok $schema->prepopulate;
 
 {
     my @expected = (
@@ -145,9 +144,4 @@ $schema->prepopulate;
 }
 
 done_testing;
-
-__END__
-
-first
-not_first
 
