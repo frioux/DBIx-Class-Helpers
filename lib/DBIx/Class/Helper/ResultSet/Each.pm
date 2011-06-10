@@ -113,7 +113,7 @@ This is functionally similar to something like:
 
 However the method will return the original $resultset used to initialize it
 so that you can continue chaining or building off it.  Of course you will need
-to issue a c<reset> for this to be useful.
+to issue a c<ResultSet->reset> for this to be useful.
 
 You may find this helper leads you to writing more concise and compact code.
 Additionally having an iterator object available can be helpful, particularly

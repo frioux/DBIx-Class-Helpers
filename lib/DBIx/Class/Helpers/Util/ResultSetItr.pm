@@ -85,6 +85,7 @@ sub next {
 
 ## Possible, but requires $rs->count, and don't want that penalty for now
 
+sub is_last {}
 sub last {}
 sub size {}
 sub max {}
