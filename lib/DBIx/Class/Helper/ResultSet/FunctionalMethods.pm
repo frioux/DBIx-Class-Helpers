@@ -1,6 +1,6 @@
-package DBIx::Class::Helper::ResultSet::Each;
+package DBIx::Class::Helper::ResultSet::FunctionalMethods;
 
-# ABSTRACT: Provide an JQuery-like 'each' method
+# ABSTRACT: Provide functional methods inspired by JQuery and Underscore.js
 
 use strict;
 use warnings;
@@ -40,7 +40,7 @@ following:
     use Modern::Perl;
     use parent 'DBIx::Class::ResultSet';
 
-    __PACKAGE__->load_components('Helper::ResultSet::Each');
+    __PACKAGE__->load_components('Helper::ResultSet::FunctionalMethods');
 
     ## Additional custom resultset methods, if any
 
@@ -49,6 +49,8 @@ following:
 Then later when you have a resulset of that class:
 
     my $rs = $schema->resultset('Bar');
+
+You can call various functional programming inspired methods.
 
     $rs->each(sub {
       my ($each, $row) = @_;
