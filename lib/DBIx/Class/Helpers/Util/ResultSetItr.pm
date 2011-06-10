@@ -110,9 +110,10 @@ A L<DBIx::Class::ResultSet> doesn't give you a lot of information by default
 that you might wish to have, such as the location one is at in the set, etc.
 This wraps a small class around the resultset to provide these.
 
-Warning: This class was primarily written to support L<DBIx::Class::Helper::ResultSet::Each>
-and not for stand alone use.  I will feel free to change this class as needed
-to improve the usage of that helper. 
+Warning: This class was primarily written to support
+L<DBIx::Class::Helper::ResultSet::FunctionalMethods> and not for stand alone use.
+I will feel free to change this class as needed to improve the usage of that
+helper. 
 
 =head1 METHODS
 
