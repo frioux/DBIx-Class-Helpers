@@ -90,3 +90,58 @@ sub size {}
 sub max {}
 
 1;
+
+=pod
+
+=head1 SYNOPSIS
+
+Given a L<DBIx::Class::ResultSet> wrap a basic iterator object around it
+
+    my $rs = $schema->resultset('Bar');
+    my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$rs);
+    while(my $row = $itr->next) {
+      ...
+    }
+
+This is really not supported for for public use.  Buyer beware
+
+=head1 DESCRIPTION
+
+A L<DBIx::Class::ResultSet> doesn't give you a lot of information by default
+that you might wish to have, such as the location one is at in the set, etc.
+This wraps a small class around the resultset to provide these.
+
+Warning: This class was primarily written to support L<DBIx::Class::Helper::ResultSet::Each>
+and not for stand alone use.  I will feel free to change this class as needex
+to improve the usage of that helper. 
+
+=head1 METHODS
+
+This component defines the following methods.
+
+=head2 index
+
+=head2 count
+
+=head2 escape
+
+=head2 is_first
+
+=head2 is_not_first
+
+=head2 is_even
+
+=head2 is_odd
+
+=head2 resultset
+
+=head2 first
+
+=head2 not_first
+
+=head2 even
+
+=head2 odd
+
+=head2 next
+
