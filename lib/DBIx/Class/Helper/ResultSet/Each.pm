@@ -92,13 +92,20 @@ Then later when you have a resulset of that class:
 
     $rs->each(sub {
       my ($itr, $row) = @_;
-      ...
+      if($itr->odd) {
+        print $row->column;
+      } else {
+        $itr->escape;
+      }
     });
 
 =head1 DESCRIPTION
 
 This component gives you a JQuery like C<each> method for a given
-L<DBIx::Class::ResultSet>.
+L<DBIx::Class::ResultSet>.  Functionally this doesn't do anything you could
+not do with a standard perl C<for> or C<while> loop with a bit of control
+information, however it might give you more concise and clean code while
+reducing repeated basic logic.  Your results may vary.
 
 =head1 METHODS
 
