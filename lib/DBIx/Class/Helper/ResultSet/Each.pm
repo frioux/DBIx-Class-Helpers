@@ -7,7 +7,7 @@ use warnings;
 #use DBIx::Class::Helpers::Util::ResultSetItr;
 
 sub each {
-  my($self, $func) = @_;
+  my($self, $func, $fail) = @_;
   $self->throw_exception('Argument must be a CODEREF')
     unless ref($func) eq 'CODE';
 
@@ -18,6 +18,11 @@ sub each {
       return $itr->resultset;
     }
   }
+
+  if($fail && $itr->has_not_been_used) {
+    $fail->($self);
+  }
+
   return $self;
 }
 
@@ -45,7 +50,7 @@ sub count { shift->index + 1 }
 
 sub escape { shift->{escape} = 1 }
 sub has_escaped { shift->{escape} ? 1:0 }
-
+sub has_not_been_used { defined shift->{index} ? 0:1 }
 
 sub is_first { shift->index == 0 ? 1:0 }
 sub is_not_first { shift->index == 0 ? 0:1 }
@@ -56,25 +61,41 @@ sub resultset { shift->{resultset} }
 
 sub first {
   my ($self, $code, $fail) = @_;
-  $self->is_first ? $code->($self) : $fail->($self);
+  if($self->is_first) {
+      $code->($self);
+  } elsif($fail) {
+      $fail->($self);
+  }
   return $self;
 }
 
 sub not_first {
   my ($self, $code, $fail) = @_;
-  $self->is_not_first ? $code->($self) : $fail->($self);
+  if($self->is_not_first) {
+      $code->($self);
+  } elsif($fail) {
+      $fail->($self);
+  }
   return $self;
 }
 
 sub even {
   my ($self, $code, $fail) = @_;
-  $self->is_even ? $code->($self) : $fail->($self);
+  if($self->is_even) {
+      $code->($self);
+  } elsif($fail) {
+      $fail->($self);
+  }
   return $self;
 }
 
 sub odd {
   my ($self, $code, $fail) = @_;
-  $self->is_odd ? $code->($self) : $fail->($self);
+  if($self->is_odd) {
+      $code->($self);
+  } elsif($fail) {
+      $fail->($self);
+  }
   return $self;
 }
 
@@ -119,12 +140,20 @@ Then later when you have a resulset of that class:
     my $rs = $schema->resultset('Bar');
 
     $rs->each(sub {
-      my ($itr, $row) = @_;
-      if($itr->is_odd) {
-        print $row->column;
+      my ($each, $row) = @_;
+
+      $each->first(sub {
+        print "Hey, this is the first row!";
+      });
+
+      if($each->is_odd) {
+        print $row->columnname;
       } else {
-        $itr->escape;
+        $each->escape;
       }
+    }, sub {
+      my ($rs) = @_;
+      warn "The resultset was empty, nothing done...";
     });
 
 =head1 DESCRIPTION
@@ -133,7 +162,12 @@ This component gives you a JQuery like C<each> method for a given
 L<DBIx::Class::ResultSet>.  Functionally this doesn't do anything you could
 not do with a standard perl C<for> or C<while> loop with a bit of control
 information, however it might give you more concise and clean code while
-reducing repeated basic logic.  Your results may vary.
+reducing repeated basic logic.  For example we create a nice command chain
+style to execute different coderefs based on if the resultset has any members
+or not, if the index is even or odd, etc.
+
+You may find this saves you some effort when formatting your resultsets in a
+template or for some sort of output.
 
 =head1 METHODS
 
@@ -155,7 +189,7 @@ here).
 Example: For the given L<DBIx::Class::ResultSet>, iterator over each result.
 
     $rs->each(sub {
-      my ($itr, $row) = @_;
+      my ($each, $row) = @_;
       ...
     });
 
