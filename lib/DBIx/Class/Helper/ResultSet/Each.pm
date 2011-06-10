@@ -60,7 +60,7 @@ Then later when you have a resulset of that class:
       if($each->is_odd) {
         print $row->columnname;
       } else {
-        $each->escape;
+        return $each->escape;
       }
     }, sub {
       my ($rs) = @_;

@@ -121,27 +121,68 @@ This component defines the following methods.
 
 =head2 index
 
+A positive number starting from zero which is the location in the set the
+current row is at.
+
 =head2 count
+
+A positive number starting from one which is the location in the set the
+current row is at.
 
 =head2 escape
 
+Upon completion of the current, stop execution and return the resultset at the
+current state.
+
 =head2 is_first
+
+Returns boolean true if the current row is the first in the set
 
 =head2 is_not_first
 
+Returns boolean true if the current row is NOT the first in the set
+
 =head2 is_even
+
+Returns true if the count of the location in the set is even
 
 =head2 is_odd
 
+Returns true if the count of the location in the set is odd
+
 =head2 resultset
+
+Accessor for the raw L<DBIx::Class::ResultSet> we are wrapping.
 
 =head2 first
 
+Args: $coderef, ?$failure
+
+If the current row is first in the set, execute a C<$coderef>, otherwise
+execute a C<$failure> coderef.   Returns the C<$each> object so you can chain.
+
 =head2 not_first
+
+Args: $coderef, ?$failure
+
+If the current row is NOT the first in the set, execute a C<$coderef>, otherwise
+execute a C<$failure> coderef.  Returns the C<$each> object so you can chain.
 
 =head2 even
 
+Args: $coderef, ?$failure
+
+If the current row is even in the set, execute a C<$coderef>, otherwise
+execute a C<$failure> coderef.  Returns the C<$each> object so you can chain.
+
 =head2 odd
 
+Args: $coderef, ?$failure
+
+If the current row is odd in the set, execute a C<$coderef>, otherwise
+execute a C<$failure> coderef.  Returns the C<$each> object so you can chain.
+
 =head2 next
+
+Return the next row in the set or undef.
 

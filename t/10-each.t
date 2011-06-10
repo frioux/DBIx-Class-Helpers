@@ -78,7 +78,7 @@ ok $schema->prepopulate;
         is $each->is_odd, $expected->{odd},
           'Got $each->odd of ('.$each->is_odd.') == $expected->{odd} of ('.$expected->{odd}.')';
 
-        $each->escape;
+        return $each->escape;
       })
       ->each(sub {
         my ($each, $row) = @_;
