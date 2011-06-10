@@ -1,6 +1,6 @@
 package DBIx::Class::Helper::ResultSet::Each;
 
-# ABSTRACT: Provide an JQuery-like 'each' method 
+# ABSTRACT: Provide an JQuery-like 'each' method
 
 use strict;
 use warnings;
@@ -14,7 +14,9 @@ sub each {
   my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$self);
   while(my $row = $itr->next) {
     $func->($itr, $row);
-    last if $itr->has_escaped;
+    if($itr->has_escaped) {
+      return $itr->resultset;
+    }
   }
   return $self;
 }
@@ -33,7 +35,6 @@ sub index { shift->{index} }
 sub _inc_index { shift->{index}++ }
 sub _init_index { shift->{index} ||= 0 }
 sub _has_index { defined shift->{index} }
-
 sub _init_or_inc_index {
   my $self = shift;
   $self->_has_index  ?
@@ -41,18 +42,45 @@ sub _init_or_inc_index {
 }
 
 sub count { shift->index + 1 }
-sub first { shift->index == 0 ? 1:0 }
+
 sub escape { shift->{escape} = 1 }
 sub has_escaped { shift->{escape} ? 1:0 }
 
-sub odd { shift->index % 2 ? 1:0 }
-sub even { shift->index % 2 ? 0:1 }
 
-sub _resultset { shift->{resultset} }
+sub is_first { shift->index == 0 ? 1:0 }
+sub is_not_first { shift->index == 0 ? 0:1 }
+
+sub is_even { shift->index % 2 ? 1:0 }
+sub is_odd { shift->index % 2 ? 0:1 }
+sub resultset { shift->{resultset} }
+
+sub first {
+  my ($self, $code, $fail) = @_;
+  $self->is_first ? $code->($self) : $fail->($self);
+  return $self;
+}
+
+sub not_first {
+  my ($self, $code, $fail) = @_;
+  $self->is_not_first ? $code->($self) : $fail->($self);
+  return $self;
+}
+
+sub even {
+  my ($self, $code, $fail) = @_;
+  $self->is_even ? $code->($self) : $fail->($self);
+  return $self;
+}
+
+sub odd {
+  my ($self, $code, $fail) = @_;
+  $self->is_odd ? $code->($self) : $fail->($self);
+  return $self;
+}
 
 sub next {
   my $self = shift;
-  if(my $next = $self->_resultset->next) {
+  if(my $next = $self->resultset->next) {
     $self->_init_or_inc_index;
     return $next;
   } else {
@@ -76,14 +104,14 @@ Given a L<DBIx::Class::ResultSet> that consumes this component, such as the
 following:
 
     package MySchema::ResultSet::Bar;
-    
+
     use Modern::Perl;
     use parent 'DBIx::Class::ResultSet';
 
     __PACKAGE__->load_components('Helper::ResultSet::Each');
 
     ## Additional custom resultset methods, if any
-    
+
     1;
 
 Then later when you have a resulset of that class:
@@ -92,7 +120,7 @@ Then later when you have a resulset of that class:
 
     $rs->each(sub {
       my ($itr, $row) = @_;
-      if($itr->odd) {
+      if($itr->is_odd) {
         print $row->column;
       } else {
         $itr->escape;
@@ -113,7 +141,18 @@ This component defines the following methods.
 
 =head2 each
 
-For the given L<DBIx::Class::ResultSet>, iterator over each result:
+Arguments: $rs->each($coderef, ?$failure_coderef)
+
+Where C<$coderef> is an anonymous subroutine or closure that will get the
+instantiated L<DBIx::Class::Helpers::Util::ResultSetItr> object and the
+current C<$row> from the set returned.
+
+C<$failure_coderef> is an anonymous subroutine or closure that gets
+executed ONLY if there were no rows in the set.  It gets the C<$resultset>
+as an argument (this might change later if we discover a better thing to do
+here).
+
+Example: For the given L<DBIx::Class::ResultSet>, iterator over each result.
 
     $rs->each(sub {
       my ($itr, $row) = @_;
@@ -136,4 +175,4 @@ Additionally having an iterator object available can be helpful, particularly
 when you are in a template and need to display things differently based on if
 the row is even/odd, first/last, etc.  You should see the documentation for
 L<DBIx::Class::Helpers::Util::ResultSetItr> for the methods this object exposes
-for use.
+for use.  You can also glance at the test cases.
