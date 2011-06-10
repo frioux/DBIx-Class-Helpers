@@ -4,14 +4,14 @@ package DBIx::Class::Helper::ResultSet::Each;
 
 use strict;
 use warnings;
-use DBIx::Class::Helpers::Util::ResultSetItr;
+#use DBIx::Class::Helpers::Util::ResultSetItr;
 
 sub each {
   my($self, $func) = @_;
   $self->throw_exception('Argument must be a CODEREF')
     unless ref($func) eq 'CODE';
 
-  my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$rs);
+  my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$self);
   while(my $row = $itr->next) {
     $func->($itr, $row);
     last if $itr->has_escaped;
@@ -26,7 +26,7 @@ use warnings;
 
 sub new {
   my ($class, %args) = @_;
-  bless(%args, $class);
+  bless(\%args, $class);
 }
 
 sub index { shift->{index} }
@@ -37,7 +37,7 @@ sub _has_index { defined shift->{index} }
 sub _init_or_inc_index {
   my $self = shift;
   $self->_has_index  ?
-    $self->_init_index : $self->_inc_index;
+    $self->_inc_index : $self->_init_index;
 }
 
 sub count { shift->index + 1 }
