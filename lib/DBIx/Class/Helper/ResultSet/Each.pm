@@ -9,7 +9,7 @@ use DBIx::Class::Helpers::Util::ResultSetItr;
 sub each {
   my($self, $func) = @_;
   $self->throw_exception('Argument must be a CODEREF')
-    unless ref $func eq 'CODE';
+    unless ref($func) eq 'CODE';
 
   my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$rs);
   while(my $row = $itr->next) {
@@ -109,14 +109,14 @@ This component defines the following methods.
 For the given L<DBIx::Class::ResultSet>, iterator over each result:
 
     $rs->each(sub {
-      my ($idx, $row) = @_;
+      my ($itr, $row) = @_;
       ...
     });
 
 This is functionally similar to something like:
 
-    my $idx = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$rs);
-    while(my $row = $idx->next) {
+    my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$rs);
+    while(my $row = $itr->next) {
       ...
     }
 
