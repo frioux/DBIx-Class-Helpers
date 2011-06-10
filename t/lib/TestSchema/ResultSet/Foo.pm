@@ -4,6 +4,6 @@ use warnings;
 
 use parent 'TestSchema::ResultSet';
 
-__PACKAGE__->load_components(qw{ Helper::ResultSet::Union Helper::ResultSet::Random Helper::ResultSet::Each });
+__PACKAGE__->load_components(qw{ Helper::ResultSet::Union Helper::ResultSet::Random Helper::ResultSet::FunctionalMethods });
 
 1;
