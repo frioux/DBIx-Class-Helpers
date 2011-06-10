@@ -69,7 +69,7 @@ Then later when you have a resulset of that class:
 
 =head1 DESCRIPTION
 
-This component gives you a JQuery like C<each> method for a given
+This component gives you a JQuery inspired C<each> method for a given
 L<DBIx::Class::ResultSet>.  Functionally this doesn't do anything you could
 not do with a standard perl C<for> or C<while> loop with a bit of control
 information, however it might give you more concise and clean code while
@@ -86,13 +86,13 @@ This component defines the following methods.
 
 =head2 each
 
-Arguments: $rs->each($coderef, ?$failure_coderef)
+Arguments: $rs->each($coderef, ?$if_empty_coderef)
 
 Where C<$coderef> is an anonymous subroutine or closure that will get the
 instantiated L<DBIx::Class::Helpers::Util::ResultSetItr> object and the
 current C<$row> from the set returned.
 
-C<$failure_coderef> is an anonymous subroutine or closure that gets
+C<$if_empty_coderef> is an anonymous subroutine or closure that gets
 executed ONLY if there were no rows in the set.  It gets the C<$resultset>
 as an argument (this might change later if we discover a better thing to do
 here).

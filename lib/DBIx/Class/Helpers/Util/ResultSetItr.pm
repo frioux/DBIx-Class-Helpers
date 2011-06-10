@@ -104,8 +104,6 @@ Given a L<DBIx::Class::ResultSet> wrap a basic iterator object around it
       ...
     }
 
-This is really not supported for for public use.  Buyer beware
-
 =head1 DESCRIPTION
 
 A L<DBIx::Class::ResultSet> doesn't give you a lot of information by default
@@ -113,7 +111,7 @@ that you might wish to have, such as the location one is at in the set, etc.
 This wraps a small class around the resultset to provide these.
 
 Warning: This class was primarily written to support L<DBIx::Class::Helper::ResultSet::Each>
-and not for stand alone use.  I will feel free to change this class as needex
+and not for stand alone use.  I will feel free to change this class as needed
 to improve the usage of that helper. 
 
 =head1 METHODS
@@ -157,31 +155,31 @@ Accessor for the raw L<DBIx::Class::ResultSet> we are wrapping.
 
 =head2 first
 
-Args: $coderef, ?$failure
+Args: $coderef, ?$if_empty
 
 If the current row is first in the set, execute a C<$coderef>, otherwise
-execute a C<$failure> coderef.   Returns the C<$each> object so you can chain.
+execute a C<$if_empty> coderef.   Returns the C<$each> object so you can chain.
 
 =head2 not_first
 
-Args: $coderef, ?$failure
+Args: $coderef, ?$if_empty
 
 If the current row is NOT the first in the set, execute a C<$coderef>, otherwise
-execute a C<$failure> coderef.  Returns the C<$each> object so you can chain.
+execute a C<$if_empty> coderef.  Returns the C<$each> object so you can chain.
 
 =head2 even
 
-Args: $coderef, ?$failure
+Args: $coderef, ?$if_empty
 
 If the current row is even in the set, execute a C<$coderef>, otherwise
-execute a C<$failure> coderef.  Returns the C<$each> object so you can chain.
+execute a C<$if_empty> coderef.  Returns the C<$each> object so you can chain.
 
 =head2 odd
 
-Args: $coderef, ?$failure
+Args: $coderef, ?$if_empty
 
 If the current row is odd in the set, execute a C<$coderef>, otherwise
-execute a C<$failure> coderef.  Returns the C<$each> object so you can chain.
+execute a C<$if_empty> coderef.  Returns the C<$each> object so you can chain.
 
 =head2 next
 
