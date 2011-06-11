@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use DBIx::Class::Helpers::Util::ResultSetItr;
 
-## I doubt this is enough, or it belongs here...
+## I doubt this is correct, or it belongs here... Maybe its own Helper or Core?
 sub clone {
   my ($self) = @_;
   my $clone = { (ref $self ? %$self : ()) };
@@ -56,17 +56,23 @@ sub times {
   return $self;
 }
 
-sub if { }
-sub around { }
-sub collect { }
-sub reduce { }
+sub around {
+  my($self, $method_spec, $coderef) = @_;
+  my @methods = ref ($method_spec) ? @$method_spec : ($method_spec);
+
+    ## TBD
+}
+
 sub bind { }
 sub bind_all { }
-sub times { }
-sub do { }
-sub defer {
-  ## possible?
-}
+sub defer { }
+
+## For later, maybe
+
+sub if { }
+sub while {}
+sub collect { }
+sub reduce { }
 
 1;
 
@@ -244,31 +250,13 @@ Example:
 
     $rs->around( search => sub {
       my ($orig, $rs, @args) = @_;
-      $rs->$orig(@args);
+      return $rs->$orig(@args);
     });
 
 You may wish to use this to add some sort of 'hook' before passing a resultset
 to another method.  Since the anonymous coderef can be a closure, this opens
-some possibilties for enabling observer style patterns.
-
-=head2 collect
-
-Arguments: $scalarRef, 
-Returns: Original ResultSet
-
-Performs a $rs->search and collects the result into a variable.  Then returns
-the original $rs.
-
-Example:
-
-    my ($older_rs, $younger_rs);
-    $rs->collect($older_rs, {age => {'>', 35}})
-      ->collect($older_rs, {age => {'<', 13}});
-
-Similar to
-
-    my $older_rs = $rs->search({age => {'>', 35}});
-    my $younger_rs = $rs->search({age => {'<', 13}});
+some possibilties for enabling observer style patterns.  You can also use this
+to modify C<@args>, etc, just as in L<Moose>, or even change the return value.
 
 =head2 do
 
@@ -297,20 +285,41 @@ Basically this calls L</do> a number of times equal to the first argument.
       ...
     });
 
-=head2 while
+=head2 bind
 
-Arguments: $cond|cond_ref, $while_coderef, ?$continue_coderef, ?$if_empty_coderef
+    TBD
+
+=head2 bind_all
+
+    TBD
+
+=head2 defer
+
+    TBD
+
+=head1 PROPOSED / DRAFT METHODS
+
+The following methods are draft status.  We are still working out the best way
+to make them useful (or considering dropping altogether)
+
+=head2 collect
+
+Arguments: $scalarRef, 
 Returns: Original ResultSet
 
-Similar to L</each> except you have complete control over the condition under
-which the loop will execute.  You could rewrite the L</each> method like:
+Performs a $rs->search and collects the result into a variable.  Then returns
+the original $rs.
 
-    $rs->while(
-      sub {
-        my $rs = shift;
-      },
+Example:
 
+    my ($older_rs, $younger_rs);
+    $rs->collect($older_rs, {age => {'>', 35}})
+      ->collect($older_rs, {age => {'<', 13}});
 
+Similar to
+
+    my $older_rs = $rs->search({age => {'>', 35}});
+    my $younger_rs = $rs->search({age => {'<', 13}});
 
 =head2 if
 
@@ -338,4 +347,10 @@ This is similar to:
     }
 
 
+=head2 while
 
+    TBD
+
+=head2 reduce
+
+    TBD
