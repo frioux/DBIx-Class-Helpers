@@ -1,10 +1,18 @@
 package DBIx::Class::Helper::ResultSet::FunctionalMethods;
 
-# ABSTRACT: Provide functional methods inspired by JQuery and Underscore.js
+# ABSTRACT: Provide functional methods inspired by JQuery.js and Underscore.js
 
 use strict;
 use warnings;
 use DBIx::Class::Helpers::Util::ResultSetItr;
+
+## I doubt this is enough, or it belongs here...
+sub clone {
+  my ($self) = @_;
+  my $clone = { (ref $self ? %$self : ()) };
+  bless $clone, (ref $self || $self);
+  return $clone;
+}
 
 sub each {
   my($self, $func, $fail) = @_;
@@ -36,10 +44,21 @@ sub once {
   return $self;
 }
 
+sub do {
+  my($self, $func, @args) = @_;
+  $func->($self->clone, @args);
+  return $self;
+}
+
+sub times {
+  my($self, $times, $func, @args) = @_;
+  $self->do($func, @args) for 1.. $times;
+  return $self;
+}
+
 sub if { }
 sub around { }
 sub collect { }
-sub times { }
 sub reduce { }
 sub bind { }
 sub bind_all { }
@@ -80,13 +99,18 @@ You can call various functional programming inspired methods.
 =head1 DESCRIPTION
 
 Perform functional and functional like methods on you L<DBIx::Class::ResultSets>.
-Methods here are inspired by JQuery and Underscore.js, however this is not an
+Methods here are inspired by JQuery and Underscore.js.  However this is not an
 attempt to write a full collections API since L<DBIx::Class> and SQL is pretty
 functional to begin with.  What you have here is a set of methods we hope make
 it easier to perform certain types of common patterns related to extracting
-rows of data and making decisions based on that data.  The goal it to help avoid
-excessive conditional logic and to allow one to write more compact and neat
-code.  For example, you could replace:
+rows of data and making decisions based on that data. 
+
+Additionally, we have tried to write these methods to allow for a 'chaining'
+approach that you can't replicate with traditional Perl control and looping
+structures.
+
+The goal it to help avoid excessive conditional logic and to allow one to write
+more compact and neat code.  For example, you could replace:
 
     my $has_rows;
     while(my $row = $rs->next) {
@@ -97,6 +121,7 @@ code.  For example, you could replace:
       warn 'no rows!';
     }
 
+
 With something like
 
     $rs->each(sub {
@@ -106,10 +131,24 @@ With something like
       warn 'no rows!';
     });
 
-The second version has less overall lines and character, and it also carefully
+The second version has less overall lines and characters, and it also carefully
 encapsulates a very common pattern, which is to loop over all the rows in a
-resultset and do something should no rows exist.
+resultset and do something should no rows exist.  Also, the L</each> method
+returns the original C<$rs> so you could chain commands:
 
+    $rs->each(sub {
+      my ($each, $row) = @_;
+      ## Do Something
+    }, sub {
+      warn 'no rows!';
+    })->do(sub {
+      my $rs = shift;
+      ## Do something else
+    });
+
+There may be cases in your logical flow where this type of programming is more
+clear and simple; in other cases traditional Perl control and looping might be
+better.  These methods give you an option.
 
 =head1 METHODS
 
@@ -193,7 +232,7 @@ Example
 
 Useful to isolate the logic for the first row in a resultset.
 
-=head2 Around
+=head2 around
 
 Arguments: $method||\@methods, $coderef
 Returns: Wrapped ResultSet (A Proxy instance)
@@ -212,9 +251,70 @@ You may wish to use this to add some sort of 'hook' before passing a resultset
 to another method.  Since the anonymous coderef can be a closure, this opens
 some possibilties for enabling observer style patterns.
 
+=head2 collect
+
+Arguments: $scalarRef, 
+Returns: Original ResultSet
+
+Performs a $rs->search and collects the result into a variable.  Then returns
+the original $rs.
+
+Example:
+
+    my ($older_rs, $younger_rs);
+    $rs->collect($older_rs, {age => {'>', 35}})
+      ->collect($older_rs, {age => {'<', 13}});
+
+Similar to
+
+    my $older_rs = $rs->search({age => {'>', 35}});
+    my $younger_rs = $rs->search({age => {'<', 13}});
+
+=head2 do
+
+Arguments: $coderef, ?@args
+Returns: Original Resultset
+
+Do a coderef with the resultset passed as an argument.
+
+    $rs->do(sub {
+      my ($rs, $arg) = @_;
+      $rs->find({id=>$arg});
+    }, 100);
+
+If you pass more than one argument, all the extra arguments will be send to the
+anonymous coderef.  
+
+=head2 times
+
+Arguments: $integer, $coderef, ?@args
+Returns: Original Resultset
+
+Basically this calls L</do> a number of times equal to the first argument.
+
+    $rs->times(3, sub {
+      my $rs = shift;
+      ...
+    });
+
+=head2 while
+
+Arguments: $cond|cond_ref, $while_coderef, ?$continue_coderef, ?$if_empty_coderef
+Returns: Original ResultSet
+
+Similar to L</each> except you have complete control over the condition under
+which the loop will execute.  You could rewrite the L</each> method like:
+
+    $rs->while(
+      sub {
+        my $rs = shift;
+      },
+
+
+
 =head2 if
 
-Arguments: ($cond_coderef, $pass_coderef, $fail_coderef)
+Arguments: ($cond|$cond_coderef, $pass_coderef, $fail_coderef)
 Returns: Original ResultSet
 
 Perform conditional logic on the ResultSet
