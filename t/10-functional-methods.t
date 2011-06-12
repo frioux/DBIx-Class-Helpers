@@ -138,10 +138,55 @@ ok $schema->prepopulate;
           })
           ->even(sub {
             ok $expected->{even}, 'Got Even as expected';
-          });
-
+          })
+          ->if(1, sub { ok 1, 'got one!'})
+          ->if(0, undef, sub { ok 1, 'got zero!'})
+          ->if
+          (
+              sub {
+                my $each = shift;
+                return $each->is_odd;
+              },
+              sub { ok $expected->{odd}, 'Got Odd as expected' },
+              sub { ok $expected->{even}, 'Got Even as expected' },
+          );
       });
 }
 
-done_testing;
+ok $schema
+  ->resultset('Foo')
+  ->once(sub { is shift->id, 1, 'Once got the row expected' })
+  ->once(sub { is shift->id, 2, 'Once got the row expected' });
+
+ok $schema
+  ->resultset('Foo')
+  ->do(sub { is shift->first->id, shift, 'Did!' },1);
+
+ok $schema
+  ->resultset('Foo')
+  ->times(3, sub {
+    my ($rs, $arg) = @_;
+    is $rs->first->id, $arg, "Did for $arg";
+  },1);
+
+my $flag = 0;
+ok my $rs = $schema
+  ->resultset('Foo')
+  ->around('search', sub {
+    my ($orig, $self, @args) = @_;
+    $flag=1;
+    $self->$orig(@args);
+  })
+  ->search({id=>[1,2]})
+  ->do(sub {
+    my $rs = shift;
+    is $rs->next->id, 1;
+    is $rs->next->id, 2;
+    ok !$rs->next, 'correctly found the end of the set';
+  });
+
+ok $rs->count, 'Got back to original set';
+ok $flag, 'Flag was set';
+
+done_testing
 

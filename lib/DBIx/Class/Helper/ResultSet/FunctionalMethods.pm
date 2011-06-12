@@ -56,16 +56,25 @@ sub times {
   return $self;
 }
 
+my $anon_class_count = 0; ## TODO this is going to get ugly after a while. 
+## should see what the Moose people do.
+
 sub around {
   my($self, $method_spec, $coderef) = @_;
+  my $package = ref($self) . '::ANON_WRAPPED_'. $anon_class_count++;
   my @methods = ref ($method_spec) ? @$method_spec : ($method_spec);
-
-    ## TBD
+  for my $method(@methods) {
+    no strict 'refs';
+    my $orig = $self->can($method);
+    @{$package . '::ISA'} = (ref($self));
+    *{$package . '::' . $method} = sub {
+        my ($self, @args) = @_;
+        $coderef->($orig ,$self, @args);
+    };
+    bless $self, $package;
+  }
+  return $self;
 }
-
-sub bind { }
-sub bind_all { }
-sub defer { }
 
 ## For later, maybe
 
@@ -285,18 +294,6 @@ Basically this calls L</do> a number of times equal to the first argument.
       ...
     });
 
-=head2 bind
-
-    TBD
-
-=head2 bind_all
-
-    TBD
-
-=head2 defer
-
-    TBD
-
 =head1 PROPOSED / DRAFT METHODS
 
 The following methods are draft status.  We are still working out the best way
@@ -346,6 +343,27 @@ This is similar to:
       warn 'no id with 100 found';
     }
 
+Another try
+
+    $rs
+      ->if($a, sub {})
+      ->elsif()
+      ->elsif()
+      ->else()
+      ->endif()
+      ->search()
+      ->find();
+
+    $rs->given
+      ->when(sub {
+        my $rs = shift;
+        return $rs->find({id=>100})
+      }, sub {
+        warn 'is so';
+      })
+
+  ** Is not clear to me this has a good use case to distinguish from Perl built
+  ** in control system.  What if anything can change in ^^ to make that the case?
 
 =head2 while
 

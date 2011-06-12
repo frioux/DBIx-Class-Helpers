@@ -83,7 +83,20 @@ sub next {
   }
 }
 
-## Possible, but requires $rs->count, and don't want that penalty for now
+sub if {
+  my ($self, $cond_spec, $pass_cr, $fail_cr, @args) = @_;
+  my $cond = ref $cond_spec ? $cond_spec->($self) : $cond_spec;
+  if($cond) {
+    $pass_cr->($self, @args);
+  } elsif($fail_cr) {
+    $fail_cr->($self, @args);
+  }
+  return $self;
+}        
+
+## Possible, but requires $rs->count, and don't want that penalty for now or
+## deal with any race conditions or conflicts. Maybe we can peek at the cursor
+## for some of this info.
 
 sub is_rest {}
 sub rest {}
@@ -187,4 +200,29 @@ execute a C<$if_empty> coderef.  Returns the C<$each> object so you can chain.
 =head2 next
 
 Return the next row in the set or undef.
+
+=head2 if
+
+Arguments: $cond|$cond_codered, $pass_coderef, ?$fail_coderef, ?@args
+Returns: $self
+
+Given a condition, execute either a pass or fail anonymous subroutine.  The
+fail coderef is optional and the method returns C<$self> for chaining.
+
+    $each->if
+    (
+      $a>$b,
+      sub {  warn "$a > $b" },
+      sub {  warn "$a < $b" },
+    );
+
+If the condition is a coderef, then C<$self> is passed as an argument along
+with any other C<@args> and the return is considered in boolean context.
+
+    $each->if
+    (
+      sub { shift->is_odd},
+      sub {  warn "is odd" },
+      sub {  warn "is even" },
+    );
 
