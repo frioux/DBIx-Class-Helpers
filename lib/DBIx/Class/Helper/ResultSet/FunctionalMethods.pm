@@ -6,14 +6,6 @@ use strict;
 use warnings;
 use DBIx::Class::Helpers::Util::ResultSetItr;
 
-## I doubt this is correct, or it belongs here... Maybe its own Helper or Core?
-sub clone {
-  my ($self) = @_;
-  my $clone = { (ref $self ? %$self : ()) };
-  bless $clone, (ref $self || $self);
-  return $clone;
-}
-
 sub each {
   my($self, $func, $fail) = @_;
   $self->throw_exception('Argument must be a CODEREF')
@@ -46,7 +38,7 @@ sub once {
 
 sub do {
   my($self, $func, @args) = @_;
-  $func->($self->clone, @args);
+  $func->($self->search, @args);
   return $self;
 }
 
@@ -56,7 +48,7 @@ sub times {
   return $self;
 }
 
-my $anon_class_count = 0; ## TODO this is going to get ugly after a while. 
+my $anon_class_count = 0; ## TODO this is going to get ugly after a while
 ## should see what the Moose people do.
 
 sub around {
