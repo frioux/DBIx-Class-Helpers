@@ -1,6 +1,6 @@
-package DBIx::Class::Helper::ResultSet::FunctionalMethods;
+package DBIx::Class::Helper::ResultSet::ControlFlow;
 
-# ABSTRACT: Provide functional methods inspired by JQuery.js and Underscore.js
+# ABSTRACT: Methods to control flow and run commands
 
 use strict;
 use warnings;
@@ -53,7 +53,7 @@ my $anon_class_count = 0; ## TODO this is going to get ugly after a while
 
 sub around {
   my($self, $method_spec, $coderef) = @_;
-  my $package = ref($self) . '::ANON_WRAPPED_'. $anon_class_count++;
+  my $package = ref($self) . '::ANON_DBIC_HELPER_AROUND_'. $anon_class_count++;
   my @methods = ref ($method_spec) ? @$method_spec : ($method_spec);
   for my $method(@methods) {
     no strict 'refs';
@@ -67,13 +67,6 @@ sub around {
   }
   return $self;
 }
-
-## For later, maybe
-
-sub if { }
-sub while {}
-sub collect { }
-sub reduce { }
 
 1;
 
@@ -89,7 +82,7 @@ following:
     use Modern::Perl;
     use parent 'DBIx::Class::ResultSet';
 
-    __PACKAGE__->load_components('Helper::ResultSet::FunctionalMethods');
+    __PACKAGE__->load_components('Helper::ResultSet::ControlFlow');
 
     ## Additional custom resultset methods, if any
 
@@ -99,22 +92,30 @@ Then later when you have a resulset of that class:
 
     my $rs = $schema->resultset('Bar');
 
-You can call various functional programming inspired methods.
+You can call methods directly on your object which are related to control flow
+and looping over the items in you resultset.
 
-    TBD
+    $rs->do(sub {
+      print shift->find({id=>1} ? 'found one' : 'nope';
+    })->each(sub {
+      my ($each, $row) = @_;
+      print $each->is_odd ? $row->name . ' is odd' : 'nope, not odd';
+    });
 
 =head1 DESCRIPTION
 
-Perform functional and functional like methods on you L<DBIx::Class::ResultSets>.
-Methods here are inspired by JQuery and Underscore.js.  However this is not an
-attempt to write a full collections API since L<DBIx::Class> and SQL is pretty
-functional to begin with.  What you have here is a set of methods we hope make
-it easier to perform certain types of common patterns related to extracting
-rows of data and making decisions based on that data. 
+There are times where Perl's procedural syntax for control flow and looping
+leads to excessively verbose code.  For those times we present this helper
+which is designed to encapsulate some very common control flow and loop patterns
+for L<DBIx::Class> users.
+
+The methods are OO in nature and designed to be compact and concise.
 
 Additionally, we have tried to write these methods to allow for a 'chaining'
 approach that you can't replicate with traditional Perl control and looping
-structures.
+structures.  Each control flow method returns the original resultset so you
+can proceed as though it is unaltered (unless of course you alter it somehow
+like with an insert or update).
 
 The goal it to help avoid excessive conditional logic and to allow one to write
 more compact and neat code.  For example, you could replace:
@@ -127,7 +128,6 @@ more compact and neat code.  For example, you could replace:
     unless($has_rows) {
       warn 'no rows!';
     }
-
 
 With something like
 
@@ -155,7 +155,8 @@ returns the original C<$rs> so you could chain commands:
 
 There may be cases in your logical flow where this type of programming is more
 clear and simple; in other cases traditional Perl control and looping might be
-better.  These methods give you an option.
+better.  These methods give you an option.  On the other hand you might think
+this is all pointless line noise.  As you wish :)
 
 =head1 METHODS
 
@@ -272,7 +273,7 @@ Do a coderef with the resultset passed as an argument.
     }, 100);
 
 If you pass more than one argument, all the extra arguments will be send to the
-anonymous coderef.  
+anonymous coderef.
 
 =head2 times
 
@@ -286,81 +287,3 @@ Basically this calls L</do> a number of times equal to the first argument.
       ...
     });
 
-=head1 PROPOSED / DRAFT METHODS
-
-The following methods are draft status.  We are still working out the best way
-to make them useful (or considering dropping altogether)
-
-=head2 collect
-
-Arguments: $scalarRef, 
-Returns: Original ResultSet
-
-Performs a $rs->search and collects the result into a variable.  Then returns
-the original $rs.
-
-Example:
-
-    my ($older_rs, $younger_rs);
-    $rs->collect($older_rs, {age => {'>', 35}})
-      ->collect($older_rs, {age => {'<', 13}});
-
-Similar to
-
-    my $older_rs = $rs->search({age => {'>', 35}});
-    my $younger_rs = $rs->search({age => {'<', 13}});
-
-=head2 if
-
-Arguments: ($cond|$cond_coderef, $pass_coderef, $fail_coderef)
-Returns: Original ResultSet
-
-Perform conditional logic on the ResultSet
-
-Example:
-
-    $rs->if(sub {
-      shift->find({id=>100});
-    }, sub {
-      print 'id 100 has name: '. shift->name;
-    }, sub {
-      warn 'no id with 100 found';
-    });
-
-This is similar to:
-
-    if(my $row = $rs->find({id=>100})) {
-      print 'id 100 has name: '. $row->name;
-    } else {
-      warn 'no id with 100 found';
-    }
-
-Another try
-
-    $rs
-      ->if($a, sub {})
-      ->elsif()
-      ->elsif()
-      ->else()
-      ->endif()
-      ->search()
-      ->find();
-
-    $rs->given
-      ->when(sub {
-        my $rs = shift;
-        return $rs->find({id=>100})
-      }, sub {
-        warn 'is so';
-      })
-
-  ** Is not clear to me this has a good use case to distinguish from Perl built
-  ** in control system.  What if anything can change in ^^ to make that the case?
-
-=head2 while
-
-    TBD
-
-=head2 reduce
-
-    TBD

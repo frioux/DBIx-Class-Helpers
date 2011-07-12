@@ -190,12 +190,20 @@ Args: $coderef, ?$if_empty
 If the current row is even in the set, execute a C<$coderef>, otherwise
 execute a C<$if_empty> coderef.  Returns the C<$each> object so you can chain.
 
+    $each->even(
+      sub { print "Current item is even in index" },
+    );
+
 =head2 odd
 
 Args: $coderef, ?$if_empty
 
 If the current row is odd in the set, execute a C<$coderef>, otherwise
 execute a C<$if_empty> coderef.  Returns the C<$each> object so you can chain.
+
+    $each->odd(
+      sub { print "Current item is odd in index" },
+    );
 
 =head2 next
 
