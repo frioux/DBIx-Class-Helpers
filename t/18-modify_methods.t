@@ -5,27 +5,43 @@ use lib 't/lib';
 use Test::More;
 use TestSchema;
 
-ok my $schema = TestSchema->deploy_or_connect();
+my ($around, $before, $after) = (0,0,0);
+my $schema = TestSchema->deploy_or_connect;
+
 ok $schema->prepopulate;
 
-my $flag = 0;
 ok my $rs = $schema
   ->resultset('Foo')
   ->around('search', sub {
     my ($orig, $self, @args) = @_;
-    $flag=1;
+    ok $before, 'Before was set';
+    ok !$after, 'After not yet set';
+    $around = 1;
     $self->$orig(@args);
   })
-  ->search({id=>[1,2]})
-  ->do(sub {
-    my $rs = shift;
-    is $rs->next->id, 1;
-    is $rs->next->id, 2;
-    ok !$rs->next, 'correctly found the end of the set';
-  });
+  ->before('search', sub {
+    my ($self, @args) = @_;
+    $before = 1;
+    ok !$after, 'After not yet set';
+    ok !$around, 'Around not was set';
+  })
+  ->after('search', sub {
+    my ($self, @args) = @_;
+    ok !$after, 'After not yet set';
+    $after = 1;
+    ok $before, 'Before was set';
+    ok $around, 'Around was set';
+  })
+  ->search({id=>[1,2]}),
+  'Got a good resultset';
 
 ok $rs->count, 'Got back to original set';
-ok $flag, 'Flag was set';
+ok $around, 'Around Flag was set';
+ok $before, 'Before Flag was set';
+ok $after, 'After Flag was set';
 
-done_testing
+## Need explicit test number here to make sure we don't have too many modifier
+## callbacks fired off.  If you change these tests please keep up-to-date.
+
+done_testing(13);
 
