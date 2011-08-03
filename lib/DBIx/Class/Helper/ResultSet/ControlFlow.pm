@@ -4,14 +4,14 @@ package DBIx::Class::Helper::ResultSet::ControlFlow;
 
 use strict;
 use warnings;
-use DBIx::Class::Helpers::Util::ResultSetItr;
+use DBIx::Class::Helpers::Util::ResultSet::Iterator;
 
 sub each {
   my($self, $func, $fail) = @_;
   $self->throw_exception('Argument must be a CODEREF')
     unless ref($func) eq 'CODE';
 
-  my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$self);
+  my $itr = DBIx::Class::Helpers::Util::ResultSet::Iterator->new(resultset=>$self);
   while(my $row = $itr->next) {
     $func->($itr, $row);
     if($itr->has_escaped) {
@@ -148,7 +148,7 @@ Arguments: $rs->each($coderef, ?$if_empty_coderef)
 Returns: Original Resultset OR partly iterated Resultset
 
 Where C<$coderef> is an anonymous subroutine or closure that will get the
-instantiated L<DBIx::Class::Helpers::Util::ResultSetItr> object and the
+instantiated L<DBIx::Class::Helpers::Util::ResultSet::Iterator> object and the
 current C<$row> from the set returned.  For example C<$row> in the ResultSet
 the $coderef will be executed once.
 
@@ -166,7 +166,7 @@ Example: For the given L<DBIx::Class::ResultSet>, iterator over each result.
 
 This is functionally similar to something like:
 
-    my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$rs);
+    my $itr = DBIx::Class::Helpers::Util::ResultSet::Iterator->new(resultset=>$rs);
     while(my $row = $itr->next) {
       ...
     }
@@ -199,7 +199,7 @@ Additionally having an iterator object available can be helpful, particularly
 when you are in a template and need to display things differently based on if
 the row is even/odd, first/last, etc.
 
-You should see the documentation for L<DBIx::Class::Helpers::Util::ResultSetItr>
+You should see the documentation for L<DBIx::Class::Helpers::Util::ResultSet::Iterator>
 for the methods this object exposes for use.
 
 =head2 once

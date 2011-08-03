@@ -1,4 +1,4 @@
-package DBIx::Class::Helpers::Util::ResultSetItr;
+package DBIx::Class::Helpers::Util::ResultSet::Iterator;
 
 # ABSTRACT: Put an Iterator around a Resultset
 
@@ -114,7 +114,7 @@ sub max {}
 Given a L<DBIx::Class::ResultSet> wrap a basic iterator object around it
 
     my $rs = $schema->resultset('Bar');
-    my $itr = DBIx::Class::Helpers::Util::ResultSetItr->new(resultset=>$rs);
+    my $itr = DBIx::Class::Helpers::Util::ResultSet::Iterator->new(resultset=>$rs);
     while(my $row = $itr->next) {
       ...
     }
