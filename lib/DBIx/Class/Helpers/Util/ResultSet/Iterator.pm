@@ -2,36 +2,31 @@ package DBIx::Class::Helpers::Util::ResultSet::Iterator;
 
 # ABSTRACT: Put an Iterator around a Resultset
 
-use strict;
-use warnings;
+use Moo;
 
-sub new {
-  my ($class, %args) = @_;
-  bless(\%args, $class);
-}
+has resultset => (is=>'ro', required=>1);
+has index => (is=>'rw', predicate=>'_has_index');
+has _escape => (is=>'rw', predicate=>'has_escaped');
 
-sub index { shift->{index} }
-sub _inc_index { shift->{index}++ }
-sub _init_index { shift->{index} ||= 0 }
-sub _has_index { defined shift->{index} }
 sub _init_or_inc_index {
   my $self = shift;
-  $self->_has_index  ?
-    $self->_inc_index : $self->_init_index;
+  if($self->_has_index) {
+    $self->index($self->index +1);
+  } else {
+    $self->index(0);
+  }
 }
 
 sub count { shift->index + 1 }
 
-sub escape { shift->{escape} = 1 }
-sub has_escaped { shift->{escape} ? 1:0 }
-sub has_not_been_used { defined shift->{index} ? 0:1 }
+sub escape { shift->_escape(1) }
+sub has_not_been_used { shift->_has_index ? 1:0 }
 
 sub is_first { shift->index == 0 ? 1:0 }
 sub is_not_first { shift->index == 0 ? 0:1 }
 
 sub is_even { shift->index % 2 ? 1:0 }
 sub is_odd { shift->index % 2 ? 0:1 }
-sub resultset { shift->{resultset} }
 
 sub first {
   my ($self, $code, $fail) = @_;
@@ -98,12 +93,12 @@ sub if {
 ## deal with any race conditions or conflicts. Maybe we can peek at the cursor
 ## for some of this info.
 
-sub is_rest {}
-sub rest {}
-sub is_last {}
-sub last {}
-sub size {}
-sub max {}
+## sub is_rest {}
+## sub rest {}
+## sub is_last {}
+## sub last {}
+## sub size {}
+## sub max {}
 
 1;
 

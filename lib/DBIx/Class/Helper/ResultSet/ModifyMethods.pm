@@ -5,54 +5,34 @@ package DBIx::Class::Helper::ResultSet::ModifyMethods;
 use strict;
 use warnings;
 
+use Role::Tiny ();
+
+my $ANON_CLASS_COUNT = 0;
+
+sub _wrap_methods {
+  my($self, $type, $method_spec, $modifier) = @_;
+  my @methods = $self->_methods_from_spec($method_spec);
+  my $pkg = 'DBIC_HELPER_ANON'.$ANON_CLASS_COUNT++;
+  my $modifier_str = $self->_modifiers_from($type, @methods);
+  eval "package $pkg; use Moo::Role; $modifier_str; 1";
+  Role::Tiny->apply_roles_to_object($self, $pkg);
+}
+
+sub _modifiers_from {
+  my ($self, $type, @methods) = @_;
+  my $modifier_str;
+  $modifier_str .= "$type '$_', \$modifier;" for @methods;
+  return $modifier_str;
+}
+
+sub _methods_from_spec {
+  my ($self, $method_spec) = @_;
+  return ref($method_spec) ? @$method_spec : ($method_spec);
+}
+
 sub around { shift->_wrap_methods('around', @_) }
 sub before { shift->_wrap_methods('before', @_) }
 sub after { shift->_wrap_methods('after', @_) }
-
-my $anon_class_count = 0;
-sub _wrap_methods {
-  my($self, $type, $method_spec, $modifier) = @_;
-  my @methods = ref($method_spec) ? @$method_spec : ($method_spec);
-  my $package = ref($self) . '::ANON_DBIC_HELPER_'. uc($type). '_'. join('_', @methods). '_'. $anon_class_count++;
-  for my $method(@methods) {
-    no strict 'refs';
-    my $orig = $self->can($method);
-    die "There is no method '$method' on ". ref($self)
-      unless $orig;
-    @{$package . '::ISA'} = (ref($self));
-    *{$package . '::' . $method} = "_generate_$type"->($self, $orig, $modifier);
-    bless $self, $package;
-  }
-  return $self;
-
-}
-
-sub _generate_around {
-  my ($self, $orig, $modifier) = @_;
-  return sub {
-    my ($rs, @args) = @_;
-    $modifier->($orig, $rs, @args);
-  };
-}
-
-sub _generate_before {
-  my ($self, $orig, $modifier) = @_;
-  return sub {
-    my ($rs, @args) = @_;
-    $rs->$modifier(@args);
-    $rs->$orig(@args);
-  };
-}
-
-sub _generate_after {
-  my ($self, $orig, $modifier) = @_;
-  return sub {
-    my ($rs, @args) = @_;
-    my $result = $rs->$orig(@args);
-    $rs->$modifier(@args);
-    return $result;
-  };
-}
 
 1;
 
