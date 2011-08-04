@@ -25,7 +25,7 @@ ok my $rs = $schema
     ok !$after, 'After not yet set';
     ok !$around, 'Around not was set';
   })
-  ->after('search', sub {
+  ->after(['search', 'find'], sub {
     my ($self, @args) = @_;
     ok !$after, 'After not yet set';
     $after = 1;

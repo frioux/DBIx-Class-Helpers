@@ -7,32 +7,22 @@ use warnings;
 
 use Role::Tiny ();
 
+sub around { shift->_wrap_methods('around', @_) }
+sub before { shift->_wrap_methods('before', @_) }
+sub after { shift->_wrap_methods('after', @_) }
+
+my %WRAPPER_PKG;
 my $ANON_CLASS_COUNT = 0;
 
 sub _wrap_methods {
   my($self, $type, $method_spec, $modifier) = @_;
-  my @methods = $self->_methods_from_spec($method_spec);
-  my $pkg = 'DBIC_HELPER_ANON'.$ANON_CLASS_COUNT++;
-  my $modifier_str = $self->_modifiers_from($type, @methods);
+  my @methods = ref($method_spec) ? @$method_spec : ($method_spec);
+  my $pkg = $WRAPPER_PKG{$modifier} ||= 'DBIC_HELPER_ANON'.$ANON_CLASS_COUNT++;
+  my $modifier_str;
+  $modifier_str .= "$type '$_', \$modifier;" for @methods;
   eval "package $pkg; use Moo::Role; $modifier_str; 1";
   Role::Tiny->apply_roles_to_object($self, $pkg);
 }
-
-sub _modifiers_from {
-  my ($self, $type, @methods) = @_;
-  my $modifier_str;
-  $modifier_str .= "$type '$_', \$modifier;" for @methods;
-  return $modifier_str;
-}
-
-sub _methods_from_spec {
-  my ($self, $method_spec) = @_;
-  return ref($method_spec) ? @$method_spec : ($method_spec);
-}
-
-sub around { shift->_wrap_methods('around', @_) }
-sub before { shift->_wrap_methods('before', @_) }
-sub after { shift->_wrap_methods('after', @_) }
 
 1;
 
