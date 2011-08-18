@@ -20,7 +20,7 @@ sub _init_or_inc_index {
 sub count { shift->index + 1 }
 
 sub escape { shift->_escape(1) }
-sub has_not_been_used { shift->_has_index ? 1:0 }
+sub has_not_been_used { shift->_has_index ? 0:1 }
 
 sub is_first { shift->index == 0 ? 1:0 }
 sub is_not_first { shift->index == 0 ? 0:1 }

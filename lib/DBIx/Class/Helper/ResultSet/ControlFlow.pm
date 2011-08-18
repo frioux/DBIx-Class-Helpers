@@ -7,22 +7,39 @@ use warnings;
 use DBIx::Class::Helpers::Util::ResultSet::Iterator;
 
 sub each {
-  my($self, $func, $fail) = @_;
-  $self->throw_exception('Argument must be a CODEREF')
-    unless ref($func) eq 'CODE';
+  my($self, $func_proto, $fail) = @_;
 
+  ## validate and normalize the function prototype
+  unless(
+    $func_proto and (
+    ref($func_proto) eq 'CODE' or
+    ref($func_proto) eq 'ARRAY' )
+  ) {
+    $self->throw_exception('Argument must be a CODEREF or ARRAYREF')
+  }
+
+  ## create a local iterator for the each function
+  my @funcs;
+  my $func_itr = sub {
+    @funcs = ref($func_proto) eq 'ARRAY' ? @$func_proto : $func_proto unless @funcs;
+    return shift @funcs;
+  };
+
+  ## Iterate over the resultset
   my $itr = DBIx::Class::Helpers::Util::ResultSet::Iterator->new(resultset=>$self);
   while(my $row = $itr->next) {
-    $func->($itr, $row);
+    $func_itr->()->($itr, $row);
     if($itr->has_escaped) {
       return $itr->resultset;
     }
   }
 
+  ## Handle fails
   if($fail && $itr->has_not_been_used) {
     $fail->($self);
   }
 
+  ## ALlow chaining methods
   return $self;
 }
 
@@ -144,7 +161,7 @@ This component defines the following methods.
 
 =head2 each
 
-Arguments: $rs->each($coderef, ?$if_empty_coderef)
+Arguments: $rs->each($coderef|\@$coderef, ?$if_empty_coderef)
 Returns: Original Resultset OR partly iterated Resultset
 
 Where C<$coderef> is an anonymous subroutine or closure that will get the
@@ -156,6 +173,13 @@ C<$if_empty_coderef> is an anonymous subroutine or closure that gets
 executed ONLY if there were no rows in the set.  It gets the C<$resultset>
 as an argument (this might change later if we discover a better thing to do
 here).
+
+In the case where the first argument is an arrayref of coderefs, we automatically
+iterate over each coderef for each result in the set in turn and reset the
+coderef iterator as needed to make sure we hit every item in the set.  Please
+be aware that in the case where the arrayref of coderefs is longer than the
+available results in the set, this means that not all coderefs will be invoked
+and this happens without an exception being thrown.
 
 Example: For the given L<DBIx::Class::ResultSet>, iterator over each result.
 
@@ -193,6 +217,19 @@ Here's a more detailed example.
       my ($rs) = @_;
       warn "The resultset was empty, nothing done...";
     });
+
+Finally one example using an arrayref as the first argument:
+
+    $rs->each(
+      [
+        sub { ... },
+        sub { ... },
+        sub { ... },
+      ], sub {
+        my ($rs) = @_;
+        warn "The resultset was empty, nothing done...";
+      }
+    );
 
 You may find this helper leads you to writing more concise and compact code.
 Additionally having an iterator object available can be helpful, particularly
