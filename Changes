@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.007001  2011-08-17 22:34:54 CST6CDT
        - Fix dependency (add Carp::Clan)
 
 2.007000  2011-03-14 21:43:20 CST6CDT
