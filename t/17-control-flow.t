@@ -193,6 +193,60 @@ ok $schema->prepopulate;
     );
 }
 
+{
+  my @expected = (
+    { id=>1, count=>1, index=>0, first=>1, even=>0, odd=>1 },
+    { id=>2, count=>2, index=>1, first=>0, even=>1, odd=>0 },
+    { id=>3, count=>3, index=>2, first=>0, even=>0, odd=>1 },
+    { id=>4, count=>4, index=>3, first=>0, even=>1, odd=>0 },
+    { id=>5, count=>5, index=>4, first=>0, even=>0, odd=>1 },
+  );
+
+  my ($saw_cb1_cnt, $saw_cb2_cnt) = (0,0);
+
+  my $cb1 = sub {
+    my ($each, $row) = @_;
+    my $expected = shift @expected;
+
+    is $row->id, $expected->{id},
+      'Got $row->id of ('.$row->id.') == $expected->{id} of ('.$expected->{id}.')';
+
+    ok $each->is_odd, 'cb1 is getting the odds';
+
+    $saw_cb1_cnt++;
+  };
+
+  my $cb2 = sub {
+    my ($each, $row) = @_;
+    my $expected = shift @expected;
+
+    is $row->id, $expected->{id},
+      'Got $row->id of ('.$row->id.') == $expected->{id} of ('.$expected->{id}.')';
+
+    ok $each->is_even, 'cb2 is getting the evens';
+
+    $saw_cb2_cnt++;
+  };
+
+  ok $schema
+    ->resultset('Foo')
+    ->each(
+      [ $cb1, $cb2 ],
+      sub {
+        fail 'should not see this';
+      },
+    )->each(
+      [ $cb1, $cb2 ],
+      sub {
+        pass 'should see this';
+      },
+    );
+
+  is $saw_cb1_cnt, 3, 'saw first callback correct number of times';
+  is $saw_cb2_cnt, 2, 'saw second callback correct number of times';
+
+}
+
 ok $schema
   ->resultset('Foo')
   ->once(sub { is shift->id, 1, 'Once got the row expected' })
@@ -209,5 +263,5 @@ ok $schema
     is $rs->first->id, $arg, "Did for $arg";
   },1);
 
-done_testing
+done_testing(145);
 

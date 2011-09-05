@@ -39,7 +39,7 @@ sub each {
     $fail->($self);
   }
 
-  ## ALlow chaining methods
+  ## Allow chaining methods
   return $self;
 }
 
