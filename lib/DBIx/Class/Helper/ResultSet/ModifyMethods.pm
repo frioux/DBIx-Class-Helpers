@@ -17,7 +17,7 @@ my $ANON_CLASS_COUNT = 0;
 sub _wrap_methods {
   my($self, $type, $method_spec, $modifier) = @_;
   my @methods = ref($method_spec) ? @$method_spec : ($method_spec);
-  my $pkg = $WRAPPER_PKG{$modifier} ||= 'DBIC_HELPER_ANON'.$ANON_CLASS_COUNT++;
+  my $pkg = $WRAPPER_PKG{$modifier .'_'. join('_', @methods)} ||= 'DBIC_HELPER_ANON'.$ANON_CLASS_COUNT++;
   my $modifier_str;
   $modifier_str .= "$type '$_', \$modifier;" for @methods;
   eval "package $pkg; use Moo::Role; $modifier_str; 1";
