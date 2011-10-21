@@ -24,6 +24,8 @@ is_load_namespaces: {
       'is_load_namespaces works when correct';
    ok !is_load_namespaces('P::Foo'),
       'is_load_namespaces works when incorrect';
+   ok is_load_namespaces('P::Result::Foo::Bar'), 
+   	   'is_load_namespaces works with two levels namespace';
 }
 
 is_not_load_namespaces: {
@@ -42,6 +44,8 @@ assert_similar_namespaces: {
       'assert_similar_namespaces works when right is namespace';
    dies_ok { assert_similar_namespaces('P::Result::Foo', 'L::Bar') }
       'assert_similar_namespaces works when left is namespace';
+	lives_ok { assert_similar_namespaces('P::Result::Foo::Bar',  'L::Result::Foo::Bar')}
+		'assert_similar_namespaces works with two levels of right namespace';
 }
 
 done_testing;
