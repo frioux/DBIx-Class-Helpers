@@ -26,7 +26,7 @@ sub get_namespace_parts {
 
 sub is_load_namespaces {
    my $namespace = shift;
-   $namespace =~ /^[\w:]+::Result::[\w]+$/;
+   $namespace =~ /^[\w:]+::Result::[\w:]+$/;
 }
 
 sub is_not_load_namespaces {
