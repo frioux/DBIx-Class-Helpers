@@ -2,6 +2,10 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+2.007002  2012-01-09 16:23:08 CST6CDT
+       - Fix POD in AutoRemoveColumns (mattp)
+       - Fix multiple level deep Result namespaces (Siddhartha Basu)
+
 2.007001  2011-08-17 22:34:54 CST6CDT
        - Fix dependency (add Carp::Clan)
 
