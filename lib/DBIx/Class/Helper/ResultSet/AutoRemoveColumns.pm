@@ -56,7 +56,7 @@ sub _resolved_attrs {
 
 =head1 SYNOPSIS
 
- package MySchema::ResultSet::Bar;
+ package MySchema::Result::Bar;
 
  use strict;
  use warnings;
