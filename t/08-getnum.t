@@ -6,6 +6,7 @@ use warnings;
 use lib 't/lib';
 use Test::More;
 use Test::Deep;
+use Test::Exception;
 use List::Util 'first';
 
 use TestSchema;
@@ -35,6 +36,16 @@ for (map +{$_->get_columns}, $schema->resultset('Foo')->all) {
 
 for (map +{$_->get_inflated_columns}, $schema->resultset('Foo')->all) {
    ok(is_numeric($_->{id}), "id $_->{id} has been 'numified'");
+}
+
+for (map +{$_->get_inflated_columns}, $schema->resultset('Foo')->all) {
+   ok(is_numeric($_->{id}), "id $_->{id} has been 'numified'");
+}
+
+for ($schema->resultset('Foo')->search(undef, {
+   columns => { lol => 'id' },
+})->all) {
+   lives_ok { $_->get_column('lol') } "doesn't break when using columns";
 }
 
 done_testing;

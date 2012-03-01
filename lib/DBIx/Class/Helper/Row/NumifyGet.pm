@@ -3,6 +3,8 @@ package DBIx::Class::Helper::Row::NumifyGet;
 use strict;
 use warnings;
 
+use Try::Tiny;
+
 # ABSTRACT: Force numeric "context" on numeric columns
 
 sub get_column {
@@ -11,7 +13,7 @@ sub get_column {
    my $value = $self->next::method($col);
 
    $value += 0 if defined($value) and # for nullable and autoinc fields
-                  $self->_is_column_numeric($col);
+                  try { $self->_is_column_numeric($col) };
 
    return $value;
 }
@@ -24,7 +26,7 @@ sub get_columns {
    for (keys %columns) {
       $columns{$_} += 0
          if defined($columns{$_}) and # for nullable and autoinc fields
-            $self->_is_column_numeric($_);
+            try { $self->_is_column_numeric($_) };
    }
 
    return %columns;
