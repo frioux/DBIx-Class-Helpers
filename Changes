@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.007003  2012-02-29 19:56:57 CST6CDT
        - Fix ::Row::NumifyGet breaking when using select/as or columns
 
 2.007002  2012-01-09 16:23:08 CST6CDT
