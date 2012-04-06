@@ -94,7 +94,7 @@ This helper adds a JSON method like the following:
        id       => $self->id,
        kitten   => $self->kitten,
        # robot  => $self->robot,    # <-- doesn't serialize text columns
-       your_mom => $self->your_mom, # <-- normally wouldn't but explicitely
+       your_mom => $self->your_mom, # <-- normally wouldn't but explicitly
                                     #     asked for in the column spec above
     }
  }
