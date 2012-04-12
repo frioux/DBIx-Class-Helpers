@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Fix ::OnColumnChange to not obliviate args passed to update
 
 2.007003  2012-02-29 19:56:57 CST6CDT
        - Fix ::Row::NumifyGet breaking when using select/as or columns

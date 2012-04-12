@@ -57,9 +57,9 @@ sub after_column_change {
 }
 
 sub update {
-   my $self = shift;
+   my ($self, $args) = @_;
 
-   my %dirty = ( $self->get_dirty_columns, %{$_[0]||{}} );
+   my %dirty = ( $self->get_dirty_columns, %{$args||{}} );
 
    my @all_before = @{$self->_before_change || []};
    my @all_around = @{$self->_around_change || []};
@@ -72,7 +72,7 @@ sub update {
 
    my $inner = $self->next::can;
 
-   my $final = sub { $self->$inner };
+   my $final = sub { $self->$inner($args) };
 
    for ( reverse @around ) {
       my $fn = $_->{method};

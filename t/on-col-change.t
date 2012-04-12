@@ -62,14 +62,16 @@ cmp_deeply([
 
 @TestSchema::Result::Bar::events = ();
 
-$first->update({ foo_id => 1, id => 3 });
+$first->update({ foo_id => 1, id => 99 });
 
+is($first->foo_id, 1, 'foo_id is updated');
+is($first->id, 99, 'id is updated');
 cmp_deeply([
   [ 'before_foo_id', 2, 1 ],
   [ 'pre_around_foo_id', 2, 1 ],
   [ 'post_around_foo_id', 2, 1 ],
-  [ 'after_id', undef, 3 ],
-  [ 'after_foo_id', 2, 1 ]
+  [ 'after_id', undef, 99 ],
+  [ 'after_foo_id', 1, 1 ]
 ], \@TestSchema::Result::Bar::events,
    '... even with args passed to update');
 
