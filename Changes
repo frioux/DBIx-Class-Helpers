@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add Helper::ResultSet::CorrelatedRelationship for easy correlated
+         subqueries
 
 2.007004  2012-04-11 19:53:51 America/Chicago
        - Fix ::OnColumnChange to not obliviate args passed to update
