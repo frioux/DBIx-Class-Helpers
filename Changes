@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.008000  2012-05-09 13:36:28 America/Chicago
        - Add Helper::ResultSet::CorrelatedRelationship for easy correlated
          subqueries
 
