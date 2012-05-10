@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Simplify implementation of CorrelatedRelationship to work with more
+         versions of DBIx::Class
 
 2.008000  2012-05-09 13:36:28 America/Chicago
        - Add Helper::ResultSet::CorrelatedRelationship for easy correlated

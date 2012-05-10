@@ -3,49 +3,23 @@ package DBIx::Class::Helper::ResultSet::CorrelateRelationship;
 use strict;
 use warnings;
 
+use base 'DBIx::Class::ResultSet';
+
 # ABSTRACT: Easily correlate your ResultSets
 
 sub correlate {
    my ($self, $rel) = @_;
 
-   my $rel_info = $self->result_source->relationship_info($rel);
+   my $source = $self->result_source;
+   my $rel_info = $source->relationship_info($rel);
 
-   my $csa = $self->current_source_alias;
-   my $ref = ref($rel_info->{cond});
-   my $search;
-
-   my $foreign_alias = "${rel}_alias";
-   if ($ref eq 'HASH') {
-      $search = {
-         map {
-            my $k = $_;
-            my $v = $rel_info->{cond}{$k};
-
-            $k =~ s/foreign/$foreign_alias/;
-            $v =~ s/self/$csa/;
-            ( $k => { -ident => $v } )
-         } keys %{$rel_info->{cond}}
-      }
-   } elsif ($ref eq 'ARRAY') {
-      $search = [
-         map {
-            my ($k, $v) = %$_;
-
-            $k =~ s/foreign/$foreign_alias/;
-            $v =~ s/self/$csa/;
-            { $k => { -ident => $v } }
-         } @{$rel_info->{cond}}
-      ]
-   } elsif ($ref eq 'CODE') {
-      $search = $rel_info->{cond}->({
-         foreign_alias     => $foreign_alias,
-         self_alias        => $csa,
-         self_resultsource => $self->result_source,
-         foreign_relname   => $rel,
-      })
-   }
-   return $self->result_source->related_source($rel)->resultset
-      ->search($search, {
+   return $source->related_source($rel)->resultset
+      ->search(scalar $source->_resolve_condition(
+         $rel_info->{cond},
+         "${rel}_alias",
+         $self->current_source_alias,
+         $rel
+      ), {
          alias => "${rel}_alias",
       })
 }
