@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.009000  2012-05-11 10:45:15 America/Chicago
        - add Helper::ResultSet::SearchOr component to avoid Union when possible
        - Simplify implementation of CorrelatedRelationship to work with more
          versions of DBIx::Class
