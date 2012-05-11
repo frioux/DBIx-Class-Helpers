@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Stupid doc fix
 
 2.009000  2012-05-11 10:45:15 America/Chicago
        - add Helper::ResultSet::SearchOr component to avoid Union when possible

@@ -56,7 +56,7 @@ sub search_or {
 
    my $me = $self->current_source_alias;
 
-   $self->search_or([$self->failed, $self->not_passed]);
+   $self->search_or([$self->failed, $self->untested]);
  }
 
  1;
