@@ -12,7 +12,7 @@ __PACKAGE__->load_namespaces(
    default_resultset_class => 'ResultSet',
 );
 
-__PACKAGE__->load_components(qw/Schema::Versioned/);
+__PACKAGE__->load_components(qw/Schema::Versioned Helper::Schema::LintContents/);
 
 sub dbfile { 'dbfile' }
 

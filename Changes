@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add Helper::Schema::LintContents
 
 2.009001  2012-05-11 11:00:51 America/Chicago
        - Stupid doc fix
