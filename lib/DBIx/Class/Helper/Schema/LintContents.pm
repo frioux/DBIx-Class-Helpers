@@ -3,17 +3,9 @@ package DBIx::Class::Helper::Schema::LintContents;
 use strict;
 use warnings;
 
+use Scalar::Util 'blessed';
+
 # ABSTRACT: Check the data in your database match your constraints
-
-sub _r_sources {
-   my $self = shift;
-
-   my %sref = %{$self->source_registrations};
-
-   return {
-      map { $sref{$_} => $_ } keys %sref
-   }
-}
 
 sub null_check_source {
    my ($self, $source_name, $non_nullable_columns) = @_;
@@ -81,7 +73,7 @@ sub fk_check_source_auto {
       map {
          $_ => $self->fk_check_source(
             $from_moniker,
-            $self->_r_sources->{$from_source->related_source($_)},
+            $from_source->related_source($_),
             $self->_fk_cond_fixer($rels{$_}->{cond})
          )
       } grep {
@@ -94,9 +86,13 @@ sub fk_check_source_auto {
 sub fk_check_source {
    my ($self, $source_from, $source_to, $columns) = @_;
 
+   my $to_rs = blessed $source_to
+      ? $source_to->resultset
+      : $self->resultset($source_to)
+   ;
    my $me = $self->resultset($source_from)->current_source_alias;
    $self->resultset($source_from)->search({
-      -not_exists => $self->resultset($source_to)
+      -not_exists => $to_rs
          ->search({
             map +( "self.$_" => { -ident => "other.$columns->{$_}" } ), keys %$columns
          }, {
@@ -166,7 +162,7 @@ tell L<DBIx::Class> about, real constraints are fairly sure to be followed.
  );
 
 C<fk_check_source> takes three arguments, the first is the B<from> source
-moniker of a relationship.  The second is the B<to> source of a relationship.
+moniker of a relationship.  The second is the B<to> source or source moniker of a relationship.
 The final argument is a hash reference representing the columns of the
 relationship.  The return value is a resultset of the B<from> source that do
 not have a corresponding B<to> row.  To be clear, the example given above would

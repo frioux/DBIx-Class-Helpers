@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Make ::Schema::LintContents marginally more useful in that it no
+         longer needlessly limits your sources to one moniker only
 
 2.010000  2012-05-17 21:26:47 America/Chicago
        - Add Helper::Schema::LintContents
