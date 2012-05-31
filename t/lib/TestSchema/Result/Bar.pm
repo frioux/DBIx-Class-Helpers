@@ -6,6 +6,7 @@ use DBIx::Class::Candy
       Helper::Row::ToJSON
       Helper::Row::SubClass
       Helper::Row::OnColumnChange
+      Helper::Row::SelfResultSet
     )];
 
 our @events;

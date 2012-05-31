@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add Helper::Row::SelfResultSet
 
 2.010001  2012-05-26 10:58:50 America/Chicago
        - Make ::Schema::LintContents marginally more useful in that it no
