@@ -1,7 +1,10 @@
 package TestSchema::Result::Gnarly;
 
 use DBIx::Class::Candy
-   -components => ['Helper::Row::ToJSON'];
+   -components => [qw(
+      Helper::Row::ToJSON
+      Helper::Row::ProxyResultSetMethod
+   )];
 
 table 'Gnarly';
 
@@ -19,5 +22,12 @@ column your_mom => {
 };
 
 primary_key 'id';
+
+proxy_resultset_method 'id_plus_one';
+
+proxy_resultset_method id_plus_two => {
+   resultset_method => 'id_plus_two',
+   slot             => 'plus2',
+};
 
 1;
