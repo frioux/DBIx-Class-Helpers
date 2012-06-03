@@ -10,6 +10,7 @@ use TestSchema;
 my $schema = TestSchema->deploy_or_connect();
 $schema->prepopulate;
 
+$schema->resultset('Foo_Bar')->delete;
 $schema->resultset('Foo_Bar')->populate([
    [qw(foo_id bar_id)],
    [1, 2],
