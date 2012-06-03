@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.011000  2012-06-03 16:12:54 America/Chicago
        - Add Helper::Row::SelfResultSet
 
 2.010001  2012-05-26 10:58:50 America/Chicago
