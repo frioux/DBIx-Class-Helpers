@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.012000  2012-06-05 21:23:16 America/Chicago
        - Add Helper::ResultSet::NoColumns
 
 2.011000  2012-06-03 16:12:54 America/Chicago
