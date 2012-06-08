@@ -99,7 +99,7 @@ should be using it.
 
 C<proxy_resultset_method>'s first argument is the name of the method to
 generate and is required.  The other two arguments, C<$slot>, and
-C<$resultset_method> are option.  If unspecified C<$slot> will default to
+C<$resultset_method> are optional.  If unspecified C<$slot> will default to
 C<$name> and C<$resultset_method> will default to C<"with_$name">.  C<$slot>
 is the column that the data being retrieved is stored as in the ResultSet
 method being proxied to.  C<$resultset_method> is (duh) the ResultSet method
