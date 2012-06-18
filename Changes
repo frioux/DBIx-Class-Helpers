@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.013002  2012-06-17 22:22:45 America/Chicago
        - Lots of misc documentation cleanup
 
 2.013001  2012-06-11 17:40:04 America/Chicago
