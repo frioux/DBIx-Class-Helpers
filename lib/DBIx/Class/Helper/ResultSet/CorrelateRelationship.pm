@@ -108,6 +108,9 @@ And then elsewhere, like in a controller:
 
 This assumes that the Book resultset has C<good> and C<bad> methods.
 
+See L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it to
+your entire schema.
+
 =head1 METHODS
 
 =head2 correlate

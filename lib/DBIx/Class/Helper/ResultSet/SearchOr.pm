@@ -90,6 +90,9 @@ With a union, you'd have to implement it like this:
 The union will work, but it will generate more complex SQL that may have lower
 performance on your database.
 
+See L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it to
+your entire schema.
+
 =head1 METHODS
 
 =head2 search_or

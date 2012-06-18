@@ -134,22 +134,25 @@ You might have something like the following sketch autocompletion code:
  my $rs1 = $schema->resultset('Album')->search({
     name => { -like => "$input%" }
  }, {
-   columns => [qw{id name}],
-   '+select' => [\'"album" AS tablename']
+   columns => [qw( id name ), {
+      tablename => \['?', [{} => 'album']],
+   }],
  });
 
  my $rs2 = $schema->resultset('Artist')->search({
     name => { -like => "$input%" }
  }, {
-   columns => [qw{id name}],
-   '+select' => [\'"artist" AS tablename']
+   columns => [qw( id name ), {
+      tablename => \['?', [{} => 'artist']],
+   }],
  });
 
  my $rs3 = $schema->resultset('Song')->search({
     name => { -like => "$input%" }
  }, {
-   columns => [qw{id name}],
-   '+select' => [\'"song" AS tablename']
+   columns => [qw( id name ), {
+      tablename => \['?', [{} => 'song']],
+   }],
  });
 
  $_->result_class('DBIx::Class::ResultClass::HashRefInflator')
