@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add ::Row::ProxyResultSetUpdate helper
        - fully qualify columns in ::SelfResultSet
 
 2.013003  2012-06-28 08:04:13 America/Chicago

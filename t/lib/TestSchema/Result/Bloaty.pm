@@ -1,6 +1,8 @@
 package TestSchema::Result::Bloaty;
 
-use DBIx::Class::Candy;
+use DBIx::Class::Candy -components => [
+   'Helper::Row::ProxyResultSetUpdate'
+];
 
 table 'Bloaty';
 
