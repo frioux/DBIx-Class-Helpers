@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+2.013003  2012-06-28 08:04:13 America/Chicago
+       - Redist due to broken release
+
 2.013002  2012-06-17 22:22:45 America/Chicago
        - Lots of misc documentation cleanup
 
