@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - fully qualify columns in ::SelfResultSet
 
 2.013003  2012-06-28 08:04:13 America/Chicago
        - Redist due to broken release

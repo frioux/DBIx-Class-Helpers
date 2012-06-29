@@ -9,8 +9,11 @@ sub self_rs {
    my ($self) = @_;
 
    my $src = $self->result_source;
-   return $src->resultset->search({
-      map { $_ => $self->get_column($_) } $src->primary_columns
+   my $rs = $src->resultset;
+   my $me = $rs->current_source_alias;
+   return $rs->search({
+          # perl, sometimes I hate your guts
+      map +( "$me.$_" => $self->get_column($_) ), $src->primary_columns
    })
 }
 
