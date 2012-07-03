@@ -3,8 +3,6 @@ package DBIx::Class::Helper::ResultSet::CorrelateRelationship;
 use strict;
 use warnings;
 
-use base 'DBIx::Class::ResultSet';
-
 # ABSTRACT: Easily correlate your ResultSets
 
 sub correlate {

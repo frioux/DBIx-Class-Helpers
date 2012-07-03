@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Stop breaking ::IgnoreWantarray with ::CorrelatedRelationship
 
 2.014000  2012-06-30 00:16:13 America/Chicago
        - Add ::Row::ProxyResultSetUpdate helper
