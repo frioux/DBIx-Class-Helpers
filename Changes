@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Tests are fully in memory for speed and parallelization
 
 2.014001  2012-07-03 08:34:21 America/Chicago
        - Stop breaking ::IgnoreWantarray with ::CorrelatedRelationship

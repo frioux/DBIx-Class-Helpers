@@ -12,7 +12,7 @@ __PACKAGE__->load_namespaces(
    default_resultset_class => 'ResultSet',
 );
 
-__PACKAGE__->load_components(qw/Schema::Versioned Helper::Schema::LintContents/);
+__PACKAGE__->load_components(qw/Helper::Schema::LintContents/);
 
 sub dbfile { 'dbfile' }
 
@@ -25,19 +25,14 @@ sub ddl_filename {
 sub deploy_or_connect {
    my $self = shift;
 
-   my $schema;
-   unless ( -e $self->dbfile && [stat $self->dbfile]->[7] > 0 ) {
-      $schema = $self->connect;
-      $schema->deploy();
-   } else {
-      $schema = $self->connect
-   }
+   my $schema = $self->connect;
+   $schema->deploy();
    return $schema;
 }
 
 sub connect {
    my $self = shift;
-   return $self->next::method('dbi:SQLite:dbname='.$self->dbfile);
+   return $self->next::method('dbi:SQLite::memory:');
 }
 
 sub generate_ddl {
@@ -47,6 +42,9 @@ sub generate_ddl {
       'SQLite',
       $schema->schema_version,
       $self->upgrade_directory,
+      undef, {
+         add_drop_table => 0,
+      },
    );
 }
 
