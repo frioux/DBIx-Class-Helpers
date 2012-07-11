@@ -8,6 +8,7 @@ use warnings;
 use parent 'DBIx::Class::Helper::Row::StorageValues';
 use List::Util 'first';
 use DBIx::Class::Candy::Exports;
+use namespace::clean;
 
 export_methods [qw(before_column_change around_column_change after_column_change)];
 
