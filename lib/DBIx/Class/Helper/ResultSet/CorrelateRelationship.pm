@@ -117,3 +117,75 @@ your entire schema.
 
 Correlate takes a single argument, a relationship for the invocant, and returns
 a resultset that can be used in the selector list.
+
+=head1 EXAMPLES
+
+=head2 counting CD's and Tracks of Artists
+
+If you had an Artist ResultSet and you wanted to count the tracks and CD's per
+Artist, here is a recipe that will work:
+
+ sub with_track_count {
+   my $self = shift;
+
+   $self->search(undef, {
+     '+columns' => {
+       track_count => $self->correlate('cds')
+         ->related_resultset('tracks')
+         ->count_rs
+         ->as_query
+     }
+   });
+ }
+
+ sub with_cd_count {
+   my $self = shift;
+
+   $self->search(undef, {
+     '+columns' => {
+       cd_count => $self->correlate('cds')
+         ->count_rs
+         ->as_query
+     }
+   });
+ }
+
+ # elsewhere
+
+ my @artists = $artists->with_cd_count->with_track_count->all;
+
+Note that the following will B<not> work:
+
+ sub BUSTED_with_track_count {
+   my $self = shift;
+
+   $self->search(undef, {
+     '+columns' => {
+       track_count => $self->related_resultset('cds')
+         ->correlate('tracks')
+         ->count_rs
+         ->as_query
+     }
+   });
+ }
+
+The above is broken because C<correlate> returns a fresh resultset that will
+only work as a subquery to the ResultSet it was chained off of.  The upshot
+of that is that the above C<tracks> relationship is on the C<cds> ResultSet,
+whereas the query is for the Artist ResultSet, so the correlation will be
+"broken" by effectively "joining" to columns that are not in the current scope.
+
+For the same reason, the following will also not work:
+
+ sub BUSTED2_with_track_count {
+   my $self = shift;
+
+   $self->search(undef, {
+     '+columns' => {
+       track_count => $self->correlate('cds')
+         ->correlate('tracks')
+         ->count_rs
+         ->as_query
+     }
+   });
+ }

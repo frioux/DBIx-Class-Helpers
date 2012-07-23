@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add EXAMPLES to CorrelateRelationship
 
 2.014002  2012-07-10 21:41:17 America/Chicago
        - Tests are fully in memory for speed and parallelization
