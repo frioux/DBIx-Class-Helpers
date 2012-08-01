@@ -52,6 +52,8 @@ __END__
 
 =head1 SYNOPSIS
 
+ use DBIx::Class::Helpers::Util ':all';
+
  my ($namespace, $class) = get_namespace_parts('MyApp:Schema::Person');
  is $namespace, 'MyApp::Schema';
  is $class, 'Person';
@@ -77,7 +79,7 @@ __END__
 A collection of various helper utilities for L<DBIx::Class> stuff.  Probably
 only useful for components.
 
-=head1 METHODS
+=head1 EXPORTS
 
 =head2 get_namespace_parts
 
