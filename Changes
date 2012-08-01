@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add order_by_visitor ::Util
 
 2.014003  2012-07-28 14:21:26 America/Chicago
        - Add EXAMPLES to CorrelateRelationship

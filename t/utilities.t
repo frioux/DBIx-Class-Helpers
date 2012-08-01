@@ -6,6 +6,7 @@ use warnings;
 use lib 't/lib';
 use Test::More;
 use Test::Exception;
+use Test::Deep;
 
 use DBIx::Class::Helpers::Util ':all';
 
@@ -46,6 +47,45 @@ subtest assert_similar_namespaces => sub {
       'assert_similar_namespaces works when left is namespace';
    lives_ok { assert_similar_namespaces('P::Result::Foo::Bar',  'L::Result::Foo::Bar')}
       'assert_similar_namespaces works with two levels of right namespace';
+};
+
+subtest order_by_vistor => sub {
+   my $complex_order_by = [
+      { -desc => [qw( foo bar )] },
+      'baz',
+      { -asc => 'biff' }
+   ];
+
+   cmp_deeply(
+      order_by_visitor($complex_order_by, sub{shift}),
+      $complex_order_by,
+      'roundtrip'
+   );
+
+   cmp_deeply(
+      order_by_visitor('frew', sub{'bar'}),
+      'bar',
+      'simplest ever'
+   );
+
+   cmp_deeply(
+      order_by_visitor({ -asc => 'foo' }, sub{'bar'}),
+      { -asc => 'bar' },
+      'simple hash'
+   );
+
+   cmp_deeply(
+      order_by_visitor([{ -asc => 'foo' }, 'bar'], sub{
+         if ($_[0] eq 'foo') {
+            return 'foot'
+         } else {
+            return $_[0]
+         }
+      }),
+      [{ -asc => 'foot' }, 'bar'],
+      'typical'
+   );
+
 };
 
 done_testing;
