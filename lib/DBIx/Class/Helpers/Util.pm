@@ -5,7 +5,7 @@ use warnings;
 
 # ABSTRACT: Helper utilities for DBIx::Class components
 
-use Sub::Exporter -setup => {
+use Sub::Exporter::Progressive -setup => {
     exports => [
       qw(
          get_namespace_parts is_load_namespaces is_not_load_namespaces
