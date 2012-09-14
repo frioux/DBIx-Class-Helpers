@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.015001  2012-09-13 21:19:40 America/Chicago
        - Correctly dep on Sub::Exporter::Progressive 0.001006
 
 2.015000  2012-08-01 18:00:31 America/Chicago
