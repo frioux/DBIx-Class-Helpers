@@ -13,6 +13,6 @@ install:
    - perl -Ilib -It/lib -MTestSchema -E'TestSchema->generate_ddl; my $t = TestSchema->connect; $t->deploy'
 
 script:
-   - PERL5OPT=-MDevel::Cover prove -lrsv t
+   - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine prove -lrsv t
    - cover
-   - test "$(echo "$(cover -summary 2>/dev/null | tail -n6 | head -n1 | perl -pi -e '$_ = (split /\s+/)[7]') >= 94" | bc)" -ne 0
+   - test "$(echo "$(cover -summary 2>/dev/null | tail -n6 | head -n1 | perl -pi -e '$_ = (split /\s+/)[5]') >= 94" | bc)" -ne 0
