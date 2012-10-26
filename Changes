@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add Helper::ResultSet::Shortcut (Wes Malone)
 
 2.015001  2012-09-13 21:19:40 America/Chicago
        - Correctly dep on Sub::Exporter::Progressive 0.001006

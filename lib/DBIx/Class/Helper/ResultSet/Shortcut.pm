@@ -1,39 +1,23 @@
-package DBIx::Class::Helper::ResultSet::AttributeAccessors;
+package DBIx::Class::Helper::ResultSet::Shortcut;
 
-# ABSTRACT: Avoid empty search params when you modify a resultset
+# ABSTRACT: Shortcuts to common searches (->order_by, etc)
 
 use strict;
 use warnings;
 
-sub distinct {
-   my ( $self, $switch ) = @_;
-   $self->search(undef, { distinct => defined $switch ? $switch : 1 }) 
-}
+use base 'Class::C3::Componentised';
 
-sub group_by {
-   shift->search(undef, { group_by => shift })
-}
+__PACKAGE__->load_components(qw(
+   HRI
+   OrderBy
+   GroupBy
+   Distinct
+   Rows
+   Columns
+   AddColumns
+));
 
-sub order_by {
-   shift->search(undef, { order_by => shift })
-}
-
-sub hri {
-   shift->search(undef, {
-      result_class => 'DBIx::Class::ResultClass::HashRefInflator' })
-}
-
-sub rows {
-   shift->search(undef, { rows => shift })
-}
-
-sub columns {
-   shift->search(undef, { columns => shift })
-}
-
-sub add_columns {
-   shift->search(undef, { '+columns' => shift })
-}
+sub component_base_class { 'DBIx::Class::Helper::ResultSet::Shortcut' }
 
 1;
 
@@ -122,3 +106,28 @@ entire schema.
  # equivalent to...
  $foo_rs->search(undef, { '+columns' => [qw/ some column names /] });
 
+=head1 SEE ALSO
+
+This component is actually a number of other components put together.  It will
+get more components added to it over time.  If you are worried about all the
+extra methods you won't use or something, using the individual shortcuts is
+a simple solution.  All the documentation will remain here, but the individual
+components are:
+
+=over 2
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::HRI>
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::OrderBy>
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::GroupBy>
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::Distinct>
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::Rows>
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::Columns>
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::AddColumns>
+
+=back
