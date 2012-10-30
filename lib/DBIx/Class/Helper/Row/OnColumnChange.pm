@@ -292,3 +292,17 @@ If used in conjunction with L<DBIx::Class::Candy> this component will export:
 =item after_column_change
 
 =back
+
+=head1 CAVEATS
+
+OnColumnChange methods are not triggered if you update your row via a
+relationship accessor.
+
+This does not work.
+ # $artist belongs_to 'label'
+ $artist->update({ label => $label });
+
+Whereas this works
+ # 'label_id' is the column storing the foreign key
+ # of the artists label.
+ $artist->update({ label_id => $label_id });
