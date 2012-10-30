@@ -6,11 +6,26 @@ use warnings;
 use lib 't/lib';
 use Test::More;
 use Test::Deep;
+use Test::Exception;
 
 use TestSchema;
 use TestSchema::Result::Bar;
 my $schema = TestSchema->deploy_or_connect();
 $schema->prepopulate;
+
+throws_ok(
+   sub {
+      TestSchema::Result::Bar->after_column_change(
+         foo_id => {
+            method => sub { 1; }
+         },
+         id => {
+            method => sub { 1; }
+         },
+      );
+   },
+   qr/Invalid number of arguments\. One \$column => \$args pair at a time\./,
+);
 
 TestSchema::Result::Bar->after_column_change(
    foo_id => {
@@ -74,5 +89,26 @@ cmp_deeply([
   [ 'after_foo_id', 1, 1 ]
 ], \@TestSchema::Result::Bar::events,
    '... even with args passed to update');
+
+
+
+
+TestSchema::Result::Foo->after_column_change(
+   bar_id => {
+      method   => sub { die },
+      txn_wrap => 1,
+   },
+);
+
+my $foo = $schema->resultset('Foo')->search(undef, { order_by => 'id' })->first;
+my $bar = $schema->resultset('Bar')->search( { id => { '!=' => $first->id } } )->first;
+dies_ok(
+    sub { $foo->update({ bar_id => $bar->id }); },
+    'after_column_change method triggered when updating via foreign key column',
+);
+dies_ok(
+    sub { $foo->update({ bar => $bar }); },
+    'after_column_change method triggered when updating via relationship accessor',
+);
 
 done_testing;
