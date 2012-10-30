@@ -6,11 +6,26 @@ use warnings;
 use lib 't/lib';
 use Test::More;
 use Test::Deep;
+use Test::Exception;
 
 use TestSchema;
 use TestSchema::Result::Bar;
 my $schema = TestSchema->deploy_or_connect();
 $schema->prepopulate;
+
+throws_ok(
+   sub {
+      TestSchema::Result::Bar->after_column_change(
+         foo_id => {
+            method => sub { 1; }
+         },
+         id => {
+            method => sub { 1; }
+         },
+      );
+   },
+   qr/Invalid number of arguments\. One \$column => \$args pair at a time\./,
+);
 
 TestSchema::Result::Bar->after_column_change(
    foo_id => {

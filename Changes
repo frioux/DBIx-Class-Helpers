@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - validate number of arguments to _change_column (David Schmidt)
        - fix name of Helper::ResultSet::Shortcut in SYNOPSIS
 
 2.016000  2012-10-25 21:35:05 CST6CDT

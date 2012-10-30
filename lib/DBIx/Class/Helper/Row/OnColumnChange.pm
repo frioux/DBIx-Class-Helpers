@@ -16,6 +16,9 @@ __PACKAGE__->mk_group_accessors(inherited => $_)
    for qw(_before_change _around_change _after_change);
 
 sub before_column_change {
+   die 'Invalid number of arguments. One $column => $args pair at a time.'
+      unless  @_ == 3;
+
    my $self = shift;
 
    my $column   = shift;
@@ -30,6 +33,9 @@ sub before_column_change {
 }
 
 sub around_column_change {
+   die 'Invalid number of arguments. One $column => $args pair at a time.'
+      unless  @_ == 3;
+
    my $self = shift;
 
    my $column   = shift;
@@ -44,6 +50,9 @@ sub around_column_change {
 }
 
 sub after_column_change {
+   die 'Invalid number of arguments. One $column => $args pair at a time.'
+      unless  @_ == 3;
+
    my $self = shift;
 
    my $column   = shift;
