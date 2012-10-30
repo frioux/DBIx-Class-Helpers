@@ -90,4 +90,22 @@ cmp_deeply([
 ], \@TestSchema::Result::Bar::events,
    '... even with args passed to update');
 
+TestSchema::Result::Foo->after_column_change(
+   bar_id => {
+      method   => sub { die },
+      txn_wrap => 1,
+   },
+);
+
+my $foo = $schema->resultset('Foo')->search(undef, { order_by => 'id' })->first;
+my $bar = $schema->resultset('Bar')->search( { id => { '!=' => $first->id } } )->first;
+dies_ok(
+    sub { $foo->update({ bar_id => $bar->id }); },
+    'after_column_change method triggered when updating via foreign key column',
+);
+dies_ok(
+    sub { $foo->update({ bar => $first }); },
+    'after_column_change method triggered when updating via relationship accessor',
+);
+
 done_testing;
