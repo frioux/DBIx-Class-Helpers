@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.016001  2012-11-02 17:52:43 CST6CDT
        - fix OnColumnChange to work with relationship based updates
          so $artist->update({ cd => $cd_obj }) now correctly triggers
          a change.  Thanks David Schmidt for the test
