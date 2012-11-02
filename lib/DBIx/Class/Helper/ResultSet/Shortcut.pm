@@ -27,7 +27,7 @@ sub component_base_class { 'DBIx::Class::Helper::ResultSet::Shortcut' }
 
  package MyApp::Schema::ResultSet::Foo;
 
- __PACKAGE__->load_components(qw{Helper::ResultSet::AttributeAccessors});
+ __PACKAGE__->load_components(qw{Helper::ResultSet::Shortcut});
 
  ...
 
