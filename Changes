@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - fix OnColumnChange to work with relationship based updates
+         so $artist->update({ cd => $cd_obj }) now correctly triggers
+         a change.  Thanks David Schmidt for the test
        - validate number of arguments to _change_column (David Schmidt)
        - fix name of Helper::ResultSet::Shortcut in SYNOPSIS
 

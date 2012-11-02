@@ -69,7 +69,10 @@ sub after_column_change {
 sub update {
    my ($self, $args) = @_;
 
-   my %dirty = ( $self->get_dirty_columns, %{$args||{}} );
+   $self->set_inflated_columns($args) if $args;
+
+   my %dirty = $self->get_dirty_columns
+     or return $self;
 
    my @all_before = @{$self->_before_change || []};
    my @all_around = @{$self->_around_change || []};
