@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+2.016002  2012-11-17 15:31:12 CST6CDT
+       - Put MetaYAML back in dist
+
 2.016001  2012-11-02 17:52:43 CST6CDT
        - fix OnColumnChange to work with relationship based updates
          so $artist->update({ cd => $cd_obj }) now correctly triggers
