@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Fix bug in dup_check_source_auto and fk_check_source_auto.  If
+         any of the broken things were multiple they explode in the hashref.
+         The solution is to force the values to be resultsets, which is how
+         the helper is documented anyway. (thanks MST for finding this)
 
 2.016002  2012-11-17 15:31:12 CST6CDT
        - Put MetaYAML back in dist

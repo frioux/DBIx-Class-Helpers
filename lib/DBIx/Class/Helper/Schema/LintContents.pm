@@ -42,7 +42,7 @@ sub dup_check_source_auto {
    my %uc = $self->source($source)->unique_constraints;
    return {
       map {
-         $_ => $self->dup_check_source($source, $uc{$_})
+         $_ => scalar $self->dup_check_source($source, $uc{$_})
       } keys %uc
    }
 }
@@ -71,7 +71,7 @@ sub fk_check_source_auto {
 
    return {
       map {
-         $_ => $self->fk_check_source(
+         $_ => scalar $self->fk_check_source(
             $from_moniker,
             $from_source->related_source($_),
             $self->_fk_cond_fixer($rels{$_}->{cond})

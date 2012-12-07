@@ -60,6 +60,10 @@ subtest 'fk_check_source_auto' => sub {
       foo_id => 1010,
       bar_id => 2020,
    });
+   $schema->resultset('Foo_Bar')->create({
+      foo_id => 1111,
+      bar_id => 2222,
+   });
 
    cmp_deeply [map {
       my $source = $_;
@@ -70,8 +74,8 @@ subtest 'fk_check_source_auto' => sub {
       } keys %$constraints;
    } grep { $_ ne 'Bloaty' } $schema->sources], [
      { "Bar foo" => 0 },
-     { "Foo_Bar bar" => 1 },
-     { "Foo_Bar foo" => 1 },
+     { "Foo_Bar bar" => 2 },
+     { "Foo_Bar foo" => 2 },
      { "Foo bar" => 0 },
      { "Gnarly_Station station" => 0 },
      { "Gnarly_Station gnarly" => 0 }
