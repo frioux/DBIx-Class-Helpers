@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.016003  2012-12-07 15:54:29 CST6CDT
        - Fix bug in dup_check_source_auto and fk_check_source_auto.  If
          any of the broken things were multiple they explode in the hashref.
          The solution is to force the values to be resultsets, which is how
