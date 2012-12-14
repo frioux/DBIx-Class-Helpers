@@ -8,7 +8,9 @@ use DBIx::Class::Candy
 
 table 'Gnarly';
 
-column 'id';
+column 'id' => {
+   is_auto_increment => 1,
+};
 column 'name';
 
 column literature => {
