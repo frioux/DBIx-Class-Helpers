@@ -2,24 +2,68 @@ package DBIx::Class::Helper::Schema::Serialize;
 
 # it might be stupid to make this methods; maybe just subs?
 
-use strict;
-use warnings;
+use Moo;
+use DBIx::Class::Helper::Schema::Serialize::Result;
 
 use Scalar::Util qw(blessed weaken);
 
 sub _transform_source_arg { [map blessed $_ ? $_->source_name : $_, @{$_[1]}] }
 
-sub serialize {
-   my ($self, $args) = @_;
+has starting_points => (
+   is => 'ro',
+   required => 1,
+);
 
-   my @starting_points = @{$args->{starting_points}||[]};
+has schema => (
+   is => 'ro',
+   required => 1,
+   handles => [qw(sources source)],
+);
 
-   die 'dummy!' unless @starting_points;
+has included_sources => (
+   is => 'ro',
+   lazy => 1,
+   builder => 'build_included_sources',
+   init_arg => 'resolved_included_sources',
+);
+
+has _source_serializers => (
+   is => 'ro',
+   init_arg => 'source_serializers',
+   default => sub { {} },
+);
+
+has source_serializers => (
+   is => 'ro',
+   lazy => 1,
+   init_arg => undef,
+   builder => 'build_source_serializers',
+);
+
+sub build_source_serializers {
+   my $self = shift;
+
+   my $ret = $self->_source_serializers;
+
+   for my $source (keys %{$self->included_sources}) {
+      my $r = $ret->{$source} ||=
+         DBIx::Class::Helper::Schema::Serialize::Result->new(
+            serializer => $self,
+         );
+      $r->source($self->source($source));
+      $r->serializer($self);
+   }
+
+   $ret
+}
+
+sub build_included_sources {
+   my $self = shift;
 
    my %included_sources;
-   if (my $w = $args->{included_sources}) {
+   if (my $w = $self->_included_sources) {
       %included_sources = map { $_ => 1 } @{$self->_transform_source_arg($w)}
-   } elsif (my $b = $args->{excluded_sources}) {
+   } elsif (my $b = $self->_excluded_sources) {
       my %excluded = map { $_ => 1 } @{$self->_transform_source_arg($b)};
 
       %included_sources = map { $_ => 1 }
@@ -28,14 +72,30 @@ sub serialize {
       %included_sources = map { $_ => 1 } $self->sources
    }
 
+   \%included_sources
+}
+
+has _included_sources => (
+   is => 'ro',
+   init_arg => 'included_sources',
+);
+
+has _excluded_sources => (
+   is => 'ro',
+   init_arg => 'excluded_sources',
+);
+
+sub serialize {
+   my ($self, $args) = @_;
+
+   my %included_sources =  %{$self->included_sources};
    my $ret = {
       data => {
          map { $_ => {} } keys %included_sources
       },
-      included_sources => \%included_sources,
    };
 
-   for my $rs (@starting_points) {
+   for my $rs (@{$self->starting_points}) {
       die 'you dummy!' unless $included_sources{$rs->result_source->source_name};
 
       $self->serialize_resultset($rs, $ret);
@@ -64,37 +124,11 @@ sub serialize_resultset {
 
    my $source = $rs->result_source;
 
-   my @pk = $source->primary_columns;
-
-   my %relationships = map {
-      $_ => {
-         info => $source->relationship_info($_),
-         source => $source->related_source($_),
-      },
-   } $source->relationships;
-
-   my %autoinc_fk;
-   for my $r (keys %relationships) {
-      my $easy_cond = $self->_fk_cond_unpack($relationships{$r}{info}{cond});
-
-      my $other_src = $relationships{$r}{source};
-      for my $other_col (keys %$easy_cond) {
-         $autoinc_fk{$easy_cond->{$other_col}} = 1
-            if $other_src->column_info($other_col)->{is_auto_increment}
-      }
-   }
-
-   # TODO: column filter should be more generic
-   my @columns = grep
-      !$source->column_info($_)->{is_auto_increment} &&
-      !$autoinc_fk{$_},
-   $source->columns;
-
-   my @rels = grep
-      $conf->{included_sources}{$source->related_source($_)->source_name},
-      $source->relationships;
+   my $source_serializer = $self->source_serializers->{$source->source_name};
 
    my $source_store = $conf->{data}{$source->source_name};
+
+   my @pk = $source->primary_columns;
 
    ROW:
    while (my $row = $rs->next) {
@@ -103,7 +137,7 @@ sub serialize_resultset {
 
       my $obj = {
          columns => {
-            map { $_ => $row->get_column($_) } @columns,
+            map { $_ => $row->get_column($_) } @{$source_serializer->columns},
          }
       };
       $conf->{data}{$source->source_name}->{$pk} = $obj;
@@ -113,7 +147,7 @@ sub serialize_resultset {
          push @$stuff, $ref
       }
 
-      for (@rels) {
+      for (@{$source_serializer->relationships}) {
          $conf->{data}{$source->source_name}->{$pk}{rels} ||= {};
          my $r = [];
          $conf->{data}{$source->source_name}->{$pk}{rels}{$_} = $r;

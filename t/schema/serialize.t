@@ -7,19 +7,20 @@ use lib 't/lib';
 use Test::More;
 use Test::Deep;
 use JSYNC;
+use DBIx::Class::Helper::Schema::Serialize;
+use Devel::Dwarn;
 
 use TestSchema;
 
-subtest 'fk_check_source_auto' => sub {
-   my $schema = TestSchema->deploy_or_connect();
-   $schema->prepopulate;
+my $schema = TestSchema->deploy_or_connect();
+$schema->prepopulate;
 
-   use Devel::Dwarn;
-   warn JSYNC::dump(DwarnS $schema->serialize({
-      starting_points => [
-         map $schema->resultset($_)->search_rs, 'Gnarly_Station'
-      ],
-   }));
-};
+DBIx::Class::Helper::Schema::Serialize->new(
+   schema => $schema,
+   starting_points => [
+      map $schema->resultset($_)->search_rs, 'Gnarly_Station'
+   ],
+)->serialize->$Dwarn;
 
+ok 1;
 done_testing;
