@@ -101,6 +101,10 @@ sub serialize {
       $self->serialize_resultset($rs, $ret);
    }
 
+   for (keys %{$ret->{data}}) {
+      $ret->{data}{$_} = [values %{$ret->{data}{$_}}]
+   }
+
    return $ret->{data};
 }
 
@@ -133,14 +137,14 @@ sub serialize_resultset {
    ROW:
    while (my $row = $rs->next) {
       my $pk = join "\0", map $row->get_column($_), @pk;
-      next ROW if $conf->{data}{$source->source_name}->{$pk};
+      next ROW if $source_store->{$pk};
 
       my $obj = {
          columns => {
             map { $_ => $row->get_column($_) } @{$source_serializer->columns},
          }
       };
-      $conf->{data}{$source->source_name}->{$pk} = $obj;
+      $source_store->{$pk} = $obj;
       if ($stuff) {
          my $ref = $obj;
          weaken($ref);
@@ -148,9 +152,14 @@ sub serialize_resultset {
       }
 
       for (@{$source_serializer->relationships}) {
-         $conf->{data}{$source->source_name}->{$pk}{rels} ||= {};
-         my $r = [];
-         $conf->{data}{$source->source_name}->{$pk}{rels}{$_} = $r;
+         my $r;
+
+         if ($source_serializer->include_relationships) {
+            $conf->{data}{$source->source_name}->{$pk}{rels} ||= {};
+            $r = [];
+            $conf->{data}{$source->source_name}->{$pk}{rels}{$_} = $r;
+         }
+
          $self->serialize_resultset(
             scalar $row->related_resultset($_),
             $conf,

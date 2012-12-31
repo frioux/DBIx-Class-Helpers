@@ -8,6 +8,7 @@ use Test::More;
 use Test::Deep;
 use JSYNC;
 use DBIx::Class::Helper::Schema::Serialize;
+use aliased 'DBIx::Class::Helper::Schema::Serialize::Result';
 use Devel::Dwarn;
 
 use TestSchema;
@@ -17,9 +18,13 @@ $schema->prepopulate;
 
 DBIx::Class::Helper::Schema::Serialize->new(
    schema => $schema,
-   starting_points => [
-      map $schema->resultset($_)->search_rs, 'Gnarly_Station'
-   ],
+   starting_points => [ $schema->resultset('Gnarly_Station')->search_rs ],
+   source_serializers => {
+      Gnarly_Station => Result->new(
+         relationships => ['gnarly'],
+         include_relationships => 0,
+      )->$Dwarn,
+   },
 )->serialize->$Dwarn;
 
 ok 1;

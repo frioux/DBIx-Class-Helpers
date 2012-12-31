@@ -8,6 +8,11 @@ has relationships => (
    builder => 'build_relationships',
 );
 
+has include_relationships => (
+   is => 'ro',
+   default => sub { 1 },
+);
+
 sub build_relationships {
    [grep $_[0]->include_relationship($_), $_[0]->source->relationships];
 }
