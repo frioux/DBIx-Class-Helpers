@@ -90,22 +90,28 @@ sub serialize {
 
    my %included_sources =  %{$self->included_sources};
    my $ret = {
-      data => {
+      all_data => {
          map { $_ => {} } keys %included_sources
+      },
+      init_data => {
+         map { $_->result_source->source_name => [] } @{$self->starting_points}
       },
    };
 
    for my $rs (@{$self->starting_points}) {
-      die 'you dummy!' unless $included_sources{$rs->result_source->source_name};
+      my $source_name = $rs->result_source->source_name;
+      die 'you dummy!' unless $included_sources{$source_name};
 
-      $self->serialize_resultset($rs, $ret);
+      $self->serialize_resultset(
+         $rs, $ret, $ret->{init_data}{$source_name}
+      );
    }
 
-   for (keys %{$ret->{data}}) {
-      $ret->{data}{$_} = [values %{$ret->{data}{$_}}]
+   for (keys %{$ret->{all_data}}) {
+      $ret->{all_data}{$_} = [values %{$ret->{all_data}{$_}}]
    }
 
-   return $ret->{data};
+   return $ret->{init_data};
 }
 
 # taken from linter
@@ -130,7 +136,7 @@ sub serialize_resultset {
 
    my $source_serializer = $self->source_serializers->{$source->source_name};
 
-   my $source_store = $conf->{data}{$source->source_name};
+   my $source_store = $conf->{all_data}{$source->source_name};
 
    my @pk = $source->primary_columns;
 
@@ -155,9 +161,9 @@ sub serialize_resultset {
          my $r;
 
          if ($source_serializer->include_relationships) {
-            $conf->{data}{$source->source_name}->{$pk}{rels} ||= {};
+            $conf->{all_data}{$source->source_name}->{$pk}{rels} ||= {};
             $r = [];
-            $conf->{data}{$source->source_name}->{$pk}{rels}{$_} = $r;
+            $conf->{all_data}{$source->source_name}->{$pk}{rels}{$_} = $r;
          }
 
          $self->serialize_resultset(
