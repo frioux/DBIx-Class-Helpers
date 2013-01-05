@@ -13,12 +13,45 @@ my %rand_order_by = (
    'DBIx::Class::Storage::DBI::MSSQL'                      => 'NEWID()',
    'DBIx::Class::Storage::DBI::Pg'                         => 'RANDOM()',
    'DBIx::Class::Storage::DBI::Oracle'                     => 'dbms_random.value',
+   'DBIx::Class::Storage::DBI::Sybase::MSSQL'                     => 'NEWID()',
+   'DBIx::Class::Storage::DBI::Sybase::Microsoft_SQL_Server::NoBindVars' =>
+     'NEWID()',
+   'DBIx::Class::Storage::DBI::Sybase::Microsoft_SQL_Server'      => 'NEWID()',
+   'DBIx::Class::Storage::DBI::Sybase::ASE::NoBindVars'           => 'RAND()',
+   'DBIx::Class::Storage::DBI::Sybase::ASE'                       => 'RAND()',
+   'DBIx::Class::Storage::DBI::Sybase'                            => 'RAND()',
+   'DBIx::Class::Storage::DBI::SQLAnywhere'                       => 'RAND()',
+   'DBIx::Class::Storage::DBI::Oracle::WhereJoins' => 'dbms_random.value',
+   'DBIx::Class::Storage::DBI::Oracle::Generic'    => 'dbms_random.value',
+   'DBIx::Class::Storage::DBI::ODBC::SQL_Anywhere' => 'RAND()',
+   'DBIx::Class::Storage::DBI::ODBC::Firebird'                    => 'RAND()',
+   'DBIx::Class::Storage::DBI::ODBC::ACCESS'                      => 'RND()',
+   'DBIx::Class::Storage::DBI::mysql::backup'                     => 'RAND()',
+   'DBIx::Class::Storage::DBI::InterBase'                         => 'RAND()',
+   'DBIx::Class::Storage::DBI::Firebird::Common'                  => 'RAND()',
+   'DBIx::Class::Storage::DBI::Firebird'                          => 'RAND()',
+   'DBIx::Class::Storage::DBI::DB2'                               => 'RAND()',
+   'DBIx::Class::Storage::DBI::ADO::MS_Jet'                       => 'RND()',
+   'DBIx::Class::Storage::DBI::ADO::Microsoft_SQL_Server'         => 'NEWID()',
+   'DBIx::Class::Storage::DBI::ACCESS'                            => 'RND()',
 );
+
+{
+#sort keys descending to handle more specific storage classes first
+#(right now it does not make a difference though)
+my @keys_rand_order_by = sort { $b cmp $a } keys %rand_order_by;
 
 sub _rand_order_by {
    my $self = shift;
    $self->result_source->storage->_determine_driver;
-   return $rand_order_by{ref $self->result_source->storage} || 'RAND()';
+   my $storage = $self->result_source->storage;
+
+   for my $dbms (@keys_rand_order_by) {
+      return $rand_order_by{$dbms} if $storage->isa($dbms);
+   }
+
+   return 'RAND()';
+}
 }
 
 sub rand {

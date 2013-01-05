@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add more storages for ::ResultSet::Random (Thanks José Diaz Seng!)
 
 2.016003  2012-12-07 15:54:29 CST6CDT
        - Fix bug in dup_check_source_auto and fk_check_source_auto.  If
