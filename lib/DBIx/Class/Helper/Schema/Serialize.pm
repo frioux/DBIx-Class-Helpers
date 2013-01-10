@@ -114,6 +114,20 @@ sub serialize {
    return $ret->{init_data};
 }
 
+# XXX: make excluding parts of serialized data optional?
+sub deserialize {
+   my ($class, $data) = @_;
+
+   require DBIx::Class::Helper::Schema::SourceOrderer;
+
+   my $tree = DBIx::Class::Helper::Schema::SourceOrderer
+      ->new( schema => $data->{schema} )
+      ->source_tree({ limit_sources => [ ] });
+
+   my $seen;
+
+}
+
 # taken from linter
 sub _fk_cond_unpack {
    my ($self, $cond) = @_;
