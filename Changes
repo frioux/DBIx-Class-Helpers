@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Fix hash order dependency bug (Thanks Fitz Elliott!)
 
 2.016004  2013-01-09 20:05:57 CST6CDT
        - Add more storages for ::ResultSet::Random (Thanks José Diaz Seng!)
