@@ -14,14 +14,14 @@ subtest 'null_check_source_auto' => sub {
    $schema->prepopulate;
 
    $schema->source('Gnarly')->column_info('literature')->{is_nullable} = 0;
-   cmp_deeply [map +{ $_ => $schema->null_check_source_auto($_)->count }, $schema->sources], [
-     { Gnarly => 3 },
+   cmp_deeply [map +{ $_ => $schema->null_check_source_auto($_)->count }, sort $schema->sources], [
      { Bar => 0 },
-     { Station => 0 },
-     { Foo_Bar => 0 },
      { Bloaty => undef },
      { Foo => 0 },
-     { Gnarly_Station => 0 }
+     { Foo_Bar => 0 },
+     { Gnarly => 3 },
+     { Gnarly_Station => 0 },
+     { Station => 0 },
    ], 'errors for Gnarly null_check_source';
 };
 
@@ -39,15 +39,15 @@ subtest 'dub_check_source_auto' => sub {
       map {
          my $constraint_name = $_;
         +{ "$source $constraint_name" => $constraints->{$constraint_name}->count }
-      } keys %$constraints;
-   } grep { $_ ne 'Bloaty' } $schema->sources], [
+      } sort keys %$constraints;
+   } grep { $_ ne 'Bloaty' } sort $schema->sources], [
+     { "Bar primary" => 0 },
+     { "Foo primary" => 0 },
+     { "Foo_Bar primary" => 0 },
      { "Gnarly Gnarly_name" => 2 },
      { "Gnarly primary" => 0 },
-     { "Bar primary" => 0 },
+     { "Gnarly_Station primary" => 0 },
      { "Station primary" => 0 },
-     { "Foo_Bar primary" => 0 },
-     { "Foo primary" => 0 },
-     { "Gnarly_Station primary" => 0 }
    ], 'Gnarly_name duplicated twice';
 };
 
@@ -71,14 +71,14 @@ subtest 'fk_check_source_auto' => sub {
       map {
          my $fk_constraint_name = $_;
         +{ "$source $fk_constraint_name" => $constraints->{$fk_constraint_name}->count }
-      } keys %$constraints;
-   } grep { $_ ne 'Bloaty' } $schema->sources], [
+      } sort keys %$constraints;
+   } grep { $_ ne 'Bloaty' } sort $schema->sources], [
      { "Bar foo" => 0 },
+     { "Foo bar" => 0 },
      { "Foo_Bar bar" => 2 },
      { "Foo_Bar foo" => 2 },
-     { "Foo bar" => 0 },
+     { "Gnarly_Station gnarly" => 0 },
      { "Gnarly_Station station" => 0 },
-     { "Gnarly_Station gnarly" => 0 }
    ], 'foo and bar constraints broken';
 };
 
