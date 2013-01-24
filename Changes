@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.016005  2013-01-23 19:00:09 CST6CDT
        - Fix hash order dependency bug (Thanks Fitz Elliott!)
 
 2.016004  2013-01-09 20:05:57 CST6CDT
