@@ -14,7 +14,7 @@ __PACKAGE__->load_namespaces(
 
 __PACKAGE__->load_components(qw/Helper::Schema::LintContents/);
 
-sub dbfile { 'dbfile' }
+sub dbfile { ':memory:' }
 
 sub upgrade_directory { './t/lib' }
 
