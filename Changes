@@ -3,6 +3,7 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
        - Remove use of a private method, thus fixing Helpers on v0.08210
        - Remove the last vestige of non-in-memory SQLite
+       - Stop using RT for bugtracking
 
 2.016005  2013-01-23 19:00:09 CST6CDT
        - Fix hash order dependency bug (Thanks Fitz Elliott!)
