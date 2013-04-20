@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.017000  2013-04-20 10:37:04 CST6CDT
        - Add ::Schema::QuoteNames to force quote_names on
        - Add normalize_connect_info utilitiy
 
