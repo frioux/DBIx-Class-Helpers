@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add normalize_connect_info utilitiy
 
 2.016006  2013-04-12 09:14:23 CST6CDT
        - Remove use of a private method, thus fixing Helpers on v0.08210

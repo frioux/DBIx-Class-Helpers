@@ -88,4 +88,74 @@ subtest order_by_vistor => sub {
 
 };
 
+subtest normalize_connect_info => sub {
+   subtest 'form 1' => sub {
+      cmp_deeply(
+         normalize_connect_info('dbi:foo'),
+         { dsn => 'dbi:foo' },
+         'dsn',
+      );
+
+      cmp_deeply(
+         normalize_connect_info('dbi:foo', 'user'),
+         {
+            dsn => 'dbi:foo',
+            user => 'user',
+         },
+         'dsn, user',
+      );
+      cmp_deeply(
+         normalize_connect_info('dbi:foo', 'user', 'pass'),
+         {
+            dsn => 'dbi:foo',
+            user => 'user',
+            password => 'pass',
+         },
+         'dsn, user, pass',
+      );
+      cmp_deeply(
+         normalize_connect_info('dbi:foo', 'user', 'pass',
+            { LongReadLen => 1 },
+         ),
+         {
+            dsn => 'dbi:foo',
+            user => 'user',
+            password => 'pass',
+            LongReadLen => 1,
+         },
+         'dsn, user, pass, dbi_opts',
+      );
+      cmp_deeply(
+         normalize_connect_info('dbi:foo', 'user', 'pass',
+            { LongReadLen => 1 },
+            { quote_names => 1 },
+         ),
+         {
+            dsn => 'dbi:foo',
+            user => 'user',
+            password => 'pass',
+            LongReadLen => 1,
+            quote_names => 1,
+         },
+         'all params',
+      );
+   };
+
+   subtest 'form 2' => sub {
+      my $s = sub {};
+      cmp_deeply(
+         normalize_connect_info($s),
+         { dbh_maker => $s },
+         'just sub',
+      );
+
+      cmp_deeply(
+         normalize_connect_info($s, { quote_names => 1 }),
+         { dbh_maker => $s, quote_names => 1 },
+         'sub and options',
+      );
+   };
+
+};
+
 done_testing;
