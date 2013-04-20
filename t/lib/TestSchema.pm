@@ -12,7 +12,10 @@ __PACKAGE__->load_namespaces(
    default_resultset_class => 'ResultSet',
 );
 
-__PACKAGE__->load_components(qw/Helper::Schema::LintContents/);
+__PACKAGE__->load_components(qw(
+   Helper::Schema::LintContents
+   Helper::Schema::QuoteNames
+));
 
 sub dbfile { ':memory:' }
 
