@@ -134,6 +134,8 @@ __END__
        return 'foo_bar' if $field eq 'foo.bar';
        return $field;
     }) if $attrs && $attrs->{order_by};
+
+    $self->next::method($search, $attrs);
  }
 
 =head1 DESCRIPTION
