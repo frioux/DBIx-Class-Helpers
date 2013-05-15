@@ -3,7 +3,7 @@ package DBIx::Class::Helper::ResultSet::Me;
 use strict;
 use warnings;
 
-# ABSTRACT: Define predefined searches a more nicely
+# ABSTRACT: Define predefined searches more nicely
 
 sub me { shift->current_source_alias . q(.) }
 
