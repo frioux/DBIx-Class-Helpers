@@ -15,6 +15,7 @@ __PACKAGE__->load_components(qw(
    Rows
    Columns
    AddColumns
+   Prefetch
 ));
 
 sub component_base_class { 'DBIx::Class::Helper::ResultSet::Shortcut' }
