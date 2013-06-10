@@ -15,6 +15,8 @@ my $rs = $schema->resultset('Foo');
 
 my $dupes_rs = $rs->search({}, { join => 'bars' });
 
+ok($dupes_rs->has_rows, 'check rs has rows');
+
 cmp_deeply 
    [$dupes_rs->distinct->all], 
    [$dupes_rs->search({},{distinct => 1})->all],
@@ -41,6 +43,11 @@ cmp_deeply
    [$dupes_rs->rows(2)->all], 
    [$dupes_rs->search({},{rows => 2})->all],
    'rows works the same';
+
+cmp_deeply
+   [$dupes_rs->rows(2)->all],
+   [$dupes_rs->limit(2)->all],
+   'limit works the same';
 
 cmp_deeply 
    [$dupes_rs->columns(['bar_id'])->all], 
