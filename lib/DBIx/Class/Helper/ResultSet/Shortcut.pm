@@ -94,6 +94,20 @@ entire schema.
  # equivalent to...
  $foo_rs->search(undef, { rows => 10 })
 
+=method limit
+
+This is an alias for C<rows>.
+
+  $foo_rs->limit(10);
+
+  # equivalent to...
+  $foo_rs->rows(10);
+
+=method has_rows
+
+A lighter way to check the resultset contains any data rather than
+calling C<< $rs->count >>.
+
 =method columns
 
  $foo_rs->columns([qw/ some column names /]);
