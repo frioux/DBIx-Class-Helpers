@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Add ::ResultSet::Shortcut::Prefetch (Wallas Reis)
        - Add ::ResultSet::Shortcut::HasRows (Wallas Reis)
        - Add ::ResultSet::Shortcut::Limit (Wallas Reis)
        - make ::ResultSet::Me more flexible (moltar)

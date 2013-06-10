@@ -54,6 +54,10 @@ cmp_deeply
    [$dupes_rs->search({},{columns => ['bar_id']})->all],
    'columns works the same';
 
+cmp_deeply
+   [$dupes_rs->prefetch('bar')->all],
+   [$dupes_rs->search({},{prefetch => 'bar' })->all],
+   'prefetch works the same';
 
 done_testing;
 
