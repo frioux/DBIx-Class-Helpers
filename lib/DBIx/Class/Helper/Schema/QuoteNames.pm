@@ -1,5 +1,7 @@
 package DBIx::Class::Helper::Schema::QuoteNames;
 
+# ABSTRACT: force C<quote_names> on
+
 use strict;
 use warnings;
 
