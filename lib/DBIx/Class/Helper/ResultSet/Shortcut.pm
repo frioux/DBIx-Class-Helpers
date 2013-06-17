@@ -107,6 +107,13 @@ entire schema.
  # equivalent to...
  $foo_rs->search(undef, { '+columns' => [qw/ some column names /] });
 
+=method prefetch
+
+ $foo_rs->prefetch('bar');
+
+ # equivalent to...
+ $foo_rs->search(undef, { prefetch => 'bar' });
+
 =head1 SEE ALSO
 
 This component is actually a number of other components put together.  It will
