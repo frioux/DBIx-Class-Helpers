@@ -81,6 +81,18 @@ entire schema.
  # equivalent to...
  $foo_rs->search(undef, { order_by => { -desc => 'col1' } });
 
+You can also specify the order in a free form, e.g.:
+
+ order_by('col1')        # same as search({}, { order_by => 'col1' }
+ order_by('!col1')       # same as search({}, { order_by => { -desc => 'col1' } }
+ order_by('col1,col2')   # same as search({}, { order_by => qw/col1, col2/ }
+ order_by('col1,!col2')  # same as search({}, { order_by => [{ -asc => 'col1' }, { -desc => 'col2' }] }
+ order_by(qw/col1 col2/) # same as search({}, { order_by => qw/col1, col2/ }
+
+Can mix it all up as well:
+
+ order_by('col1', qw/col2 col3/, 'col4,!col5')
+
 =method hri
 
  $foo_rs->hri;

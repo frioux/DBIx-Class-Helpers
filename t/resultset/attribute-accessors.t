@@ -59,5 +59,22 @@ cmp_deeply
    [$dupes_rs->search({},{prefetch => 'bar' })->all],
    'prefetch works the same';
 
+## Extended order_by syntax test
+my %tests = (
+    'id'         => [{ -asc => 'me.id' }],
+    '!id'        => [{ -desc => 'me.id' }],
+    'id,!bar_id'   => [{ -asc => 'me.id' }, { -desc => 'bar_id' }],
+    'id, !bar_id'  => [{ -asc => 'me.id' }, { -desc => 'bar_id' }],
+    'id ,!bar_id'  => [{ -asc => 'me.id' }, { -desc => 'bar_id' }],
+    'id , !bar_id' => [{ -asc => 'me.id' }, { -desc => 'bar_id' }],
+);
+
+while (my ($order, $expect) = each(%tests)) {
+   cmp_deeply
+      [$dupes_rs->order_by($order)->all],
+      [$dupes_rs->search({},{order_by => $expect})->all],
+      "order_by works: $order";
+}
+
 done_testing;
 
