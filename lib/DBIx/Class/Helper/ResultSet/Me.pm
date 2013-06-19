@@ -5,7 +5,7 @@ use warnings;
 
 # ABSTRACT: Define predefined searches more nicely
 
-sub me { shift->current_source_alias . q(.) }
+sub me { join('.', shift->current_source_alias, shift || q{})  }
 
 1;
 
