@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - make ::ResultSet::Me more flexible (moltar)
        - Fix some warnings (when using deprecated modules) (good catch Bill
          Mosely)
        - Fix lots of docs (moltar, Gregor Herrmann, mauke)

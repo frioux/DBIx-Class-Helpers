@@ -7,7 +7,7 @@ use warnings;
 
 # VERSION
 
-sub me { shift->current_source_alias . q(.) }
+sub me { join('.', shift->current_source_alias, shift || q{})  }
 
 1;
 
@@ -31,8 +31,13 @@ sub me { shift->current_source_alias . q(.) }
     $_[0]->search({ $_[0]->me.'type' => CANDY })
  }
 
+ sub cake {
+    $_[0]->search({ $_[0]->me('type') => CAKE })
+ }
+
  # in code using resultset:
  my $candy_bars = $schema->resultset('Bar')->candy;
+ my $cake_bars  = $schema->resultset('Bar')->cake;
 
 =head1 DESCRIPTION
 
@@ -50,4 +55,5 @@ for the L</me> method.
 
 Merely returns the SQL namespace for the current search with a C<.> at the end,
 allowing internal resultset methods to be defined with C<< $self->me >> instead
-of C<< $self->current_source_alias . q(.) >>.
+of C<< $self->current_source_alias . q(.) >>.  Also, if you pass it a single
+argument it will append that to the returned string.
