@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Fix some warnings (when using deprecated modules) (good catch Bill
+         Mosely)
+       - Fix lots of docs (moltar, Gregor Herrmann, mauke)
 
 2.017000  2013-04-20 10:37:04 CST6CDT
        - Add ::Schema::QuoteNames to force quote_names on
