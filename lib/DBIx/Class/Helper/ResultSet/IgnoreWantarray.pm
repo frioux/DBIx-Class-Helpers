@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Get rid of search context issues
 
+# VERSION
+
 sub search {
    shift->search_rs(@_);
 }

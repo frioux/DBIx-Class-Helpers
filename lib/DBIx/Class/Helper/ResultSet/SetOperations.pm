@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Do set operations with DBIx::Class
 
+# VERSION
+
 # cribbed from perlfaq4
 sub _compare_arrays {
    my ($self, $first, $second) = @_;

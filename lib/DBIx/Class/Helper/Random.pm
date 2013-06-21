@@ -1,6 +1,9 @@
 package DBIx::Class::Helper::Random;
 
 use parent 'DBIx::Class::Helper::ResultSet::Random';
+
+# VERSION
+
 use Carp::Clan;
 carp 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 3;
 croak 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 4;

@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Define predefined searches more nicely
 
+# VERSION
+
 sub me { shift->current_source_alias . q(.) }
 
 1;

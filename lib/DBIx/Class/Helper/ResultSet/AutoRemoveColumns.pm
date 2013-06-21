@@ -2,6 +2,8 @@ package DBIx::Class::Helper::ResultSet::AutoRemoveColumns;
 
 # ABSTRACT: Automatically remove columns from a ResultSet
 
+# VERSION
+
 use parent 'DBIx::Class::Helper::ResultSet::RemoveColumns', 'DBIx::Class';
 
 __PACKAGE__->mk_group_accessors(inherited => '_fetchable_columns');

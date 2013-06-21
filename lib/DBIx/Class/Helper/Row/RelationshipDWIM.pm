@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Type less for your relationships!
 
+# VERSION
+
 sub default_result_namespace {
    die 'you forgot to set your default_result_namespace'
 }

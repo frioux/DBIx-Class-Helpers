@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Clean up your SQL namespace (DEPRECATED)
 
+# VERSION
+
 sub as_virtual_view {
    my $self = shift;
 
@@ -12,8 +14,8 @@ sub as_virtual_view {
 }
 
 use Carp::Clan;
-carp 'This module is deprecated!  Please use DBIx::Class::ResultSet::as_subselect_rs instead!' if $DBIx::Class::Helper::ResultSet::VERSION >= 3;
-croak 'This module is deprecated!  Please use DBIx::Class::ResultSet::as_subselect_rs instead!' if $DBIx::Class::Helper::ResultSet::VERSION >= 4;
+carp 'This module is deprecated!  Please use DBIx::Class::ResultSet::as_subselect_rs instead!' if $VERSION >= 3;
+croak 'This module is deprecated!  Please use DBIx::Class::ResultSet::as_subselect_rs instead!' if $VERSION >= 4;
 
 1;
 

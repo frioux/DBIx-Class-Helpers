@@ -5,6 +5,8 @@ package DBIx::Class::Helper::ResultSet::Shortcut;
 use strict;
 use warnings;
 
+# VERSION
+
 use base 'Class::C3::Componentised';
 
 __PACKAGE__->load_components(qw(

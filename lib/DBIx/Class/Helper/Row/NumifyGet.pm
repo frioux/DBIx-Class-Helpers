@@ -7,6 +7,8 @@ use Try::Tiny;
 
 # ABSTRACT: Force numeric "context" on numeric columns
 
+# VERSION
+
 sub get_column {
    my ($self, $col) = @_;
 

@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Do things when the values of a column change
 
+# VERSION
+
 use parent 'DBIx::Class::Helper::Row::StorageValues';
 use List::Util 'first';
 use DBIx::Class::Candy::Exports;

@@ -2,6 +2,8 @@ package DBIx::Class::Helper::ResultSet::Union;
 
 use parent 'DBIx::Class::Helper::ResultSet::SetOperations';
 
+# VERSION
+
 use Carp::Clan;
 carp 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 3;
 croak 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 4;

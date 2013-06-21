@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Get random rows from a ResultSet
 
+# VERSION
+
 # this is ghetto
 my %rand_order_by = (
    'DBIx::Class::Storage::DBI::SQLite'                     => 'RANDOM()',

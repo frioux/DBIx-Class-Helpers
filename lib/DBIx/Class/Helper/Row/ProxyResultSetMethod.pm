@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Efficiently reuse ResultSet methods from results
 
+# VERSION
+
 use base 'DBIx::Class::Helper::Row::SelfResultSet';
 use Sub::Name ();
 

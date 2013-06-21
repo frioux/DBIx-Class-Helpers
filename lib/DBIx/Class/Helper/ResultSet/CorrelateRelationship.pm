@@ -5,6 +5,8 @@ use warnings;
 
 # ABSTRACT: Easily correlate your ResultSets
 
+# VERSION
+
 sub correlate {
    my ($self, $rel) = @_;
 
