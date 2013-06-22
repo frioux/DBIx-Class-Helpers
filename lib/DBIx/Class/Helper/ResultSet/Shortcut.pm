@@ -15,6 +15,8 @@ __PACKAGE__->load_components(qw(
    GroupBy
    Distinct
    Rows
+   HasRows
+   Limit
    Columns
    AddColumns
 ));
@@ -141,6 +143,14 @@ components are:
 =item * L<DBIx::Class::Helper::ResultSet::Shortcut::Distinct>
 
 =item * L<DBIx::Class::Helper::ResultSet::Shortcut::Rows>
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::Limit>
+
+(inherits from C<DBIx::Class::Helper::ResultSet::Shortcut::Rows>)
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::HasRows>
+
+(inherits from C<DBIx::Class::Helper::ResultSet::Shortcut::Rows>)
 
 =item * L<DBIx::Class::Helper::ResultSet::Shortcut::Columns>
 

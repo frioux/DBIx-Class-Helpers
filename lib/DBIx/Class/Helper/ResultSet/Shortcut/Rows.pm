@@ -7,8 +7,4 @@ use warnings;
 
 sub rows { shift->search(undef, { rows => shift }) }
 
-sub has_rows { return shift->rows(1)->next }
-
-sub limit { return shift->rows(@_) }
-
 1;
