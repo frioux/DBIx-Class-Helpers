@@ -11,7 +11,7 @@ use base 'Class::C3::Componentised';
 
 __PACKAGE__->load_components(qw(
    HRI
-   OrderBy
+   OrderByMagic
    GroupBy
    Distinct
    Rows
@@ -81,17 +81,16 @@ entire schema.
  # equivalent to...
  $foo_rs->search(undef, { order_by => { -desc => 'col1' } });
 
-You can also specify the order in a free form, e.g.:
+You can also specify the order as a "magic string", e.g.:
 
- order_by('col1')        # same as search({}, { order_by => 'col1' }
- order_by('!col1')       # same as search({}, { order_by => { -desc => 'col1' } }
- order_by('col1,col2')   # same as search({}, { order_by => qw/col1, col2/ }
- order_by('col1,!col2')  # same as search({}, { order_by => [{ -asc => 'col1' }, { -desc => 'col2' }] }
- order_by(qw/col1 col2/) # same as search({}, { order_by => qw/col1, col2/ }
+ $foo_rs->order_by('!col1')       # ->order_by({ -desc => 'col1' })
+ $foo_rs->order_by('col1,col2')   # ->order_by([qw(col1 col2)])
+ $foo_rs->order_by('col1,!col2')  # ->order_by([{ -asc => 'col1' }, { -desc => 'col2' }])
+ $foo_rs->order_by(qw(col1 col2)) # ->order_by([qw(col1 col2)])
 
 Can mix it all up as well:
 
- order_by('col1', qw/col2 col3/, 'col4,!col5')
+ $foo_rs->order_by(qw(col1 col2 col3), 'col4,!col5')
 
 =method hri
 
@@ -157,6 +156,11 @@ components are:
 =item * L<DBIx::Class::Helper::ResultSet::Shortcut::HRI>
 
 =item * L<DBIx::Class::Helper::ResultSet::Shortcut::OrderBy>
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::OrderByMagic>
+
+(adds the "magic string" functionality to
+C<DBIx::Class::Helper::ResultSet::Shortcut::OrderBy>))
 
 =item * L<DBIx::Class::Helper::ResultSet::Shortcut::GroupBy>
 
