@@ -1,16 +1,18 @@
 language: perl
 perl:
+   - "5.18"
    - "5.16"
    - "5.14"
    - "5.12"
    - "5.10"
+   - "5.8"
 
 install:
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=j10:c HARNESS_TIMER=1
    - sudo apt-get -y install bc
    - cpanm --quiet --notest Devel::Cover Config::INI::Reader SQL::Translator
-   - perl -MConfig::INI::Reader -E 'say join " ", keys %{Config::INI::Reader->read_file("dist.ini")->{Prereqs}}' | cpanm --quiet --notest
-   - perl -Ilib -It/lib -MTestSchema -E'TestSchema->generate_ddl; my $t = TestSchema->connect; $t->deploy'
+   - perl -MConfig::INI::Reader -e 'print join " ", keys %{Config::INI::Reader->read_file("dist.ini")->{Prereqs}}' | cpanm --quiet --notest
+   - perl -Ilib -It/lib -MTestSchema -e'TestSchema->generate_ddl; my $t = TestSchema->connect; $t->deploy'
 
 script:
    - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine prove -lrsv t
