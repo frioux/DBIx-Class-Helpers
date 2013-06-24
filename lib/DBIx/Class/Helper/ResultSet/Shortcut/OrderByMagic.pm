@@ -10,10 +10,8 @@ use base 'DBIx::Class::Helper::ResultSet::Shortcut::OrderBy';
 sub order_by {
     my ($self, @order) = @_;
 
-    ## pass thru if we have a HashRef format
-    if (@order && ref($order[0]) eq 'HASH') {
-        return $self->next::method($order[0]);
-    }
+    return $self->next::method(@order)
+       if @order && ref($order[0]);
 
     my @clauses;
     foreach (@order) {

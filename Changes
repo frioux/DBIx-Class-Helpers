@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - ::OrderByMagic now correctly passes through arrayrefs (moltar)
 
 2.018002  2013-07-30 18:45:10 CST6CDT
  - ::Helper::ResultSet correctly uses all Helpers (reported by moltar)

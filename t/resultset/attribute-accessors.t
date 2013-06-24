@@ -30,7 +30,12 @@ cmp_deeply
 cmp_deeply
    [$dupes_rs->order_by({ -desc => 'me.id' })->all],
    [$dupes_rs->search({},{order_by => { -desc => 'me.id' }})->all],
-   'order_by works the same';
+   'hashref order_by works the same';
+
+cmp_deeply
+   [$dupes_rs->order_by(['me.id'])->all],
+   [$dupes_rs->search({},{order_by => { -asc => 'me.id' }})->all],
+   'arrayref order_by works the same';
 
 cmp_deeply
    [$dupes_rs->hri->all],
