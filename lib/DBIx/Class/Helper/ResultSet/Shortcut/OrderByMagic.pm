@@ -21,7 +21,12 @@ sub order_by {
                 $col = substr($col, 1); # take everything after '!'
                 $dir = 'desc';
             }
-            push @clauses, { "-$dir" => join('.', $self->current_source_alias, $col) };
+
+            # add csa prefix if necessary
+            $col = join('.', $self->current_source_alias, $col)
+                if index($col, '.') == -1;
+
+            push @clauses, { "-$dir" => $col };
         }
     }
 
