@@ -26,7 +26,7 @@ sub order_by {
 
             ## add csa prefix if necessary
             $col = join('.', $self->current_source_alias, $col)
-                if index($col, '.') != -1;
+                if index($col, '.') == -1;
 
             push @clauses, { "-$dir" => $col };
         }
