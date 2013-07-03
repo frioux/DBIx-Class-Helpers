@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+       - Fix bug related to inheriting from ::Shortcut
 
 2.018000  2013-06-22 17:03:29 CST6CDT
        - Add ::ResultSet::Shortcut::OrderByMagic (moltar)

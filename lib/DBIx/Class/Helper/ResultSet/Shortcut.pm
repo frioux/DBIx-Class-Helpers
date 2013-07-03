@@ -7,22 +7,20 @@ use warnings;
 
 # VERSION
 
-use base 'Class::C3::Componentised';
+use base 'DBIx::Class::ResultSet';
 
 __PACKAGE__->load_components(qw(
-   HRI
-   OrderByMagic
-   GroupBy
-   Distinct
-   Rows
-   HasRows
-   Limit
-   Columns
-   AddColumns
-   Prefetch
+   Helper::ResultSet::Shortcut::HRI
+   Helper::ResultSet::Shortcut::OrderByMagic
+   Helper::ResultSet::Shortcut::GroupBy
+   Helper::ResultSet::Shortcut::Distinct
+   Helper::ResultSet::Shortcut::Rows
+   Helper::ResultSet::Shortcut::HasRows
+   Helper::ResultSet::Shortcut::Limit
+   Helper::ResultSet::Shortcut::Columns
+   Helper::ResultSet::Shortcut::AddColumns
+   Helper::ResultSet::Shortcut::Prefetch
 ));
-
-sub component_base_class { 'DBIx::Class::Helper::ResultSet::Shortcut' }
 
 1;
 
