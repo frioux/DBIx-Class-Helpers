@@ -1,232 +1,231 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
-       - Fix bug related to inheriting from ::Shortcut
+ - Fix bug related to inheriting from ::Shortcut
 
 2.018000  2013-06-22 17:03:29 CST6CDT
-       - Add ::ResultSet::Shortcut::OrderByMagic (moltar)
-       - Add ::ResultSet::Shortcut::Prefetch (Wallas Reis)
-       - Add ::ResultSet::Shortcut::HasRows (Wallas Reis)
-       - Add ::ResultSet::Shortcut::Limit (Wallas Reis)
-       - make ::ResultSet::Me more flexible (moltar)
-       - Fix some warnings (when using deprecated modules) (good catch Bill
-         Mosely)
-       - Fix lots of docs (moltar, Gregor Herrmann, mauke)
+ - Add ::ResultSet::Shortcut::OrderByMagic (moltar)
+ - Add ::ResultSet::Shortcut::Prefetch (Wallas Reis)
+ - Add ::ResultSet::Shortcut::HasRows (Wallas Reis)
+ - Add ::ResultSet::Shortcut::Limit (Wallas Reis)
+ - make ::ResultSet::Me more flexible (moltar)
+ - Fix some warnings (when using deprecated modules) (good catch Bill
+   Mosely)
+ - Fix lots of docs (moltar, Gregor Herrmann, mauke)
 
 2.017000  2013-04-20 10:37:04 CST6CDT
-       - Add ::Schema::QuoteNames to force quote_names on
-       - Add normalize_connect_info utilitiy
+ - Add ::Schema::QuoteNames to force quote_names on
+ - Add normalize_connect_info utilitiy
 
 2.016006  2013-04-12 09:14:23 CST6CDT
-       - Remove use of a private method, thus fixing Helpers on v0.08210
-       - Remove the last vestige of non-in-memory SQLite
-       - Stop using RT for bugtracking
+ - Remove use of a private method, thus fixing Helpers on v0.08210
+ - Remove the last vestige of non-in-memory SQLite
+ - Stop using RT for bugtracking
 
 2.016005  2013-01-23 19:00:09 CST6CDT
-       - Fix hash order dependency bug (Thanks Fitz Elliott!)
+ - Fix hash order dependency bug (Thanks Fitz Elliott!)
 
 2.016004  2013-01-09 20:05:57 CST6CDT
-       - Add more storages for ::ResultSet::Random (Thanks José Diaz Seng!)
+ - Add more storages for ::ResultSet::Random (Thanks José Diaz Seng!)
 
 2.016003  2012-12-07 15:54:29 CST6CDT
-       - Fix bug in dup_check_source_auto and fk_check_source_auto.  If
-         any of the broken things were multiple they explode in the hashref.
-         The solution is to force the values to be resultsets, which is how
-         the helper is documented anyway. (thanks MST for finding this)
+ - Fix bug in dup_check_source_auto and fk_check_source_auto.  If
+   any of the broken things were multiple they explode in the hashref.
+   The solution is to force the values to be resultsets, which is how
+   the helper is documented anyway. (thanks MST for finding this)
 
 2.016002  2012-11-17 15:31:12 CST6CDT
-       - Put MetaYAML back in dist
+ - Put MetaYAML back in dist
 
 2.016001  2012-11-02 17:52:43 CST6CDT
-       - fix OnColumnChange to work with relationship based updates
-         so $artist->update({ cd => $cd_obj }) now correctly triggers
-         a change.  Thanks David Schmidt for the test
-       - validate number of arguments to _change_column (David Schmidt)
-       - fix name of Helper::ResultSet::Shortcut in SYNOPSIS
+ - fix OnColumnChange to work with relationship based updates
+   so $artist->update({ cd => $cd_obj }) now correctly triggers
+   a change.  Thanks David Schmidt for the test
+ - validate number of arguments to _change_column (David Schmidt)
+ - fix name of Helper::ResultSet::Shortcut in SYNOPSIS
 
 2.016000  2012-10-25 21:35:05 CST6CDT
-       - Add Helper::ResultSet::Shortcut (Wes Malone)
+ - Add Helper::ResultSet::Shortcut (Wes Malone)
 
 2.015001  2012-09-13 21:19:40 America/Chicago
-       - Correctly dep on Sub::Exporter::Progressive 0.001006
+ - Correctly dep on Sub::Exporter::Progressive 0.001006
 
 2.015000  2012-08-01 18:00:31 America/Chicago
-       - Add order_by_visitor ::Util
+ - Add order_by_visitor ::Util
 
 2.014003  2012-07-28 14:21:26 America/Chicago
-       - Add EXAMPLES to CorrelateRelationship
+ - Add EXAMPLES to CorrelateRelationship
 
 2.014002  2012-07-10 21:41:17 America/Chicago
-       - Tests are fully in memory for speed and parallelization
+ - Tests are fully in memory for speed and parallelization
 
 2.014001  2012-07-03 08:34:21 America/Chicago
-       - Stop breaking ::IgnoreWantarray with ::CorrelatedRelationship
+ - Stop breaking ::IgnoreWantarray with ::CorrelatedRelationship
 
 2.014000  2012-06-30 00:16:13 America/Chicago
-       - Add ::Row::ProxyResultSetUpdate helper
-       - fully qualify columns in ::SelfResultSet
+ - Add ::Row::ProxyResultSetUpdate helper
+ - fully qualify columns in ::SelfResultSet
 
 2.013003  2012-06-28 08:04:13 America/Chicago
-       - Redist due to broken release
+ - Redist due to broken release
 
 2.013002  2012-06-17 22:22:45 America/Chicago
-       - Lots of misc documentation cleanup
+ - Lots of misc documentation cleanup
 
 2.013001  2012-06-11 17:40:04 America/Chicago
-       - fix Changes (left off only change in 2.013000)
+ - fix Changes (left off only change in 2.013000)
 
 2.013000  2012-06-07 20:41:13 America/Chicago
-       - Add Helper::Row::ProxyResultSetMethod
+ - Add Helper::Row::ProxyResultSetMethod
 
 2.012000  2012-06-05 21:23:16 America/Chicago
-       - Add Helper::ResultSet::NoColumns
+ - Add Helper::ResultSet::NoColumns
 
 2.011000  2012-06-03 16:12:54 America/Chicago
-       - Add Helper::Row::SelfResultSet
+ - Add Helper::Row::SelfResultSet
 
 2.010001  2012-05-26 10:58:50 America/Chicago
-       - Make ::Schema::LintContents marginally more useful in that it no
-         longer needlessly limits your sources to one moniker only
+ - Make ::Schema::LintContents marginally more useful in that it no
+   longer needlessly limits your sources to one moniker only
 
 2.010000  2012-05-17 21:26:47 America/Chicago
-       - Add Helper::Schema::LintContents
+ - Add Helper::Schema::LintContents
 
 2.009001  2012-05-11 11:00:51 America/Chicago
-       - Stupid doc fix
+ - Stupid doc fix
 
 2.009000  2012-05-11 10:45:15 America/Chicago
-       - add Helper::ResultSet::SearchOr component to avoid Union when possible
-       - Simplify implementation of CorrelatedRelationship to work with more
-         versions of DBIx::Class
+ - add Helper::ResultSet::SearchOr component to avoid Union when possible
+ - Simplify implementation of CorrelatedRelationship to work with more
+   versions of DBIx::Class
 
 2.008000  2012-05-09 13:36:28 America/Chicago
-       - Add Helper::ResultSet::CorrelatedRelationship for easy correlated
-         subqueries
+ - Add Helper::ResultSet::CorrelatedRelationship for easy correlated
+   subqueries
 
 2.007004  2012-04-11 19:53:51 America/Chicago
-       - Fix ::OnColumnChange to not obliviate args passed to update
+ - Fix ::OnColumnChange to not obliviate args passed to update
 
 2.007003  2012-02-29 19:56:57 CST6CDT
-       - Fix ::Row::NumifyGet breaking when using select/as or columns
+ - Fix ::Row::NumifyGet breaking when using select/as or columns
 
 2.007002  2012-01-09 16:23:08 CST6CDT
-       - Fix POD in AutoRemoveColumns (mattp)
-       - Fix multiple level deep Result namespaces (Siddhartha Basu)
+ - Fix POD in AutoRemoveColumns (mattp)
+ - Fix multiple level deep Result namespaces (Siddhartha Basu)
 
 2.007001  2011-08-17 22:34:54 CST6CDT
-       - Fix dependency (add Carp::Clan)
+ - Fix dependency (add Carp::Clan)
 
 2.007000  2011-03-14 21:43:20 CST6CDT
-       - Add Helper::Row::RelationshipDWIM for handy definition of relationships
-       - Significantly simplify implementation of ResultSet::ResultClassDWIM
-         (thanks ribasushi)
+ - Add Helper::Row::RelationshipDWIM for handy definition of relationships
+ - Significantly simplify implementation of ResultSet::ResultClassDWIM
+   (thanks ribasushi)
 
 2.006000  2011-01-31 18:06:56 CST6CDT
-       - Add ResultSet::ResultClassDWIM to allow ::HashRefInflator (or ::HRI)
-       - Add Schema::GenerateSource for handy addition of subclassed results
+ - Add ResultSet::ResultClassDWIM to allow ::HashRefInflator (or ::HRI)
+ - Add Schema::GenerateSource for handy addition of subclassed results
 
 2.005000  2010-10-13 19:39:56 CST6CDT
-       - Add ResultSet::Me to define predefined searches a more nicely
-       - Fix DBIx::Class::Helper::ResultSet::Random to not base off Union
-       - Fix DBIx::Class::Helper::ResultSet::Random for MSSQL
+ - Add ResultSet::Me to define predefined searches a more nicely
+ - Fix DBIx::Class::Helper::ResultSet::Random to not base off Union
+ - Fix DBIx::Class::Helper::ResultSet::Random for MSSQL
 
 2.004000  2010-07-29 21:06:58 CST6CDT
-       - Add Row::StorageValues
-       - Add Row::OnColumnChange
-       - Add Candy exports
+ - Add Row::StorageValues
+ - Add Row::OnColumnChange
+ - Add Candy exports
 
 2.003002  2010-03-24 23:48:52 CST6CDT
-       - Give up on generating test database; I need to test this out
-         with development releases
+ - Give up on generating test database; I need to test this out
+   with development releases
 
 2.003001  2010-03-23 18:41:04 CST6CDT
-       - Try again to correctly generate test database
+ - Try again to correctly generate test database
 
 2.003000  2010-03-22 21:27:14 CST6CDT
-       - Fix tests to correctly generate test database
-       - Stop bundling sqlite database with distribution!
-       - Change DBICH::Union into DBICH::SetOperations (nothingmuch)
+ - Fix tests to correctly generate test database
+ - Stop bundling sqlite database with distribution!
+ - Change DBICH::Union into DBICH::SetOperations (nothingmuch)
 
 2.002002  2010-03-14 20:18:59 CST6CDT
-       - DBIx::Class::Helper::ResultSet::Random declared RAND() as the
-         random function for PostgreSQL when Pg uses RANDOM(). This
-         broke any use of that resultset on PostgreSQL. -avar
+ - DBIx::Class::Helper::ResultSet::Random declared RAND() as the
+   random function for PostgreSQL when Pg uses RANDOM(). This
+   broke any use of that resultset on PostgreSQL. -avar
 
 2.002001  2010-03-13 00:46:30 CST6CDT
-       - Fix my silly Union code
-       - Fix error message from Util for incorrectly design namespace
-       - Fix SYNOPSES to point to correct Components
-       - Change as_virtual_view to just pass through to the cored version, as_subselect_rs
+ - Fix my silly Union code
+ - Fix error message from Util for incorrectly design namespace
+ - Fix SYNOPSES to point to correct Components
+ - Change as_virtual_view to just pass through to the cored version, as_subselect_rs
 
 2.00200   2010-02-05 14:15:06 CST6CDT
-       - Allow multiple levels for result in namespace for get_namespace_parts
-         (aka, Foo::Schema::Result::Baz::Biff) (for melo)
-       - Add Helper::Row::ToJSON
-       - Autopopulate is_numeric correcly with NumifyGet
-       - Fix mssql Random to use RAND() (pldoh, #RT53885)
+ - Allow multiple levels for result in namespace for get_namespace_parts
+   (aka, Foo::Schema::Result::Baz::Biff) (for melo)
+ - Add Helper::Row::ToJSON
+ - Autopopulate is_numeric correcly with NumifyGet
+ - Fix mssql Random to use RAND() (pldoh, #RT53885)
 
 2.00102   2010-01-15 21:50:20 CST6CDT
-       - Better performance for some cases in NumifyGet
-       - _determine_driver is better than _ensure_connected ( Random )
+ - Better performance for some cases in NumifyGet
+ - _determine_driver is better than _ensure_connected ( Random )
 
 2.00101   2010-01-15 02:14:55 CST6CDT
-       - fix bug in Random where if a user calls random and schema isn't
-         connected yet we get false storage type (thanks jnap)
-       - fix NumifyGet for nullable and autoinc columns
+ - fix bug in Random where if a user calls random and schema isn't
+   connected yet we get false storage type (thanks jnap)
+ - fix NumifyGet for nullable and autoinc columns
 
 2.00100   2010-01-13 23:37:34 CST6CDT
-       - fix 'me' in RS::Union
-       - change order in RS::Union so Unioning RS is first instead of last
-       - add Row::NumifyGet
-       - add docs to RS::Union to clarify some of the awesomeness that can be had
-       - fixed union because it didn't actually work before (!!!)
+ - fix 'me' in RS::Union
+ - change order in RS::Union so Unioning RS is first instead of last
+ - add Row::NumifyGet
+ - add docs to RS::Union to clarify some of the awesomeness that can be had
+ - fixed union because it didn't actually work before (!!!)
 
 2.00000   2009-12-30 13:02:23 CST6CDT
-       - No new changes since dev release
+ - No new changes since dev release
 
 2.00000_2 2009-12-29 18:45:15 CST6CDT
-       - note added to SubClass disambiguating it from
-         DBIx::Class::DynamicSubclass (thanks jnap)
-       - random_order_by is now private (_random_order_by)
-       - Depend on String::CamelCase now that it's fixed
+ - note added to SubClass disambiguating it from
+   DBIx::Class::DynamicSubclass (thanks jnap)
+ - random_order_by is now private (_random_order_by)
+ - Depend on String::CamelCase now that it's fixed
 
 2.00000_1 2009-12-28 11:40:43 CST6CDT
-       - No longer depend on SQLT
-       - Switch to more user friendly versioning
-       - Allow multiple random rows from Random
-       - Add the most excellent Helper::ResultSet::Union
-       - namespace helpers
+ - No longer depend on SQLT
+ - Switch to more user friendly versioning
+ - Allow multiple random rows from Random
+ - Add the most excellent Helper::ResultSet::Union
+ - namespace helpers
 
 1.093501  2009-12-16 16:32:55 CST6CDT
-       - Fix deps list
+ - Fix deps list
 
 1.093500  2009-12-16 16:12:00 CST6CDT
-       - Add IgnoreWantarray helper
-       - Pull column def information from foreign tables
-         for JoinTable helper, see pod in helper for details
+ - Add IgnoreWantarray helper
+ - Pull column def information from foreign tables
+   for JoinTable helper, see pod in helper for details
 
 0.093270 Mon Nov 23 10:45 2009
-       - Add Random helper
-       - Clean up as_virtual_view with recommendation from ijw and ribasushi
+ - Add Random helper
+ - Clean up as_virtual_view with recommendation from ijw and ribasushi
 
 0.093140 Tue Nov 10 09:32 2009
-       - Fix DBIC version dep
-       - Get rid of some warnings from the test suite
+ - Fix DBIC version dep
+ - Get rid of some warnings from the test suite
 
 0.093071 Tue Nov 03 20:53 2009
-       - Fix package of VirtualView
-       - Add test so that won't happen again
+ - Fix package of VirtualView
+ - Add test so that won't happen again
 
 0.093070 Mon Nov 02 23:16 2009
-       - Add virtual view method to clean SQL namespace
-       - Add methods to generate has_many and many_to_many for join tables
-       - Hopefully fix deps for real
+ - Add virtual view method to clean SQL namespace
+ - Add methods to generate has_many and many_to_many for join tables
+ - Hopefully fix deps for real
 
 0.093000 Sat Oct 26 19:40 2009
-       - Add parent as a dependency
-       - Super basic POD cleanup
-       - Tighter Restrictions on the namespaces of parent classes
+ - Add parent as a dependency
+ - Super basic POD cleanup
+ - Tighter Restrictions on the namespaces of parent classes
 
 0.092970 Sat Oct 24 02:41 2009
-       - Initial Release
-
+ - Initial Release
