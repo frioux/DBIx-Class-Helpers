@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Fix return precedence in test (Reini Urban)
 
 2.018001  2013-07-02 20:40:18 CST6CDT
  - Fix bug related to inheriting from ::Shortcut
