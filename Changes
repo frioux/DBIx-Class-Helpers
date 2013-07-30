@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - ::Helper::ResultSet correctly uses all Helpers (reported by moltar)
+   Note that some deprecated helpers were removed from ::ResultSet, so check
+   your code to see if you use the as_virtual_view method.  If you do, replace
+   it with as_subselect_rs and you'll be fine.
  - Fix return precedence in test (Reini Urban)
 
 2.018001  2013-07-02 20:40:18 CST6CDT

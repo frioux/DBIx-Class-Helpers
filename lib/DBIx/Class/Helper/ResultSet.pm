@@ -1,10 +1,17 @@
 package DBIx::Class::Helper::ResultSet;
 
 use parent qw{
+   DBIx::Class::Helper::ResultSet::AutoRemoveColumns
+   DBIx::Class::Helper::ResultSet::CorrelateRelationship
    DBIx::Class::Helper::ResultSet::IgnoreWantarray
+   DBIx::Class::Helper::ResultSet::Me
+   DBIx::Class::Helper::ResultSet::NoColumns
    DBIx::Class::Helper::ResultSet::Random
-   DBIx::Class::Helper::ResultSet::Union
-   DBIx::Class::Helper::ResultSet::VirtualView
+   DBIx::Class::Helper::ResultSet::RemoveColumns
+   DBIx::Class::Helper::ResultSet::ResultClassDWIM
+   DBIx::Class::Helper::ResultSet::SearchOr
+   DBIx::Class::Helper::ResultSet::SetOperations
+   DBIx::Class::Helper::ResultSet::Shortcut
 };
 
 # ABSTRACT: All the ResultSet Helpers in one place
@@ -18,7 +25,7 @@ use parent qw{
 =head1 DESCRIPTION
 
 This is just a simple Helper helper that includes all of the ResultSet Helpers
-in one convenient module.
+in one convenient module.  It does not include deprecated helpers.
 
 =head2 NOTE
 
