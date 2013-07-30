@@ -13,7 +13,7 @@ subtest 'null_check_source_auto' => sub {
    my $schema = TestSchema->deploy_or_connect();
    $schema->prepopulate;
 
-   $schema->source('Gnarly')->column_info('literature')->{is_nullable} = 0;
+   local $schema->source('Gnarly')->column_info('literature')->{is_nullable} = 0;
    cmp_deeply [map +{ $_ => $schema->null_check_source_auto($_)->count }, sort $schema->sources], [
      { Bar => 0 },
      { Bloaty => undef },
