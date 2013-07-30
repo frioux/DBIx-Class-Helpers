@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.018002  2013-07-30 18:45:10 CST6CDT
  - ::Helper::ResultSet correctly uses all Helpers (reported by moltar)
    Note that some deprecated helpers were removed from ::ResultSet, so check
    your code to see if you use the as_virtual_view method.  If you do, replace
