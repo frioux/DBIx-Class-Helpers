@@ -10,9 +10,9 @@ use base 'DBIx::Class::Helper::ResultSet::Shortcut::OrderBy';
 sub order_by {
     my ($self, @order) = @_;
 
-    ## pass thru if we have a HashRef format
-    if (@order && ref($order[0]) eq 'HASH') {
-        return $self->next::method($order[0]);
+    ## pass thru if we have a ref (HashRef or ArrayRef)
+    if (@order && ref($order[0])) {
+        return $self->next::method(@order);
     }
 
     my @clauses;
@@ -23,7 +23,12 @@ sub order_by {
                 $col = substr($col, 1); # take everything after '!'
                 $dir = 'desc';
             }
-            push @clauses, { "-$dir" => join('.', $self->current_source_alias, $col) };
+
+            ## add csa prefix if necessary
+            $col = join('.', $self->current_source_alias, $col)
+                if index($col, '.') == -1;
+
+            push @clauses, { "-$dir" => $col };
         }
     }
 
