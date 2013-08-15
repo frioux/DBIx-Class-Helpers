@@ -30,5 +30,11 @@ subtest 'loaded data' => sub {
    is($g2->id_plus_two, 4, 'slot and specified method');
 };
 
+subtest 'copy result' => sub {
+    ok my $g3 = $g2->copy({ id => 3 }), 'Copied result.';
+    isa_ok $g3, 'DBIx::Class::Row';
+    is $g3->id, 3, 'ID = 3';
+};
+
 done_testing;
 
