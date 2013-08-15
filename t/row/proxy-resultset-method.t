@@ -31,9 +31,11 @@ subtest 'loaded data' => sub {
 };
 
 subtest 'copy result' => sub {
-    ok my $g3 = $g2->copy({ id => 3 }), 'Copied result.';
+    ok !$schema->resultset('Gnarly')->search({ id => 100 })->count,
+       'will not accidentally collide';
+    ok my $g3 = $g->copy({ id => 100 }), 'Copied result';
     isa_ok $g3, 'DBIx::Class::Row';
-    is $g3->id, 3, 'ID = 3';
+    is $g3->id, 100, 'id is correctly overridden';
 };
 
 done_testing;

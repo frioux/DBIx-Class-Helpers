@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Fix ->copy on rows with proxied ResultSet methods (thanks moltar for the
+   test!) (NOTE: This fix is what requires upgrading to DBIC 0.08260)
 
 2.019002  2014-01-12 09:40:41 America/Chicago
  - Pick SQL for random row selection in a cleaner way

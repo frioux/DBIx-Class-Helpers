@@ -1,4 +1,4 @@
-requires 'DBIx::Class' => 0.08127;
+requires 'DBIx::Class' => 0.08260;
 requires 'Carp::Clan' => 6.04;
 requires 'Sub::Exporter::Progressive' => 0.001006;
 requires 'Lingua::EN::Inflect' => 0;

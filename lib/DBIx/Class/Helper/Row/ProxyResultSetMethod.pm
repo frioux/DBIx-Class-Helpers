@@ -7,18 +7,23 @@ use warnings;
 
 # VERSION
 
-use base 'DBIx::Class::Helper::Row::SelfResultSet';
+use base 'DBIx::Class::Helper::Row::SelfResultSet', 'Class::Accessor::Grouped';
 use Sub::Name ();
 
 use DBIx::Class::Candy::Exports;
 
 export_methods [qw( proxy_resultset_method )];
 
+__PACKAGE__->mk_group_accessors(inherited => '_proxy_slots');
+
 sub proxy_resultset_method {
    my ($self, $name, $attr) = @_;
 
    my $rs_method   = $attr->{resultset_method} || "with_$name";
    my $slot        = $attr->{slot} || $name;
+
+   $self->_proxy_slots([]) unless $self->_proxy_slots;
+   push @{$self->_proxy_slots}, $slot;
 
    no strict 'refs';
    my $method = $self . '::' . $name;
@@ -34,6 +39,12 @@ sub proxy_resultset_method {
          ->next unless $_[0]->has_column_loaded($slot);
       return $_[0]->get_column($slot)
    }
+}
+
+sub copy {
+   delete local @{$_[0]->{_column_data}}{@{$_[0]->_proxy_slots}};
+
+   shift->next::method(@_);
 }
 
 1;
