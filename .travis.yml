@@ -9,12 +9,12 @@ perl:
 
 install:
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=j10:c HARNESS_TIMER=1
-   - sudo apt-get -y install bc
-   - cpanm --quiet --notest Devel::Cover SQL::Translator
+   - cpanm --quiet --notest Devel::Cover::Report::Coveralls SQL::Translator
    - cpanm --quiet --notest --installdeps .
    - perl -Ilib -It/lib -MTestSchema -e'TestSchema->generate_ddl; my $t = TestSchema->connect; $t->deploy'
 
 script:
    - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine prove -lrsv t
    - cover
-   - test "$(echo "$(cover -summary 2>/dev/null | tail -n6 | head -n1 | perl -pi -e '$_ = (split /\s+/)[5]') >= 94" | bc)" -ne 0
+after_success:
+  - cover -report coveralls
