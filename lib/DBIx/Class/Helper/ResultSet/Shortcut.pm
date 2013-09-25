@@ -7,19 +7,17 @@ use warnings;
 
 # VERSION
 
-use base 'DBIx::Class::ResultSet';
-
-__PACKAGE__->load_components(qw(
-   Helper::ResultSet::Shortcut::AddColumns
-   Helper::ResultSet::Shortcut::Columns
-   Helper::ResultSet::Shortcut::Distinct
-   Helper::ResultSet::Shortcut::GroupBy
-   Helper::ResultSet::Shortcut::HasRows
-   Helper::ResultSet::Shortcut::HRI
-   Helper::ResultSet::Shortcut::Limit
-   Helper::ResultSet::Shortcut::OrderByMagic
-   Helper::ResultSet::Shortcut::Prefetch
-   Helper::ResultSet::Shortcut::Rows
+use base (qw(
+   DBIx::Class::Helper::ResultSet::Shortcut::AddColumns
+   DBIx::Class::Helper::ResultSet::Shortcut::Columns
+   DBIx::Class::Helper::ResultSet::Shortcut::Distinct
+   DBIx::Class::Helper::ResultSet::Shortcut::GroupBy
+   DBIx::Class::Helper::ResultSet::Shortcut::HasRows
+   DBIx::Class::Helper::ResultSet::Shortcut::HRI
+   DBIx::Class::Helper::ResultSet::Shortcut::Limit
+   DBIx::Class::Helper::ResultSet::Shortcut::OrderByMagic
+   DBIx::Class::Helper::ResultSet::Shortcut::Prefetch
+   DBIx::Class::Helper::ResultSet::Shortcut::Rows
 ));
 
 1;
