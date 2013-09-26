@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.018003  2013-09-26 08:06:03 America/Chicago
  - fix method shadowing with some helpers for ::Shortcut
  - ::OrderByMagic now correctly passes through arrayrefs (moltar)
  - ::OrderByMagic only prefixes with CSA when needed (moltar)
