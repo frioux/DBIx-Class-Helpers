@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.018004  2013-10-07 15:23:39 America/Chicago
  - fix dep marked as test but actually runtime
 
 2.018003  2013-09-26 08:06:03 America/Chicago
