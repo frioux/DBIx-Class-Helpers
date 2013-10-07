@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix dep marked as test but actually runtime
 
 2.018003  2013-09-26 08:06:03 America/Chicago
  - fix method shadowing with some helpers for ::Shortcut
