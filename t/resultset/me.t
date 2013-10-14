@@ -1,18 +1,19 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
+use Test::Roo;
+with 'A::Does::TestSchema';
+sub no_deploy {}
 
-use TestSchema;
-my $schema = TestSchema->deploy_or_connect();
+test basic => sub {
+   my $schema = shift->schema;
 
-my $rs = $schema->resultset('Gnarly');
-my $alias = $rs->current_source_alias;
+   my $rs = $schema->resultset('Gnarly');
+   my $alias = $rs->current_source_alias;
 
-is $rs->me, "$alias.", 'me without args';
-is $rs->me('col'), "$alias.col", 'me with args';
+   is $rs->me, "$alias.", 'me without args';
+   is $rs->me('col'), "$alias.col", 'me with args';
+};
 
+run_me;
 done_testing;

@@ -1,20 +1,19 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
-use Test::Deep;
+use Test::Deep 'cmp_deeply';
+use Test::Roo;
+with 'A::Does::TestSchema';
 
-use TestSchema;
-my $schema = TestSchema->deploy_or_connect();
-$schema->prepopulate;
+test basic => sub {
+   my $schema = shift->schema;
 
-my $rs = $schema->resultset('Gnarly')->no_columns->search(undef, {
-   result_class => '::HRI',
-});
+   my $rs = $schema->resultset('Gnarly')->no_columns->search(undef, {
+      result_class => '::HRI',
+   });
 
-cmp_deeply([$rs->all], [ { }, { }, { } ], 'no columns selected');
+   cmp_deeply([$rs->all], [ { }, { }, { } ], 'no columns selected');
+};
 
+run_me;
 done_testing;

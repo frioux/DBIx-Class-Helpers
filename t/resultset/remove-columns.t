@@ -1,19 +1,12 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
-use Test::Deep;
-use Test::Exception;
+use Test::Deep 'cmp_deeply';
+use Test::Roo;
+with 'A::Does::TestSchema';
 
-use TestSchema;
-my $schema = TestSchema->deploy_or_connect();
-$schema->prepopulate;
-
-RemoveColumns: {
-   my $rs = $schema->resultset('Foo')->search({
+test 'remove columns' => sub {
+   my $rs = shift->schema->resultset('Foo')->search({
       id => 1
    }, {
       result_class => 'DBIx::Class::ResultClass::HashRefInflator',
@@ -37,10 +30,10 @@ RemoveColumns: {
       ],
       [{ bar_id => 1, id => 1 }],
       'chaining and +columns works with remove_columns';
-}
+};
 
-AutoRemoveColumns: {
-   my $rs = $schema->resultset('Bloaty')->search({
+test 'autoremove columns' => sub {
+   my $rs = shift->schema->resultset('Bloaty')->search({
       id => 1
    }, {
       result_class => 'DBIx::Class::ResultClass::HashRefInflator',
@@ -63,6 +56,7 @@ AutoRemoveColumns: {
       ],
       [{ name => 1, id => 1 }],
       'chaining and +columns works with remove_columns';
-}
+};
 
+run_me;
 done_testing;

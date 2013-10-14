@@ -1,24 +1,28 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
+use Test::Roo;
+with 'A::Does::TestSchema';
 
-use TestSchema;
-my $schema = TestSchema->deploy_or_connect();
-$schema->prepopulate;
+around build_schema => sub {
+   my ($orig, $self) = @_;
 
-$schema->resultset('Foo_Bar')->delete;
-$schema->resultset('Foo_Bar')->populate([
-   [qw(foo_id bar_id)],
-   [1, 2],
-   [2, 1],
-   [4, 5],
-]);
+   my $schema = $self->$orig;
 
-subtest 'single pk column' => sub {
+   $schema->resultset('Foo_Bar')->delete;
+   $schema->resultset('Foo_Bar')->populate([
+      [qw(foo_id bar_id)],
+      [1, 2],
+      [2, 1],
+      [4, 5],
+   ]);
+
+   $schema;
+};
+
+test 'single pk column' => sub {
+   my $schema = shift->schema;
+
    for ($schema->resultset('Bar')->all) {
       subtest 'Bar.id: ' . $_->id => sub {
          is ($_->self_rs->count, 1, 'single row in self_rs');
@@ -27,7 +31,9 @@ subtest 'single pk column' => sub {
    }
 };
 
-subtest 'multi pk' => sub {
+test 'multi pk' => sub {
+   my $schema = shift->schema;
+
    for ($schema->resultset('Foo_Bar')->all) {
       subtest 'Foo_Bar: ' . $_->foo_id . ' ' . $_->bar_id => sub {
          is ($_->self_rs->count, 1, 'single row in self_rs');
@@ -37,5 +43,6 @@ subtest 'multi pk' => sub {
    }
 };
 
+run_me;
 done_testing;
 

@@ -1,17 +1,13 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
-use Test::Deep;
+use Test::Deep 'cmp_deeply';
+use Test::Roo;
+with 'A::Does::TestSchema';
 
-use TestSchema;
-
-subtest 'null_check_source_auto' => sub {
-   my $schema = TestSchema->deploy_or_connect();
-   $schema->prepopulate;
+test 'null_check_source_auto' => sub {
+   $_[0]->reset_schema;
+   my $schema = shift->schema;
 
    local $schema->source('Gnarly')->column_info('literature')->{is_nullable} = 0;
    cmp_deeply [map +{ $_ => $schema->null_check_source_auto($_)->count }, sort $schema->sources], [
@@ -25,9 +21,9 @@ subtest 'null_check_source_auto' => sub {
    ], 'errors for Gnarly null_check_source';
 };
 
-subtest 'dub_check_source_auto' => sub {
-   my $schema = TestSchema->deploy_or_connect();
-   $schema->prepopulate;
+test 'dub_check_source_auto' => sub {
+   $_[0]->reset_schema;
+   my $schema = shift->schema;
 
    $schema->resultset('Gnarly')->create({ id => 100 + $_, name => 'foo' }) for 1, 2;
    $schema->resultset('Gnarly')->create({ id => 200 + $_, name => 'bar' }) for 1, 2;
@@ -51,9 +47,9 @@ subtest 'dub_check_source_auto' => sub {
    ], 'Gnarly_name duplicated twice';
 };
 
-subtest 'fk_check_source_auto' => sub {
-   my $schema = TestSchema->deploy_or_connect();
-   $schema->prepopulate;
+test 'fk_check_source_auto' => sub {
+   $_[0]->reset_schema;
+   my $schema = shift->schema;
 
    $schema->resultset('Foo_Bar')->delete;
    $schema->resultset('Foo_Bar')->create({
@@ -82,4 +78,5 @@ subtest 'fk_check_source_auto' => sub {
    ], 'foo and bar constraints broken';
 };
 
+run_me;
 done_testing;

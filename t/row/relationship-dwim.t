@@ -1,20 +1,18 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
-use Test::Deep;
+use Test::Roo;
+with 'A::Does::TestSchema';
 
-use TestSchema;
-my $schema = TestSchema->deploy_or_connect();
-$schema->prepopulate;
+test basic => sub {
+   my $schema = shift->schema;
 
-my $r = $schema->resultset('Bar')->result_class;
+   my $r = $schema->resultset('Bar')->result_class;
 
-ok $r->has_relationship('foo'), 'has Foo';
-ok $r->has_relationship('foos'), 'has foos';
+   ok $r->has_relationship('foo'), 'has Foo';
+   ok $r->has_relationship('foos'), 'has foos';
+};
 
+run_me;
 done_testing;
 

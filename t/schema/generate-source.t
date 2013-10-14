@@ -1,17 +1,21 @@
-use strict;
-use warnings;
+#!perl
 
 use lib 't/lib';
-use Test::More;
-
+use Test::Roo;
 use TestSchema;
+sub schema { 'TestSchema' }
 
-TestSchema->load_components('Helper::Schema::GenerateSource');
-TestSchema->generate_source(PsychoKiller => 'Lolbot');
+test basic => sub {
+   my $schema = shift->schema;
 
-my $class = TestSchema->class('PsychoKiller');
-ok($class, 'PsychoKiller gets registered');
-ok($class->isa('Lolbot'), 'PsychoKiller inherits from Lolbot');
-ok(ref($class) ne 'Lolbot', '... but PsychoKiller is not just a Lolbot');
+   $schema->load_components('Helper::Schema::GenerateSource');
+   $schema->generate_source(PsychoKiller => 'Lolbot');
 
+   my $class = $schema->class('PsychoKiller');
+   ok($class, 'PsychoKiller gets registered');
+   ok($class->isa('Lolbot'), 'PsychoKiller inherits from Lolbot');
+   ok(ref($class) ne 'Lolbot', '... but PsychoKiller is not just a Lolbot');
+};
+
+run_me;
 done_testing;

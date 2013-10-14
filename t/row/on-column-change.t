@@ -1,111 +1,110 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
-use Test::Deep;
+use Test::Deep 'cmp_deeply';
 use Test::Exception;
-
-use TestSchema;
 use TestSchema::Result::Bar;
-my $schema = TestSchema->deploy_or_connect();
-$schema->prepopulate;
+use Test::Roo;
+with 'A::Does::TestSchema';
 
-throws_ok(
-   sub {
-      TestSchema::Result::Bar->after_column_change(
-         foo_id => {
-            method => sub { 1; }
-         },
-         id => {
-            method => sub { 1; }
-         },
-      );
-   },
-   qr/Invalid number of arguments\. One \$column => \$args pair at a time\./,
-);
+test basic => sub {
+   my $schema = shift->schema;
 
-TestSchema::Result::Bar->after_column_change(
-   foo_id => {
-      method => sub { push @TestSchema::Result::Bar::events, [after_foo_id => $_[1], $_[2]] }
-   },
-);
-
-TestSchema::Result::Bar->after_column_change(
-   id => {
-      method => sub {
-         is($schema->storage->{transaction_depth}, 1, 'transactions turned on for id');
-         push @TestSchema::Result::Bar::events, [after_id => $_[1], $_[2]]
+   throws_ok(
+      sub {
+         TestSchema::Result::Bar->after_column_change(
+            foo_id => {
+               method => sub { 1; }
+            },
+            id => {
+               method => sub { 1; }
+            },
+         );
       },
-      txn_wrap => 1,
-   },
-);
+      qr/Invalid number of arguments\. One \$column => \$args pair at a time\./,
+   );
 
-my $another_txn_test = sub {
-   is($schema->storage->{transaction_depth}, 0, 'transactions turned off for non-txn')
+   TestSchema::Result::Bar->after_column_change(
+      foo_id => {
+         method => sub { push @TestSchema::Result::Bar::events, [after_foo_id => $_[1], $_[2]] }
+      },
+   );
+
+   TestSchema::Result::Bar->after_column_change(
+      id => {
+         method => sub {
+            is($schema->storage->{transaction_depth}, 1, 'transactions turned on for id');
+            push @TestSchema::Result::Bar::events, [after_id => $_[1], $_[2]]
+         },
+         txn_wrap => 1,
+      },
+   );
+
+   my $another_txn_test = sub {
+      is($schema->storage->{transaction_depth}, 0, 'transactions turned off for non-txn')
+   };
+
+   TestSchema::Result::Bar->around_column_change(
+      foo_id => {
+         method => sub {
+            my ( $self, $fn, $old, $new ) = @_;
+            push @TestSchema::Result::Bar::events, [pre_around_foo_id => $old, $new];
+            $another_txn_test->();
+            $fn->();
+            push @TestSchema::Result::Bar::events, [post_around_foo_id => $old, $new];
+         },
+      },
+   );
+
+   my $first = $schema->resultset('Bar')->search(undef, { order_by => 'id' })->first;
+
+   is($first->foo_id, 1, 'foo_id starts as 1');
+   $first->foo_id(2);
+   $first->update;
+   is($first->foo_id, 2, 'foo_id is updated to 2');
+
+   $another_txn_test = sub {};
+
+   cmp_deeply([
+     [ 'before_foo_id', 1, 2 ], # comes from TestSchema::Result::Bar
+     [ 'pre_around_foo_id', 1, 2 ],
+     [ 'post_around_foo_id', 1, 2 ],
+     [ 'after_foo_id', 2, 2 ],
+   ], \@TestSchema::Result::Bar::events, 'subs fire in correct order and with correct args');
+
+   @TestSchema::Result::Bar::events = ();
+
+   $first->update({ foo_id => 1, id => 99 });
+
+   is($first->foo_id, 1, 'foo_id is updated');
+   is($first->id, 99, 'id is updated');
+   cmp_deeply([
+     [ 'before_foo_id', 2, 1 ],
+     [ 'pre_around_foo_id', 2, 1 ],
+     [ 'post_around_foo_id', 2, 1 ],
+     [ 'after_id', undef, 99 ],
+     [ 'after_foo_id', 1, 1 ]
+   ], \@TestSchema::Result::Bar::events,
+      '... even with args passed to update');
+
+   TestSchema::Result::Foo->after_column_change(
+      bar_id => {
+         method   => sub { die },
+         txn_wrap => 1,
+      },
+   );
+
+   my $foo = $schema->resultset('Foo')->search(undef, { order_by => 'id' })->first;
+   my $bar = $schema->resultset('Bar')->search( { id => { '!=' => $first->id } } )->first;
+   dies_ok(
+       sub { $foo->update({ bar_id => $bar->id }); },
+       'after_column_change method triggered when updating via foreign key column',
+   );
+   dies_ok(
+       sub { $foo->update({ bar => $first }); },
+       'after_column_change method triggered when updating via relationship accessor',
+   );
 };
 
-TestSchema::Result::Bar->around_column_change(
-   foo_id => {
-      method => sub {
-         my ( $self, $fn, $old, $new ) = @_;
-         push @TestSchema::Result::Bar::events, [pre_around_foo_id => $old, $new];
-         $another_txn_test->();
-         $fn->();
-         push @TestSchema::Result::Bar::events, [post_around_foo_id => $old, $new];
-      },
-   },
-);
-
-my $first = $schema->resultset('Bar')->search(undef, { order_by => 'id' })->first;
-
-is($first->foo_id, 1, 'foo_id starts as 1');
-$first->foo_id(2);
-$first->update;
-is($first->foo_id, 2, 'foo_id is updated to 2');
-
-$another_txn_test = sub {};
-
-cmp_deeply([
-  [ 'before_foo_id', 1, 2 ], # comes from TestSchema::Result::Bar
-  [ 'pre_around_foo_id', 1, 2 ],
-  [ 'post_around_foo_id', 1, 2 ],
-  [ 'after_foo_id', 2, 2 ],
-], \@TestSchema::Result::Bar::events, 'subs fire in correct order and with correct args');
-
-@TestSchema::Result::Bar::events = ();
-
-$first->update({ foo_id => 1, id => 99 });
-
-is($first->foo_id, 1, 'foo_id is updated');
-is($first->id, 99, 'id is updated');
-cmp_deeply([
-  [ 'before_foo_id', 2, 1 ],
-  [ 'pre_around_foo_id', 2, 1 ],
-  [ 'post_around_foo_id', 2, 1 ],
-  [ 'after_id', undef, 99 ],
-  [ 'after_foo_id', 1, 1 ]
-], \@TestSchema::Result::Bar::events,
-   '... even with args passed to update');
-
-TestSchema::Result::Foo->after_column_change(
-   bar_id => {
-      method   => sub { die },
-      txn_wrap => 1,
-   },
-);
-
-my $foo = $schema->resultset('Foo')->search(undef, { order_by => 'id' })->first;
-my $bar = $schema->resultset('Bar')->search( { id => { '!=' => $first->id } } )->first;
-dies_ok(
-    sub { $foo->update({ bar_id => $bar->id }); },
-    'after_column_change method triggered when updating via foreign key column',
-);
-dies_ok(
-    sub { $foo->update({ bar => $first }); },
-    'after_column_change method triggered when updating via relationship accessor',
-);
-
+run_me;
 done_testing;

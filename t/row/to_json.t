@@ -1,17 +1,12 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
-use Test::Deep;
+use Test::Deep 'cmp_deeply';
+use Test::Roo;
+with 'A::Does::TestSchema';
 
-use TestSchema;
-my $schema = TestSchema->deploy_or_connect();
-$schema->prepopulate;
-
-SIMPLE_JSON: {
+test 'simple json' => sub {
+   my $schema = shift->schema;
    my $datas = [
       map $_->TO_JSON,
          $schema->resultset('Bar')->search(undef, { order_by => 'id' })->all
@@ -33,9 +28,10 @@ SIMPLE_JSON: {
          id => 5,
          foo_id => 5,
    }], 'simple TO_JSON works');
-}
+};
 
-MORE_COMPLEX_JSON: {
+test 'complex json' => sub {
+   my $schema = shift->schema;
    my $datas = [
       map $_->TO_JSON,
          $schema->resultset('Gnarly')->search(undef, { order_by => 'id' })->all
@@ -54,6 +50,7 @@ MORE_COMPLEX_JSON: {
          name => 'frooh',
          your_mom => undef,
    }], 'complex TO_JSON works');
-}
+};
 
+run_me;
 done_testing;

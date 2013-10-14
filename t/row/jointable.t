@@ -1,18 +1,13 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
-use Test::Deep;
+use Test::Deep 'cmp_deeply';
+use Test::Roo;
+with 'A::Does::TestSchema';
 
-use TestSchema;
-my $schema = TestSchema->deploy_or_connect();
-$schema->prepopulate;
-
-{
-   my $bar_rs = TestSchema->resultset('Foo_Bar');
+test 'metadata' => sub {
+   my $schema = shift->schema;
+   my $bar_rs = $schema->resultset('Foo_Bar');
 
    is $bar_rs->result_source->from, 'Foo_Bar', 'set table works';
 
@@ -33,10 +28,11 @@ $schema->prepopulate;
       data_type => 'integer',
       size => 12,
    }, 'bar_id infers column info correctly';
+};
 
-}
+test 'real data' => sub {
+   my $schema = shift->schema;
 
-{
    relationships: {
       my $g_rs = $schema->resultset('Gnarly');
       my $s_rs = $schema->resultset('Station');
@@ -65,6 +61,7 @@ $schema->prepopulate;
          'Right many_to_many defaulted correctly';
 
    }
-}
+};
 
+run_me;
 done_testing;

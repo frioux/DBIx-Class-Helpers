@@ -1,26 +1,24 @@
 #!perl
 
-use strict;
-use warnings;
-
 use lib 't/lib';
-use Test::More;
 use Test::Exception;
-use Test::Deep;
-
+use Test::Deep 'cmp_deeply';
+use Test::Roo;
 use DBIx::Class::Helpers::Util ':all';
 
-my ($ns, $class) = get_namespace_parts('Project::Schema::Result::Child');
-is $ns, 'Project::Schema::Result',
-   'namespace part of get_namespace_parts works';
-is $class, 'Child', 'result part of get_namespace_parts works';
+test _get_namespace_parts => sub {
+   my ($ns, $class) = get_namespace_parts('Project::Schema::Result::Child');
+   is $ns, 'Project::Schema::Result',
+      'namespace part of get_namespace_parts works';
+   is $class, 'Child', 'result part of get_namespace_parts works';
 
-($ns, $class) = get_namespace_parts('Project::Schema::Result::HouseHold::Child');
-is $ns, 'Project::Schema::Result',
-   'namespace part of get_namespace_parts works';
-is $class, 'HouseHold::Child', 'result part of get_namespace_parts works';
+   ($ns, $class) = get_namespace_parts('Project::Schema::Result::HouseHold::Child');
+   is $ns, 'Project::Schema::Result',
+      'namespace part of get_namespace_parts works';
+   is $class, 'HouseHold::Child', 'result part of get_namespace_parts works';
+};
 
-subtest is_load_namespaces => sub {
+test _is_load_namespaces => sub {
    ok is_load_namespaces('P::Result::Foo'),
       'is_load_namespaces works when correct';
    ok !is_load_namespaces('P::Foo'),
@@ -29,14 +27,14 @@ subtest is_load_namespaces => sub {
          'is_load_namespaces works with two levels namespace';
 };
 
-subtest is_not_load_namespaces => sub {
+test _is_not_load_namespaces => sub {
    ok is_not_load_namespaces('P::Foo'),
       'is_not_load_namespaces works correct';
    ok !is_not_load_namespaces('P::Result::Foo'),
       'is_not_load_namespaces works when incorrect';
 };
 
-subtest assert_similar_namespaces => sub {
+test _assert_similar_namespaces => sub {
    lives_ok { assert_similar_namespaces('P::Foo', 'L::Bar') }
       'assert_similar_namespaces works when both non-namespace';
    lives_ok { assert_similar_namespaces('P::Result::Foo', 'L::Result::Bar') }
@@ -49,7 +47,7 @@ subtest assert_similar_namespaces => sub {
       'assert_similar_namespaces works with two levels of right namespace';
 };
 
-subtest order_by_vistor => sub {
+test _order_by_vistor => sub {
    my $complex_order_by = [
       { -desc => [qw( foo bar )] },
       'baz',
@@ -88,7 +86,7 @@ subtest order_by_vistor => sub {
 
 };
 
-subtest normalize_connect_info => sub {
+test _normalize_connect_info => sub {
    subtest 'form 1' => sub {
       cmp_deeply(
          normalize_connect_info('dbi:foo'),
@@ -158,4 +156,5 @@ subtest normalize_connect_info => sub {
 
 };
 
+run_me;
 done_testing;
