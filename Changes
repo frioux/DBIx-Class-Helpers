@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+ - Create Shortcut::Page and Paging resultset helpers (wreis)
+
 2.018004  2013-10-07 15:23:39 America/Chicago
  - fix dep marked as test but actually runtime
 
