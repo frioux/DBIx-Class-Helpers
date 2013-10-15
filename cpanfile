@@ -13,4 +13,5 @@ on test => sub {
    requires 'Test::Deep' => 0;
    requires 'DBD::SQLite' => 0;
    requires 'Test::Exception' => 0;
+   requires 'DateTime::Format::SQLite.pm' => 0;
 };
