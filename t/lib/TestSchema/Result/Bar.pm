@@ -7,6 +7,7 @@ use DBIx::Class::Candy
       Helper::Row::SubClass
       Helper::Row::OnColumnChange
       Helper::Row::SelfResultSet
+      Helper::Row::CleanResultSet
     )];
 
 our @events;
