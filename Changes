@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+ - Create clean_rs row shortcut (wreis)
+
 2.018004  2013-10-07 15:23:39 America/Chicago
  - fix dep marked as test but actually runtime
 
