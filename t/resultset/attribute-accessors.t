@@ -55,6 +55,21 @@ cmp_deeply
    'limit works the same';
 
 cmp_deeply
+   [$dupes_rs->page(1)->all],
+   [$dupes_rs->search({},{page => 1})->all],
+   'page works the same';
+
+cmp_deeply
+   [$dupes_rs->rows(2)->page(2)->all],
+   [$dupes_rs->search({},{ rows => 2, page => 2 })->all],
+   'page works the same';
+
+cmp_deeply
+   [$dupes_rs->paging(2, 3)->all],
+   [$dupes_rs->search({},{ page => 2, rows => 3 })->all],
+   'paging works the same';
+
+cmp_deeply
    [$dupes_rs->columns(['bar_id'])->all],
    [$dupes_rs->search({},{columns => ['bar_id']})->all],
    'columns works the same';

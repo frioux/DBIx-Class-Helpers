@@ -18,6 +18,7 @@ use base (qw(
    DBIx::Class::Helper::ResultSet::Shortcut::OrderByMagic
    DBIx::Class::Helper::ResultSet::Shortcut::Prefetch
    DBIx::Class::Helper::ResultSet::Shortcut::Rows
+   DBIx::Class::Helper::ResultSet::Shortcut::Page
 ));
 
 1;
@@ -117,6 +118,13 @@ This is an alias for C<rows>.
 
 A lighter way to check the resultset contains any data rather than
 calling C<< $rs->count >>.
+
+=method page
+
+ $foo_rs->page(2);
+
+ # equivalent to...
+ $foo_rs->search(undef, { page => 2 })
 
 =method columns
 
