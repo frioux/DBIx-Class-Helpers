@@ -17,8 +17,6 @@ __PACKAGE__->load_components(qw(
    Helper::Schema::QuoteNames
 ));
 
-sub dbfile { ':memory:' }
-
 sub upgrade_directory { './t/lib' }
 
 sub ddl_filename {
