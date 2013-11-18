@@ -41,7 +41,7 @@ sub correlate {
 
    $self->search(undef, {
      '+columns' => {
-       book_count => $self->correlate('book')->count_rs->as_query
+       book_count => $self->correlate('books')->count_rs->as_query
      }
    });
  }
