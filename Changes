@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.019001  2013-11-23 10:19:28 America/Chicago
  - Fix typo in ::CorrelateRelationship (Getty)
 
 2.019000  2013-10-17 20:36:45 America/Chicago
