@@ -6,7 +6,7 @@ use warnings;
 # ABSTRACT: common tests to check syntax of your modules
 
 use Moose;
-use Class::MOP;
+use Module::Runtime 'use_module';
 require lib;
 
 with 'Dist::Zilla::Role::FileGatherer';
@@ -33,7 +33,7 @@ sub gather_files {
    lib->import(@{$self->lib});
 
    my $schema = $self->schema;
-   Class::MOP::load_class($schema);
+   use_module($schema);
 
    $schema->generate_ddl;
 
