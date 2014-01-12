@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.019002  2014-01-12 09:40:41 America/Chicago
  - Pick SQL for random row selection in a cleaner way
  - Stop using Class::MOP::load_class (RT#91035)
  - Really stop using RT
