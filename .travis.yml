@@ -9,8 +9,8 @@ perl:
 
 install:
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=j10:c HARNESS_TIMER=1
-   - cpanm --quiet --notest Devel::Cover::Report::Coveralls SQL::Translator
-   - cpanm --quiet --notest --installdeps .
+   - cpanm --missing --quiet --notest Devel::Cover::Report::Coveralls SQL::Translator
+   - cpanm --missing --quiet --notest --installdeps .
    - perl -Ilib -It/lib -MTestSchema -e'TestSchema->generate_ddl'
 
 script:
