@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add ::Shortcut::ResultsExist RS helper (Olaf Alders)
  - Add abstract to ::DateMethods1::Announcement (Gregor Herrmann)
 
 2.021001  2014-04-06 11:43:36-05:00 America/Chicago

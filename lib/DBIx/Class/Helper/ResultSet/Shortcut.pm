@@ -16,6 +16,7 @@ use base (qw(
    DBIx::Class::Helper::ResultSet::Shortcut::OrderByMagic
    DBIx::Class::Helper::ResultSet::Shortcut::Prefetch
    DBIx::Class::Helper::ResultSet::Shortcut::LimitedPage
+   DBIx::Class::Helper::ResultSet::Shortcut::ResultsExist
    DBIx::Class::Helper::ResultSet::Shortcut::Rows
    DBIx::Class::Helper::ResultSet::Shortcut::Page
 ));
