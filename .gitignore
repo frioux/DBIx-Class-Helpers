@@ -4,5 +4,6 @@ Makefile
 .build
 DBIx-Class-Helpers-*
 dbfile
+local
 t/lib/ddl.sql
 *.un~
