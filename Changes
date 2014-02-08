@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.019003  2014-02-07 22:21:47-06:00 America/Chicago
  - Fix ->copy on rows with proxied ResultSet methods (thanks moltar for the
    test!) (NOTE: This fix is what requires upgrading to DBIC 0.08260)
 
