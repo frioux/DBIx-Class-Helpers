@@ -14,7 +14,7 @@ subtest 'null_check_source_auto' => sub {
    $schema->prepopulate;
 
    local $schema->source('Gnarly')->column_info('literature')->{is_nullable} = 0;
-   cmp_deeply [map +{ $_ => $schema->null_check_source_auto($_)->count }, sort $schema->sources], [
+   cmp_deeply [map +{ $_ => $schema->null_check_source_auto($_)->count }, sort $schema->sources], supersetof(
      { Bar => 0 },
      { Bloaty => undef },
      { Foo => 0 },
@@ -22,7 +22,7 @@ subtest 'null_check_source_auto' => sub {
      { Gnarly => 3 },
      { Gnarly_Station => 0 },
      { Station => 0 },
-   ], 'errors for Gnarly null_check_source';
+   ), 'errors for Gnarly null_check_source';
 };
 
 subtest 'dub_check_source_auto' => sub {
@@ -40,7 +40,7 @@ subtest 'dub_check_source_auto' => sub {
          my $constraint_name = $_;
         +{ "$source $constraint_name" => $constraints->{$constraint_name}->count }
       } sort keys %$constraints;
-   } grep { $_ ne 'Bloaty' } sort $schema->sources], [
+   } grep { $_ ne 'Bloaty' } sort $schema->sources], supersetof(
      { "Bar primary" => 0 },
      { "Foo primary" => 0 },
      { "Foo_Bar primary" => 0 },
@@ -48,7 +48,7 @@ subtest 'dub_check_source_auto' => sub {
      { "Gnarly primary" => 0 },
      { "Gnarly_Station primary" => 0 },
      { "Station primary" => 0 },
-   ], 'Gnarly_name duplicated twice';
+   ), 'Gnarly_name duplicated twice';
 };
 
 subtest 'fk_check_source_auto' => sub {
@@ -72,14 +72,14 @@ subtest 'fk_check_source_auto' => sub {
          my $fk_constraint_name = $_;
         +{ "$source $fk_constraint_name" => $constraints->{$fk_constraint_name}->count }
       } sort keys %$constraints;
-   } grep { $_ ne 'Bloaty' } sort $schema->sources], [
+   } grep { $_ ne 'Bloaty' } sort $schema->sources], supersetof(
      { "Bar foo" => 0 },
      { "Foo bar" => 0 },
      { "Foo_Bar bar" => 2 },
      { "Foo_Bar foo" => 2 },
      { "Gnarly_Station gnarly" => 0 },
      { "Gnarly_Station station" => 0 },
-   ], 'foo and bar constraints broken';
+   ), 'foo and bar constraints broken';
 };
 
 done_testing;
