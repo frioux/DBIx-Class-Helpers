@@ -5,8 +5,6 @@ use warnings;
 
 # ABSTRACT: Helper utilities for DBIx::Class components
 
-# VERSION
-
 use Sub::Exporter::Progressive -setup => {
     exports => [
       qw(

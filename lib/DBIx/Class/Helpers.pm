@@ -4,8 +4,6 @@ use warnings;
 
 # ABSTRACT: Simplify the common case stuff for DBIx::Class.
 
-# VERSION
-
 1; # this class isn't meant to be used
 
 __END__

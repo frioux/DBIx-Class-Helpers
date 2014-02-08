@@ -5,8 +5,6 @@ use warnings;
 
 # ABSTRACT: Convenient subclassing with DBIx::Class
 
-# VERSION
-
 use DBIx::Class::Helpers::Util qw{get_namespace_parts assert_similar_namespaces};
 use DBIx::Class::Candy::Exports;
 

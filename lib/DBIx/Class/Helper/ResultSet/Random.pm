@@ -2,12 +2,11 @@ package DBIx::Class::Helper::ResultSet::Random;
 
 use strict;
 use warnings;
+
 use Module::Runtime 'use_module';
 use Try::Tiny;
 
 # ABSTRACT: Get random rows from a ResultSet
-
-# VERSION
 
 sub _introspector {
    my $d = use_module('DBIx::Introspector')

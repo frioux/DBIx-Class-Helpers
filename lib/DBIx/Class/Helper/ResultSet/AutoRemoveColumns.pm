@@ -1,8 +1,9 @@
 package DBIx::Class::Helper::ResultSet::AutoRemoveColumns;
 
-# ABSTRACT: Automatically remove columns from a ResultSet
+use strict;
+use warnings;
 
-# VERSION
+# ABSTRACT: Automatically remove columns from a ResultSet
 
 use parent 'DBIx::Class::Helper::ResultSet::RemoveColumns', 'DBIx::Class';
 

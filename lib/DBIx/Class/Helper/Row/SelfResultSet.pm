@@ -5,8 +5,6 @@ use warnings;
 
 # ABSTRACT: Easily use ResultSet methods for the current row
 
-# VERSION
-
 sub self_rs {
    my ($self) = @_;
 

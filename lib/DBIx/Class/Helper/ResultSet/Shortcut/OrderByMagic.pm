@@ -3,8 +3,6 @@ package DBIx::Class::Helper::ResultSet::Shortcut::OrderByMagic;
 use strict;
 use warnings;
 
-# VERSION
-
 use base 'DBIx::Class::Helper::ResultSet::Shortcut::OrderBy';
 
 sub order_by {

@@ -5,8 +5,6 @@ use warnings;
 
 # ABSTRACT: Shortcut for C<< ->resultset >>
 
-# VERSION
-
 sub clean_rs { return shift->result_source->resultset }
 
 1;

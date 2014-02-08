@@ -1,8 +1,9 @@
 package DBIx::Class::Helper::ResultSet::RemoveColumns;
 
-# ABSTRACT: Remove columns from a ResultSet
+use strict;
+use warnings;
 
-# VERSION
+# ABSTRACT: Remove columns from a ResultSet
 
 sub _resolved_attrs {
    my $self = $_[0];

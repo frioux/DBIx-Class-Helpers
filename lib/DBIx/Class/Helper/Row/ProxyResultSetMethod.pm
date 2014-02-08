@@ -5,8 +5,6 @@ use warnings;
 
 # ABSTRACT: Efficiently reuse ResultSet methods from results with fallback
 
-# VERSION
-
 use base 'DBIx::Class::Helper::Row::SelfResultSet', 'Class::Accessor::Grouped';
 use Sub::Name ();
 

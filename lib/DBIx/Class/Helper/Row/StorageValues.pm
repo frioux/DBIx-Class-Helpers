@@ -5,8 +5,6 @@ use warnings;
 
 # ABSTRACT: Keep track of stored vs in-memory row values
 
-# VERSION
-
 use parent 'DBIx::Class';
 
 __PACKAGE__->mk_group_accessors(inherited => '_storage_value_columns');

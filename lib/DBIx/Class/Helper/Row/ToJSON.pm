@@ -3,8 +3,6 @@ package DBIx::Class::Helper::Row::ToJSON;
 use strict;
 use warnings;
 
-# VERSION
-
 use parent 'DBIx::Class';
 
 # ABSTRACT: Remove the boilerplate from your TO_JSON functions

@@ -5,10 +5,6 @@ use warnings;
 
 use Scalar::Util 'blessed';
 
-# ABSTRACT: Check the data in your database match your constraints
-
-# VERSION
-
 sub null_check_source {
    my ($self, $source_name, $non_nullable_columns) = @_;
 

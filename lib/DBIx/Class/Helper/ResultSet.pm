@@ -16,8 +16,6 @@ use parent qw{
 
 # ABSTRACT: All the ResultSet Helpers in one place
 
-# VERSION
-
 1;
 
 =pod

@@ -2,8 +2,6 @@ package DBIx::Class::Helper::ResultSet::ResultClassDWIM;
 
 # ABSTRACT: result_class => '::HRI' == WIN
 
-# VERSION
-
 use strict;
 use warnings;
 

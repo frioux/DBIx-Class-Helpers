@@ -5,8 +5,6 @@ package DBIx::Class::Helper::Schema::QuoteNames;
 use strict;
 use warnings;
 
-# VERSION
-
 use DBIx::Class::Helpers::Util 'normalize_connect_info';
 
 sub connection {

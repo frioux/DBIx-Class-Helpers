@@ -5,8 +5,6 @@ use warnings;
 
 # ABSTRACT: Easily set up join tables with DBIx::Class
 
-# VERSION
-
 use DBIx::Class::Helpers::Util 'get_namespace_parts';
 use Lingua::EN::Inflect ();
 use String::CamelCase ();

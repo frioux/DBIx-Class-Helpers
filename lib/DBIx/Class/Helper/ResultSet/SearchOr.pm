@@ -5,8 +5,6 @@ package DBIx::Class::Helper::ResultSet::SearchOr;
 use strict;
 use warnings;
 
-# VERSION
-
 use List::Util 'first';
 use Carp::Clan;
 use namespace::clean;

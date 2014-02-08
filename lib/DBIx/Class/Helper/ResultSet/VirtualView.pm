@@ -5,8 +5,6 @@ use warnings;
 
 # ABSTRACT: Clean up your SQL namespace (DEPRECATED)
 
-# VERSION
-
 sub as_virtual_view {
    my $self = shift;
 
