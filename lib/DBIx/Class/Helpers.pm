@@ -1,4 +1,5 @@
 package DBIx::Class::Helpers;
+
 use strict;
 use warnings;
 
