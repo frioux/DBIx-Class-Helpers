@@ -6,6 +6,9 @@ use warnings;
 # ABSTRACT: Get rid of search context issues
 
 sub search {
+   $_[0]->throw_exception ('->search is *not* a mutator, calling it in void context makes no sense')
+      if !defined wantarray && (caller)[0] !~ /^\QDBIx::Class::/;
+
    shift->search_rs(@_);
 }
 

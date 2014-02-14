@@ -5,6 +5,7 @@ use warnings;
 
 use lib 't/lib';
 use Test::More;
+use Test::Fatal;
 
 use TestSchema;
 my $schema = TestSchema->deploy_or_connect();
@@ -19,5 +20,9 @@ isa_ok $rs, 'DBIx::Class::ResultSet';
 isa_ok $rs2, 'DBIx::Class::ResultSet';
 isa_ok $rs3, 'DBIx::Class::ResultSet';
 isa_ok $rs4, 'DBIx::Class::ResultSet';
+
+like(exception {
+   $schema->resultset('Bar')->search
+}, qr/search is \*not\* a mutator/, 'correctly die in void ctx');
 
 done_testing;

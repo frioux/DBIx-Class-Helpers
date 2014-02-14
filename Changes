@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Make IgnoreWantarray's search die in void context
 
 2.019003  2014-02-07 22:21:47-06:00 America/Chicago
  - Fix ->copy on rows with proxied ResultSet methods (thanks moltar for the
