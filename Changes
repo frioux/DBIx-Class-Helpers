@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add abstract to ::Schema::LintContents
 
 2.019004  2014-02-14 07:53:19 America/Chicago
  - Make IgnoreWantarray's search die in void context

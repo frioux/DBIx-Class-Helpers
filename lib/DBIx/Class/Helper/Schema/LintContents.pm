@@ -1,5 +1,7 @@
 package DBIx::Class::Helper::Schema::LintContents;
 
+# ABSTRACT: suite of methods to find violated "constraints"
+
 use strict;
 use warnings;
 
