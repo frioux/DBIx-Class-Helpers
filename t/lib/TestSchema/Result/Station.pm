@@ -4,9 +4,7 @@ use DBIx::Class::Candy;
 
 table 'Station';
 
-column 'id';
-column 'name';
-
-primary_key 'id';
+primary_column id => { data_type => 'int' };
+column name => { data_type => 'varchar' };
 
 1;

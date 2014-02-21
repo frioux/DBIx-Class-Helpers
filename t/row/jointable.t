@@ -43,9 +43,7 @@ $schema->prepopulate;
       my $g_s_rs = $schema->resultset('Gnarly_Station');
 
       cmp_deeply $g_s_rs->result_source->column_info('gnarly_id'), {
-         data_type => 'integer',
-         is_nullable => 0,
-         is_numeric => 1,
+         data_type => 'int',
       }, 'gnarly_id defaults column info correctly';
 
       is $s_rs->result_source->relationship_info('gnarly_stations')->{class},

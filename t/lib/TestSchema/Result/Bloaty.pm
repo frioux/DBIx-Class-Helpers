@@ -6,9 +6,10 @@ use DBIx::Class::Candy -components => [
 
 table 'Bloaty';
 
-column 'id';
+primary_column id => { data_type => 'int' };
 
 column name => {
+   data_type => 'varchar',
    remove_column => 1,
 };
 
@@ -22,7 +23,5 @@ column your_mom => {
    is_nullable => 1,
    is_serializable => 1,
 };
-
-primary_key 'id';
 
 1;

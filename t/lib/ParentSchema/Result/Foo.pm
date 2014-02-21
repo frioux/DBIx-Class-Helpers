@@ -5,6 +5,7 @@ use DBIx::Class::Candy;
 table 'Foo';
 
 column id => {
+   data_type => 'integer',
    is_numeric => 1,
 };
 

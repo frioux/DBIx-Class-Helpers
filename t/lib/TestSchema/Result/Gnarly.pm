@@ -8,8 +8,8 @@ use DBIx::Class::Candy
 
 table 'Gnarly';
 
-column 'id';
-column 'name';
+primary_column id => { data_type => 'int' };
+column name => { data_type => 'varchar' };
 
 column literature => {
    data_type => 'text',
@@ -20,8 +20,6 @@ column your_mom => {
    is_nullable => 1,
    is_serializable => 1,
 };
-
-primary_key 'id';
 
 proxy_resultset_method 'id_plus_one';
 

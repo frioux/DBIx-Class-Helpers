@@ -10,6 +10,7 @@ column id => {
 };
 
 column foo_id => {
+   data_type => 'integer',
    keep_storage_value => 1,
 };
 
