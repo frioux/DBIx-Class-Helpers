@@ -7,9 +7,17 @@ perl:
    - "5.10"
    - "5.8"
 
+before_install:
+   - mysql -e 'create database dbii_test;'
+   - export DBIITEST_MYSQL_DSN='dbi:mysql:database=dbii_test;host=127.0.0.1'
+   - export DBIITEST_MYSQL_USER=root
+   - psql -c 'create database dbii_test;' -U postgres
+   - export DBIITEST_PG_DSN='dbi:Pg:database=dbii_test;host=127.0.0.1'
+   - export DBIITEST_PG_USER=postgres
+
 install:
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=j10:c HARNESS_TIMER=1
-   - cpanm --quiet --notest Devel::Cover::Report::Coveralls SQL::Translator
+   - cpanm --quiet --notest Devel::Cover::Report::Coveralls SQL::Translator DBD::Pg DBD::mysql DateTime::Format::Pg DateTime::Format::MySQL
    - cpanm --quiet --notest --installdeps .
    - perl -Ilib -It/lib -MTestSchema -e'TestSchema->generate_ddl'
 
