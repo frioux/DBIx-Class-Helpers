@@ -20,33 +20,46 @@ __PACKAGE__->load_components(qw(
 sub upgrade_directory { './t/lib' }
 
 sub ddl_filename {
-   return File::Spec->catfile(shift->upgrade_directory, 'ddl.sql');
+   my $self = shift;
+
+   $_[2] = $self->upgrade_directory;
+
+   $self->next::method(@_)
 }
 
 sub deploy_or_connect {
    my $self = shift;
 
-   my $schema = $self->connect;
+   my $schema = $self->connect(@_);
    $schema->deploy();
    return $schema;
 }
 
 sub connect {
    my $self = shift;
-   return $self->next::method('dbi:SQLite::memory:');
+
+   if (@_) {
+      return $self->next::method(@_);
+   } else {
+      return $self->next::method('dbi:SQLite::memory:');
+   }
 }
 
 sub generate_ddl {
    my $self = shift;
    my $schema = $self->connect;
    $schema->create_ddl_dir(
-      'SQLite',
+      $_,
       $schema->schema_version,
-      $self->upgrade_directory,
+      undef,
       undef, {
          add_drop_table => 0,
+         ($_ ne 'SQLite'
+            ? (parser_args => { sources => ['HasDateOps'] })
+            : ()
+         ),
       },
-   );
+   ) for qw(SQLite MySQL PostgreSQL SQLServer);
 }
 
 sub prepopulate {

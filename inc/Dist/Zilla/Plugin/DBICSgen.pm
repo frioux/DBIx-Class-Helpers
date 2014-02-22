@@ -25,7 +25,7 @@ has lib => (
 
 sub mvp_multivalue_args { qw(lib) }
 
-unlink 't/lib/ddl.sql';
+unlink $_ for glob 't/lib/*.sql';
 
 sub gather_files {
    my $self = shift;
@@ -37,8 +37,8 @@ sub gather_files {
 
    $schema->generate_ddl;
 
-   my $file = Dist::Zilla::File::OnDisk->new(name => $schema->ddl_filename);
-   $self->add_file($file);
+   $self->add_file( Dist::Zilla::File::OnDisk->new(name => $_))
+      for glob 't/lib/*.sql';
 }
 
 no Moose;
