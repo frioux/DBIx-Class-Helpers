@@ -65,9 +65,24 @@ cmp_deeply
    'page works the same';
 
 cmp_deeply
-   [$dupes_rs->paging(2, 3)->all],
+   [$dupes_rs->get_page(2, 3)->all],
    [$dupes_rs->search({},{ page => 2, rows => 3 })->all],
-   'paging works the same';
+   'get_page works the same';
+
+cmp_deeply
+   [$dupes_rs->get_page({ page => 2, rows => 3 })->all],
+   [$dupes_rs->search({},{ page => 2, rows => 3 })->all],
+   'get_page works the same';
+
+cmp_deeply
+   [$dupes_rs->get_page({ page => 2 })->all],
+   [$dupes_rs->search({},{ page => 2 })->all],
+   'get_page works the same';
+
+cmp_deeply
+   [$dupes_rs->get_page(2)->all],
+   [$dupes_rs->get_page({ page => 2 })->all],
+   'get_page works the same';
 
 cmp_deeply
    [$dupes_rs->columns(['bar_id'])->all],

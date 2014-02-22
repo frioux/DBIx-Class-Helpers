@@ -4,6 +4,6 @@ use warnings;
 
 use parent 'TestSchema::ResultSet';
 
-__PACKAGE__->load_components(qw{ Helper::ResultSet::RemoveColumns Helper::ResultSet::Union Helper::ResultSet::Random Helper::ResultSet::ResultClassDWIM Helper::ResultSet::Shortcut Helper::ResultSet::Paging });
+__PACKAGE__->load_components(qw{ Helper::ResultSet::RemoveColumns Helper::ResultSet::Union Helper::ResultSet::Random Helper::ResultSet::ResultClassDWIM Helper::ResultSet::Shortcut Helper::ResultSet::GetPage });
 
 1;
