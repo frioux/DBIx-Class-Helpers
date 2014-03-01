@@ -750,6 +750,15 @@ run_me(mysql => {
 
 });
 
+local $SIG{__WARN__} = sub {
+   my $warning = shift;
+
+   return if $warning =~
+      m/DBIx::Class::Storage::DBI::Oracle.*sql_(?:limit_dialect|quote_char)/;
+
+   print STDERR $warning;
+};
+
 run_me(Oracle => {
    engine => 'Oracle',
    utc_now => 'sys_extract_utc(SYSTIMESTAMP)',
