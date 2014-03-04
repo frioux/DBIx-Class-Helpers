@@ -15,6 +15,8 @@ sub _dt {
    )
 }
 
+has on_connect_call => ( is => 'ro' );
+
 has [qw(
    add_sql_by_part_skip add_sql_by_part_result
    pluck_sql_by_part_skip pluck_sql_by_part_result
@@ -43,6 +45,8 @@ has connect_info => (
    default => sub {
       my $self = shift;
       my @connect_info = grep $_, map $ENV{$_}, $self->env_vars;
+      push @connect_info, { on_connect_call => $self->on_connect_call }
+         if @connect_info && $self->on_connect_call;
 
       return \@connect_info;
    },
@@ -758,6 +762,8 @@ local $SIG{__WARN__} = sub {
 };
 
 run_me(Oracle => {
+   on_connect_call => 'datetime_setup',
+
    engine => 'Oracle',
    utc_now => 'sys_extract_utc(SYSTIMESTAMP)',
 
