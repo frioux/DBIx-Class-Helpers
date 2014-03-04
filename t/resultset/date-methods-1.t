@@ -30,7 +30,12 @@ has [map "${_}_sql_by_part", qw(pluck add)] => (
    default => sub { {} },
 );
 
-sub skip_reason { 'set ' . join(q<, >, shift->env_vars) . ' to run these tests' }
+has _skip_msg_once => ( is => 'rw' );
+sub skip_reason {
+   return '(see above)' if $_[0]->_skip_msg_once;
+   $_[0]->_skip_msg_once(1);
+   'set ' . join(q<, >, shift->env_vars) . ' to run these tests'
+}
 
 sub env_vars {
    my $self = shift;
