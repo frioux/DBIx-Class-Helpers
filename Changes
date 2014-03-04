@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - fix ABSTRACT on ::Helper::ResultSet::DateMethods1
 
 2.020000  2014-03-04 08:31:39-06:00 America/Chicago
  - Add ::Helper::ResultSet::DateMethods1

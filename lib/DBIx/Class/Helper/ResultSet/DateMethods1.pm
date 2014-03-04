@@ -1,6 +1,6 @@
 package DBIx::Class::Helper::ResultSet::DateMethods1;
 
-# ABSTRACT: Define predefined searches more nicely
+# ABSTRACT: Work with dates in your RDBMS nicely
 
 # VERSION
 
