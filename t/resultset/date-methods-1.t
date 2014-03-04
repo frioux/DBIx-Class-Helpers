@@ -82,7 +82,7 @@ sub _merged_pluck_sql_by_part_result {
    my %results = %{$self->pluck_sql_by_part_result};
 
    my @overrides = grep { $base{$_} } sort keys %results;
-   diag join(q(, ), @overrides) . ' overridden' if @overrides;
+   note join(q(, ), @overrides) . ' overridden' if @overrides;
 
    return +{ %base, %results };
 }
