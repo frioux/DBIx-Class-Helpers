@@ -113,9 +113,7 @@ has schema => (
       $schema->storage_type('DBIx::Class::Storage::DBI::' . $self->storage_type)
          if $self->storage_type;
 
-      my @connect_info = @{$self->connect_info};
-      @connect_info = ('dbi:SQLite::memory:') unless @connect_info;
-      $schema = TestSchema->connect(@connect_info);
+      $schema = TestSchema->connect(@{$self->connect_info});
       $schema->deploy if $self->connected;
       $schema->storage->dbh->{private_dbii_driver} = $self->engine;
 
