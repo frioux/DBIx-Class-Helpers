@@ -53,11 +53,12 @@ sub generate_ddl {
       $schema->schema_version,
       undef,
       undef, {
-         add_drop_table => 0,
-         ($_ ne 'SQLite'
-            ? (parser_args => { sources => ['HasDateOps'] })
-            : ()
-         ),
+          ($_ ne 'SQLite'
+            ? (
+                add_drop_table => 1,
+                parser_args => { sources => ['HasDateOps'] })
+            : ( add_drop_table => 0 )
+         )
       },
    ) for qw(SQLite MySQL PostgreSQL SQLServer Oracle);
 }
