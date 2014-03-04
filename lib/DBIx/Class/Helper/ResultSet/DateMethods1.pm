@@ -287,8 +287,8 @@ sub _introspector {
 
             my $sql = delete $date_sql->[0];
 
-            # word on the street is that $sql may need to be wrapped with
-            # TO_TIMESTAMP(...)
+            $sql = "TO_TIMESTAMP($sql)"
+                if $part =~ /second|minute|hour/;
             return [
                "EXTRACT($part_map{$part} FROM $sql)", @$date_sql
             ]
@@ -308,7 +308,7 @@ sub _introspector {
             die "unknown unit $unit" unless $diff_part_map{$unit};
 
             return [
-               "($d_sql + NUMTODSINTERVAL($a_sql, ?)",
+               "($d_sql + NUMTODSINTERVAL($a_sql, ?))",
                @d_args, @a_args, $diff_part_map{$unit}
             ];
          }

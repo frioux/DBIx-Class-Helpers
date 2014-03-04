@@ -767,26 +767,27 @@ run_me(Oracle => {
 
    engine => 'Oracle',
    utc_now => 'sys_extract_utc(SYSTIMESTAMP)',
+   stringified_date => '2014-02-08 04:43:00',
 
    storage_type => 'Oracle',
 
    add_sql_prefix => \[
-      '("me"."a_date" + NUMTODSINTERVAL(?, ?)', 1, 'SECOND',
+      '("me"."a_date" + NUMTODSINTERVAL(?, ?))', 1, 'SECOND',
     ],
 
    add_sql_by_part => {
-      day    => \[ '("a_date" + NUMTODSINTERVAL(?, ?)', 1, 'DAY' ],
-      hour   => \[ '("a_date" + NUMTODSINTERVAL(?, ?)', 2, 'HOUR' ],
-      minute => \[ '("a_date" + NUMTODSINTERVAL(?, ?)', 3, 'MINUTE' ],
-      second => \[ '("a_date" + NUMTODSINTERVAL(?, ?)', 5, 'SECOND' ],
+      day    => \[ '("a_date" + NUMTODSINTERVAL(?, ?))', 1, 'DAY' ],
+      hour   => \[ '("a_date" + NUMTODSINTERVAL(?, ?))', 2, 'HOUR' ],
+      minute => \[ '("a_date" + NUMTODSINTERVAL(?, ?))', 3, 'MINUTE' ],
+      second => \[ '("a_date" + NUMTODSINTERVAL(?, ?))', 5, 'SECOND' ],
    },
 
-   pluck_sql_prefix => \[ 'EXTRACT(SECOND FROM "me"."a_date")' ],
+   pluck_sql_prefix => \[ 'EXTRACT(SECOND FROM TO_TIMESTAMP("me"."a_date"))' ],
 
    pluck_sql_by_part => {
-      second       => \[ 'EXTRACT(SECOND FROM "a_date")' ],
-      minute       => \[ 'EXTRACT(MINUTE FROM "a_date")' ],
-      hour         => \[ 'EXTRACT(HOUR FROM "a_date")' ],
+      second       => \[ 'EXTRACT(SECOND FROM TO_TIMESTAMP("a_date"))' ],
+      minute       => \[ 'EXTRACT(MINUTE FROM TO_TIMESTAMP("a_date"))' ],
+      hour         => \[ 'EXTRACT(HOUR FROM TO_TIMESTAMP("a_date"))' ],
       day_of_month => \[ 'EXTRACT(DAY FROM "a_date")' ],
       month        => \[ 'EXTRACT(MONTH FROM "a_date")' ],
       year         => \[ 'EXTRACT(YEAR FROM "a_date")' ],
