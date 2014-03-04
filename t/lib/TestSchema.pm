@@ -59,7 +59,7 @@ sub generate_ddl {
             : ()
          ),
       },
-   ) for qw(SQLite MySQL PostgreSQL SQLServer);
+   ) for qw(SQLite MySQL PostgreSQL SQLServer Oracle);
 }
 
 sub prepopulate {
