@@ -114,8 +114,9 @@ has schema => (
       my $self = shift;
 
       my $schema = 'TestSchema';
+      $schema->storage_type('DBIx::Class::Storage::DBI'); # class methods: THE WORST
       $schema->storage_type('DBIx::Class::Storage::DBI::' . $self->storage_type)
-         if $self->storage_type;
+         if $self->storage_type && !$self->connected;
 
       $schema = TestSchema->connect(@{$self->connect_info});
       $schema->deploy if $self->connected;
