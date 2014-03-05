@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.020001  2014-03-05 10:33:46CST-0600 America/Chicago
  - Make ::DateMethods1 tests paralellizable (thanks Alexander Hartmaier!)
  - fix ::Helper::ResultSet::DateMethods1 for Oracle (thanks Alexander Hartmaier!)
  - fix ABSTRACT on ::Helper::ResultSet::DateMethods1
