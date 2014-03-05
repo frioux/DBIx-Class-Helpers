@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Make ::DateMethods1 tests paralellizable (thanks Alexander Hartmaier!)
  - fix ::Helper::ResultSet::DateMethods1 for Oracle (thanks Alexander Hartmaier!)
  - fix ABSTRACT on ::Helper::ResultSet::DateMethods1
 
