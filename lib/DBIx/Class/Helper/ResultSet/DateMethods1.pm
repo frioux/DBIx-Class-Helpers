@@ -2,8 +2,6 @@ package DBIx::Class::Helper::ResultSet::DateMethods1;
 
 # ABSTRACT: Work with dates in your RDBMS nicely
 
-# VERSION
-
 use strict;
 use warnings;
 
