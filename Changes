@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.021000  2014-04-01 20:12:40-05:00 America/Chicago
  - Create Shortcut::Page and Shortcut::LimitedPage ResultSet helpers (wreis)
 
 2.020001  2014-03-05 10:33:46CST-0600 America/Chicago
