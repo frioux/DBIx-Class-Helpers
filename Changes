@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Fix ::RemoveColumns to work with a specified `columns` (Anthony DeRobertis)
+   (Fixes GH#27) Also fixes RT#91977/GH#24)
 
 2.021000  2014-04-01 20:12:40-05:00 America/Chicago
  - Create Shortcut::Page and Shortcut::LimitedPage ResultSet helpers (wreis)
