@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.021001  2014-04-06 11:43:36-05:00 America/Chicago
  - Fix ::RemoveColumns to work with a specified `columns` (Anthony DeRobertis)
    (Fixes GH#27) Also fixes RT#91977/GH#24)
 
