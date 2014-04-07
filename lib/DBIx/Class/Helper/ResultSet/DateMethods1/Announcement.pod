@@ -1,8 +1,6 @@
 # PODNAME: DBIx::Class::Helper::ResultSet::DateMethods1::Announce
 
-=head1 NAME
-
-::DateMethods1 Announcement
+# ABSTRACT: Original Announcement of DBIx::Class::Helper::ResultSet::DateMethods1
 
 =head1 Content
 
