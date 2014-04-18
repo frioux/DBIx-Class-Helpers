@@ -126,4 +126,4 @@ And that's it.  I hope you can use and enjoy these helpers!
 
 =head1 SEE ALSO
 
-L<original blog post|http://blog.afoolishmanifesto.com/archives/1926>
+L<original blog post|https://blog.afoolishmanifesto.com/posts/announcing-helper-resultset-datemethods1/>
