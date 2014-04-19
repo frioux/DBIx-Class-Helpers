@@ -79,6 +79,18 @@ sub set_table {
 
 or with L<DBIx::Class::Candy>:
 
+ # define parent class
+ package ParentSchema::Result::Bar;
+
+ use DBIx::Class::Candy;
+
+ table 'Bar'; # or use -autotable => v1, but see below
+
+ primary_column 'id';
+ column 'foo_id';
+
+ belongs_to  foo => 'ParentSchema::Result::Foo', 'foo_id';
+
  # define subclass
  package MySchema::Result::Bar;
 
@@ -91,6 +103,12 @@ or with L<DBIx::Class::Candy>:
 =head1 DESCRIPTION
 
 This component is to allow simple subclassing of L<DBIx::Class> Result classes.
+
+B<NB:> if your parent class is defined above the C<::Result> level (and
+therefore won't have a table deployed for it by default) you still need to set
+the table.  (Any value such as 'Dummy' will do.  L<DBIx::Class::Candy>'s
+C<autotable> functionality won't work in this case, so you should omit that and 
+set the C<table> manually.)
 
 =head1 METHODS
 
