@@ -6,13 +6,13 @@ use warnings;
 # ABSTRACT: Determine if a query would return results
 
 sub results_exist {
-    my $self   = shift;
-    my $search = shift;
+   my $self   = shift;
 
-    my $rs = $self->search( $search );
-    (   $rs->result_source->resultset->search( {},
-            { select => { exists => $rs->as_query } } )->cursor->next
-    )[0] ? 1 : 0;
+   $self
+      ->result_source
+      ->resultset
+      ->search({ -exists => $self->as_query })
+      ->first
 }
 
 1;
