@@ -154,6 +154,14 @@ calling C<< $rs->count >>.
  # equivalent to...
  $foo_rs->search(undef, { prefetch => 'bar' });
 
+=method results_exist
+
+ my $results_exist = $schema->resultset('Bar')->search({...})->results_exist;
+
+Uses C<EXISTS> SQL function to check if the query would return anything.
+Possibly lighter weight than the much more common C<< foo() if $rs->count >>
+idiom.
+
 =head1 SEE ALSO
 
 This component is actually a number of other components put together.  It will
@@ -197,5 +205,7 @@ C<DBIx::Class::Helper::ResultSet::Shortcut::OrderBy>))
 
 (inherits from C<DBIx::Class::Helper::ResultSet::Shortcut::Page> and
 L<DBIx::Class::Helper::ResultSet::Shortcut::Rows>)
+
+=item * L<DBIx::Class::Helper::ResultSet::Shortcut::ResultsExist>
 
 =back
