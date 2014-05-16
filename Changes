@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add ::Shortcut::Explain RS helper
 
 2.022000  2014-05-03 10:39:30-05:00 CST6CDT
  - Add ::Shortcut::ResultsExist RS helper (Olaf Alders)
