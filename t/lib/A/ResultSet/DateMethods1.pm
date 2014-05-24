@@ -5,8 +5,9 @@ use Test::Deep;
 use DateTime;
 use Test::Fatal;
 
+with 'A::Role::TestConnect';
+
 use lib 't/lib';
-use TestSchema;
 
 sub _dt {
    DateTime->new(
@@ -14,8 +15,6 @@ sub _dt {
       year => shift(@_), month => shift(@_), day => shift(@_),
    )
 }
-
-has on_connect_call => ( is => 'ro' );
 
 has [qw(
    add_sql_by_part_skip add_sql_by_part_result
@@ -37,29 +36,8 @@ sub skip_reason {
    'set ' . join(q<, >, shift->env_vars) . ' to run these tests'
 }
 
-sub env_vars {
-   my $self = shift;
-
-   my $p = 'DBIITEST_' . uc($self->engine);
-   $p . '_DSN', $p . '_USER', $p . '_PASSWORD';
-}
-
-has connect_info => (
-   is => 'ro',
-   lazy => 1,
-   default => sub {
-      my $self = shift;
-      my @connect_info = grep $_, map $ENV{$_}, $self->env_vars;
-      push @connect_info, { on_connect_call => $self->on_connect_call }
-         if @connect_info && $self->on_connect_call;
-
-      return \@connect_info;
-   },
-);
-
 has [qw(
-   engine utc_now stringified_date add_sql_prefix
-   sub_sql pluck_sql_prefix storage_type
+   utc_now stringified_date add_sql_prefix sub_sql pluck_sql_prefix
 )] => (is => 'ro');
 
 has plucked_minute => (
@@ -109,27 +87,6 @@ sub _merged_add_sql_by_part_result {
       %{$self->add_sql_by_part_result},
    }
 }
-
-sub connected { !!@{shift->connect_info} }
-
-has schema => (
-   is => 'ro',
-   lazy => 1,
-   builder => sub {
-      my $self = shift;
-
-      my $schema = 'TestSchema';
-      $schema->storage_type('DBIx::Class::Storage::DBI'); # class methods: THE WORST
-      $schema->storage_type('DBIx::Class::Storage::DBI::' . $self->storage_type)
-         if $self->storage_type && !$self->connected;
-
-      $schema = TestSchema->connect(@{$self->connect_info});
-      $schema->deploy if $self->connected;
-      $schema->storage->dbh->{private_dbii_driver} = $self->engine;
-
-      $schema
-   },
-);
 
 sub rs { shift->schema->resultset('HasDateOps') }
 
