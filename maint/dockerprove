@@ -4,13 +4,13 @@ docker run --rm -p 3306:3306 -P \
    -e MYSQL_DATABASE=docker    \
    -e MYSQL_USER=docker        \
    -e MYSQL_PASSWORD=docker    \
-   --name mysql_test orchardup/mysql &
+   --name mysql_test orchardup/mysql > /dev/null 2>&1 &
 
 export DBIITEST_MYSQL_DSN='dbi:mysql:database=docker;host=127.0.0.1;port=3306'
 export DBIITEST_MYSQL_PASSWORD=docker
 export DBIITEST_MYSQL_USER=docker
 
-docker run --rm -p 5432:5432 -P --name pg_test apalmer/postgres &
+docker run --rm -p 5432:5432 -P --name pg_test apalmer/postgres > /dev/null 2>&1 &
 
 export DBIITEST_PG_DSN='dbi:Pg:database=postgres;host=127.0.0.1;port=5432'
 export DBIITEST_PG_PASSWORD=postgres
