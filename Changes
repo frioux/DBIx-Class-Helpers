@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.023000  2014-05-26 19:33:01-05:00 America/Chicago
  - Add ::Shortcut::Explain RS helper
 
 2.022000  2014-05-03 10:39:30-05:00 CST6CDT
