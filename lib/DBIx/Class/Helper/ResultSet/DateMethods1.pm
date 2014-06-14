@@ -515,7 +515,7 @@ for what units are accepted.
        year  => $rs->dt_SQL_pluck({ -ident => '.start' }, 'year'),
     },
     group_by => [$rs->dt_SQL_pluck({ -ident => '.start' }, 'year')],
- )->hri->all
+ })->hri->all
 
 Takes two arguments: a date conforming to L</TYPES> and a unit.  The idea
 is to pluck a given unit from the datetime.  See your L</IMPLEMENTATION>
