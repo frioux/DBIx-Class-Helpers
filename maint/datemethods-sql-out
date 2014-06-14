@@ -1,0 +1,39 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Data::Dumper::Concise;
+
+use lib 't/lib';
+
+use A::Util;
+
+my $code = <<'CODE';
+# get count per year/month
+$rs->search(undef, {
+   columns => {
+      count => '*',
+      year  => $rs->dt_SQL_pluck({ -ident => '.start' }, 'year'),
+      month => $rs->dt_SQL_pluck({ -ident => '.start' }, 'month'),
+   },
+   group_by => [
+      $rs->dt_SQL_pluck({ -ident => '.start' }, 'year'),
+      $rs->dt_SQL_pluck({ -ident => '.start' }, 'month'),
+   ],
+});
+CODE
+
+my $engine = shift;
+my $include_code = shift;
+
+print "$code\n" if $include_code;
+if ($engine eq 'SQLite') {
+   my $s = TestSchema->connect('dbi:SQLite::memory:');
+   $s->deploy;
+   my $rs = $s->resultset('HasDateOps');
+   print "# $engine\n" . ${eval($code)->as_query}->[0]
+} else {
+   my $rs = A::Util::connect($engine, $engine)->resultset('HasDateOps');
+   print "# $engine\n" . ${eval($code)->as_query}->[0]
+}

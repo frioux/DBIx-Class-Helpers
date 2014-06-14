@@ -423,6 +423,25 @@ sub dt_SQL_pluck {
 
 =pod
 
+=head1 SYNOPSIS
+
+ package MySchema::ResultSet::Bar;
+
+ use strict;
+ use warnings;
+
+ use parent 'DBIx::Class::ResultSet';
+
+ __PACKAGE__->load_components('Helper::ResultSet::DateMethods1');
+
+ # in code using resultset
+
+=for exec
+perl maint/datemethods-sql-out mysql 1
+
+=for exec
+perl maint/datemethods-sql-out SQLite
+
 =head1 DESCRIPTION
 
 See L<DBIx::Class::Helper::ResultSet/NOTE> for a nice way to apply it
