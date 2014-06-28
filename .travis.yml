@@ -1,5 +1,7 @@
 language: perl
 perl:
+   - "blead"
+   - "5.20"
    - "5.18"
    - "5.16"
    - "5.14"
@@ -8,6 +10,11 @@ perl:
    - "5.8"
 
 before_install:
+   - git clone git://github.com/haarg/perl-travis-helper
+   - source perl-travis-helper/init
+   - build-perl
+   - perl -V
+
    - mysql -e 'create database dbii_test;'
    - export DBIITEST_MYSQL_DSN='dbi:mysql:database=dbii_test;host=127.0.0.1'
    - export DBIITEST_MYSQL_USER=root
