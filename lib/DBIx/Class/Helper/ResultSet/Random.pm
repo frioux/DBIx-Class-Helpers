@@ -12,11 +12,11 @@ sub _introspector {
    my $d = use_module('DBIx::Introspector')
       ->new(drivers => '2013-12.01');
 
-   $d->decorate_driver_unconnected(ACCESS => rand_sql => sub { 'RND()' });
-   $d->decorate_driver_unconnected(Oracle => rand_sql => sub { 'dbms_random.value' });
-   $d->decorate_driver_unconnected(Pg     => rand_sql => sub { 'RANDOM()' });
-   $d->decorate_driver_unconnected(MSSQL  => rand_sql => sub { 'NEWID()' });
-   $d->decorate_driver_unconnected(SQLite => rand_sql => sub { 'RANDOM()' });
+   $d->decorate_driver_unconnected(ACCESS => rand_sql => 'RND()' );
+   $d->decorate_driver_unconnected(Oracle => rand_sql => 'dbms_random.value' );
+   $d->decorate_driver_unconnected(Pg     => rand_sql => 'RANDOM()' );
+   $d->decorate_driver_unconnected(MSSQL  => rand_sql => 'NEWID()' );
+   $d->decorate_driver_unconnected(SQLite => rand_sql => 'RANDOM()' );
 
    $d
 }
