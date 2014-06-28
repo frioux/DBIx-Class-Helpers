@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Remove silly layer of subtesting (thanks to new features in Test::Roo)
 
 2.023001  2014-06-14 12:39:08-05:00 America/Chicago
  - Add handy SYNOPSIS to ::DateMethods1 (thanks for asking rjbs!)

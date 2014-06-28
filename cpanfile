@@ -15,7 +15,7 @@ requires 'Safe::Isa';
 on test => sub {
    requires 'Test::More' => 0.94;
    requires 'Test::Deep' => 0;
-   requires 'Test::Roo' => 0;
+   requires 'Test::Roo' => 1.003;
    requires 'DBD::SQLite' => 0;
    requires 'Test::Exception' => 0;
    requires 'DateTime::Format::SQLite' => 0;

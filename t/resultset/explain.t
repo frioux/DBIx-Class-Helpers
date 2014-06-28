@@ -10,7 +10,7 @@ with 'A::Role::TestConnect';
 
 sub rs { shift->schema->resultset('Gnarly') }
 
-test basic => sub {
+top_test basic => sub {
    my $self = shift;
    my $rs = $self->rs;
    SKIP: {
