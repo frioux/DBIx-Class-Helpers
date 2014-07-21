@@ -65,7 +65,7 @@ sub generate_ddl {
 
 sub prepopulate {
    my $self = shift;
-   $self->resultset($_)->delete for qw{Bar Foo Gnarly_Station Bloaty Gnarly Station};
+   $self->resultset($_)->delete for qw{Bar Foo Gnarly_Station Bloaty Gnarly Station HasAccessor};
 
    $self->populate( Gnarly => [
       [qw{id name}],
@@ -114,6 +114,13 @@ sub prepopulate {
       [3,3],
       [4,4],
       [5,5],
+   ]);
+
+   $self->populate( HasAccessor => [
+      [qw{id usable_column unusable_column}],
+      [1,'aa','bb'],
+      [2,'cc','dd'],
+      [3,'ee','ff'],
    ]);
 }
 
