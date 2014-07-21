@@ -72,7 +72,7 @@ __END__
 
 This module mostly makes sense to be used without setting as a component:
 
- ues Devel::Dwarn;
+ use Devel::Dwarn;
  Dwarn DBIx::Class::ResultSet::Explain::explain($rs)
 
 But as usual, if you prefer to use it as a component here's how:
