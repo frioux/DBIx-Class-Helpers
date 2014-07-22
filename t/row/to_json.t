@@ -56,4 +56,25 @@ MORE_COMPLEX_JSON: {
    }], 'complex TO_JSON works');
 }
 
+ACCESSOR_CLASS: {
+   my $datas = [
+      map $_->TO_JSON,
+         $schema->resultset('HasAccessor')->search(undef, { order_by => 'id' })->all
+      ];
+
+   cmp_deeply($datas, [{
+         id => 1,
+         usable_column => 'aa',
+         alternate_name => 'bb',
+      },{
+         id => 2,
+         usable_column => 'cc',
+         alternate_name => 'dd',
+      },{
+         id => 3,
+         usable_column => 'ee',
+         alternate_name => 'ff',
+   }], 'accessor fields with TO_JSON works');
+}
+
 done_testing;
