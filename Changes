@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.023003  2014-07-21 21:22:27-05:00 America/Chicago
  - Fix ToJSON to use accessors if it needs to (Thanks Kevin Benson!)
  - Fix silly typo in ::Explain (Good catch Jonathan W. Taylor!)
 
