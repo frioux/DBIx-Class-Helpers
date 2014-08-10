@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Fix ::Row::SelfResultSet to correctly include CSA (Thanks Steve Kleiman!)
 
 2.023004  2014-08-01 18:27:54-05:00 America/Chicago
  - Fix implementation of ::Row::SelfResultSet (fixes GH#34, thanks ribasushi for
