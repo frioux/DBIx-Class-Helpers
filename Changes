@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.023005  2014-08-10 11:05:27-05:00 America/Chicago
  - Fix ::Row::SelfResultSet to correctly include CSA (Thanks Steve Kleiman!)
 
 2.023004  2014-08-01 18:27:54-05:00 America/Chicago
