@@ -5,6 +5,7 @@ package DBIx::Class::Helper::ResultSet::DateMethods1;
 use strict;
 use warnings;
 
+use DBI qw(:sql_types);
 use DBIx::Introspector;
 use Safe::Isa;
 
@@ -59,11 +60,11 @@ sub _introspector {
          sub {
             my ($date_sql, $part) = @_;
 
-            my $sql = delete $date_sql->[0];
+            my ($sql, @args) = @$date_sql;
 
             return [
                "DATEPART($part_map{$part}, $sql)",
-               @$date_sql
+               @args
             ]
          }
       });
@@ -110,11 +111,11 @@ sub _introspector {
          sub {
             my ($date_sql, $part) = @_;
 
-            my $sql = delete $date_sql->[0];
+            my ($sql, @args) = @$date_sql;
 
             return [
                "STRFTIME('%$part_map{$part}', $sql)",
-               @$date_sql
+               @args
             ]
          }
       });
@@ -182,11 +183,13 @@ sub _introspector {
          sub {
             my ($date_sql, $part) = @_;
 
-            my $sql = delete $date_sql->[0];
+            my ($sql, @args) = @$date_sql;
+            @args = ([{ dbd_attrs => SQL_TIMESTAMP }, $args[0]])
+               if $sql eq '?' && @args == 1;
 
             return [
                "date_part(?, $sql)",
-               $part_map{$part}, @$date_sql
+               $part_map{$part}, @args
             ]
          }
       });
@@ -197,6 +200,9 @@ sub _introspector {
 
             my ($d_sql, @d_args) = @{$date_sql};
             my ($a_sql, @a_args) = @{$amount_sql};
+
+            @d_args = ([{ dbd_attrs => SQL_TIMESTAMP }, $d_args[0]])
+               if $d_sql eq '?' && @d_args == 1;
 
             die "unknown part $unit" unless $diff_part_map{$unit};
 
@@ -244,10 +250,10 @@ sub _introspector {
          sub {
             my ($date_sql, $part) = @_;
 
-            my $sql = delete $date_sql->[0];
+            my ($sql, @args) = @$date_sql;
 
             return [
-               "EXTRACT($part_map{$part} FROM $sql)", @$date_sql
+               "EXTRACT($part_map{$part} FROM $sql)", @args
             ]
          }
       });
@@ -283,12 +289,12 @@ sub _introspector {
          sub {
             my ($date_sql, $part) = @_;
 
-            my $sql = delete $date_sql->[0];
+            my ($sql, @args) = @$date_sql;
 
             $sql = "TO_TIMESTAMP($sql)"
                 if $part =~ /second|minute|hour/;
             return [
-               "EXTRACT($part_map{$part} FROM $sql)", @$date_sql
+               "EXTRACT($part_map{$part} FROM $sql)", @args
             ]
          }
       });

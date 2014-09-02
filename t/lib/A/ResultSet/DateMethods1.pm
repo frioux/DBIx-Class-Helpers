@@ -327,26 +327,51 @@ test add => sub {
       $self->rs->delete;
       $self->rs->create({ id => 1, a_date => $self->rs->utc($dt) });
 
-      my $added = $self->rs->search(undef, {
-         rows => 1,
-         columns => { foo =>
-            $self->rs->dt_SQL_add(
+      subtest column => sub {
+         my $added = $self->rs->search(undef, {
+            rows => 1,
+            columns => { foo =>
                $self->rs->dt_SQL_add(
-                  $self->rs->dt_SQL_add({ -ident => '.a_date' }, 'minute', 2),
-                     second => 4,
-               ), hour => 1,
-            ),
-         },
-         result_class => 'DBIx::Class::ResultClass::HashRefInflator',
-      })->first->{foo};
-      $added = $self->parse_datetime($added);
+                  $self->rs->dt_SQL_add(
+                     $self->rs->dt_SQL_add({ -ident => '.a_date' }, 'minute', 2),
+                        second => 4,
+                  ), hour => 1,
+               ),
+            },
+            result_class => 'DBIx::Class::ResultClass::HashRefInflator',
+         })->first->{foo};
+         $added = $self->parse_datetime($added);
 
-      is($added->year => 2013, 'added year');
-      is($added->month => 12, 'added month');
-      is($added->day => 11, 'added day');
-      is($added->hour => 11, 'added hour');
-      is($added->minute => 11, 'added minute');
-      is($added->second => 12, 'added second');
+         is($added->year => 2013, 'added year');
+         is($added->month => 12, 'added month');
+         is($added->day => 11, 'added day');
+         is($added->hour => 11, 'added hour');
+         is($added->minute => 11, 'added minute');
+         is($added->second => 12, 'added second');
+      };
+
+      subtest bindarg => sub {
+         my $added = $self->rs->search(undef, {
+            rows => 1,
+            columns => { foo =>
+               $self->rs->dt_SQL_add(
+                  $self->rs->dt_SQL_add(
+                     $self->rs->dt_SQL_add($dt, 'minute', 2),
+                        second => 4,
+                  ), hour => 1,
+               ),
+            },
+            result_class => 'DBIx::Class::ResultClass::HashRefInflator',
+         })->first->{foo};
+         $added = $self->parse_datetime($added);
+
+         is($added->year => 2013, 'added year');
+         is($added->month => 12, 'added month');
+         is($added->day => 11, 'added day');
+         is($added->hour => 11, 'added hour');
+         is($added->minute => 11, 'added minute');
+         is($added->second => 12, 'added second');
+      };
    }
 };
 
@@ -428,21 +453,40 @@ test pluck => sub {
       $self->rs->create({ id => 1, a_date => $self->rs->utc($dt) });
 
       my @parts = qw(year month day_of_month hour minute second);
-      my $plucked = $self->rs->search(undef, {
-         rows => 1,
-         select => [map $self->rs->dt_SQL_pluck({ -ident => '.a_date' }, $_), @parts],
-         as => \@parts,
-         result_class => 'DBIx::Class::ResultClass::HashRefInflator',
-      })->first;
+      {
+         my $plucked = $self->rs->search(undef, {
+            rows => 1,
+            select => [map $self->rs->dt_SQL_pluck({ -ident => '.a_date' }, $_), @parts],
+            as => \@parts,
+            result_class => 'DBIx::Class::ResultClass::HashRefInflator',
+         })->first;
 
-      cmp_deeply($plucked, {
-         year => 2013,
-         month => 12,
-         day_of_month => 11,
-         hour => 10,
-         minute => $self->plucked_minute,
-         second => $self->plucked_second,
-      }, 'live pluck works');
+         cmp_deeply($plucked, {
+            year => 2013,
+            month => 12,
+            day_of_month => 11,
+            hour => 10,
+            minute => $self->plucked_minute,
+            second => $self->plucked_second,
+         }, 'live pluck works from column');
+      }
+      {
+         my $plucked = $self->rs->search(undef, {
+            rows => 1,
+            select => [map $self->rs->dt_SQL_pluck($dt, $_), @parts],
+            as => \@parts,
+            result_class => 'DBIx::Class::ResultClass::HashRefInflator',
+         })->first;
+
+         cmp_deeply($plucked, {
+            year => 2013,
+            month => 12,
+            day_of_month => 11,
+            hour => 10,
+            minute => $self->plucked_minute,
+            second => $self->plucked_second,
+         }, 'live pluck works from bindarg');
+   }
    }
 };
 
