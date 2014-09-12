@@ -38,5 +38,11 @@ subtest 'copy result' => sub {
     is $g3->id, 100, 'id is correctly overridden';
 };
 
+subtest 'copy result without any proxy defined' => sub {
+   my $bloaty = $schema->resultset('Bloaty')->first;
+   ok my $bcopy = $bloaty->copy({ id => 100, name => 'boo' }), 'Copied result';
+   is $bcopy->id, 100, 'id is correctly overridden';
+};
+
 done_testing;
 
