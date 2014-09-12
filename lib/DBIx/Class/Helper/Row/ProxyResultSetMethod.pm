@@ -40,7 +40,7 @@ sub proxy_resultset_method {
 }
 
 sub copy {
-   delete local @{$_[0]->{_column_data}}{@{$_[0]->_proxy_slots}};
+   delete local @{$_[0]->{_column_data}}{@{$_[0]->_proxy_slots||[]}};
 
    shift->next::method(@_);
 }

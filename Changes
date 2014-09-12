@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - Fix ::Helper::ResultSet::DateMethods1 for Oracle (thanks Alexander Hartmaier!)
+ - Fix yet another issue with ->copy and proxied ResultSet methods (thanks again
+   moltar!)
 
 2.023006  2014-09-03 17:44:34-05:00 America/Chicago
  - Fix a few ::DateMethods1 methods when using a bound date (vs a column)
