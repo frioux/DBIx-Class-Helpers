@@ -291,10 +291,8 @@ sub _introspector {
 
             my ($sql, @args) = @$date_sql;
 
-            $sql = "TO_TIMESTAMP($sql)"
-                if $part =~ /second|minute|hour/;
             return [
-               "EXTRACT($part_map{$part} FROM $sql)", @args
+               "EXTRACT($part_map{$part} FROM TO_TIMESTAMP($sql))", @args
             ]
          }
       });
@@ -312,7 +310,7 @@ sub _introspector {
             die "unknown unit $unit" unless $diff_part_map{$unit};
 
             return [
-               "($d_sql + NUMTODSINTERVAL($a_sql, ?))",
+               "(TO_TIMESTAMP($d_sql) + NUMTODSINTERVAL($a_sql, ?))",
                @d_args, @a_args, $diff_part_map{$unit}
             ];
          }

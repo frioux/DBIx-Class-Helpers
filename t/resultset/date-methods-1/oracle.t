@@ -25,14 +25,26 @@ A::ResultSet::DateMethods1->run_tests(Oracle => {
    storage_type => 'Oracle',
 
    add_sql_prefix => \[
-      '("me"."a_date" + NUMTODSINTERVAL(?, ?))', 1, 'SECOND',
+      '(TO_TIMESTAMP("me"."a_date") + NUMTODSINTERVAL(?, ?))', 1, 'SECOND',
     ],
 
    add_sql_by_part => {
-      day    => \[ '("a_date" + NUMTODSINTERVAL(?, ?))', 1, 'DAY' ],
-      hour   => \[ '("a_date" + NUMTODSINTERVAL(?, ?))', 2, 'HOUR' ],
-      minute => \[ '("a_date" + NUMTODSINTERVAL(?, ?))', 3, 'MINUTE' ],
-      second => \[ '("a_date" + NUMTODSINTERVAL(?, ?))', 5, 'SECOND' ],
+      day    => \[ '(TO_TIMESTAMP("a_date") + NUMTODSINTERVAL(?, ?))', 1, 'DAY' ],
+      hour   => \[ '(TO_TIMESTAMP("a_date") + NUMTODSINTERVAL(?, ?))', 2, 'HOUR' ],
+      minute => \[ '(TO_TIMESTAMP("a_date") + NUMTODSINTERVAL(?, ?))', 3, 'MINUTE' ],
+      second => \[ '(TO_TIMESTAMP("a_date") + NUMTODSINTERVAL(?, ?))', 5, 'SECOND' ],
+   },
+
+   add_sql_by_part_result => {
+      day         => '2012-12-13 00:00:00.000000000',
+      hour        => '2012-12-12 02:00:00.000000000',
+      millisecond => '2012-12-12 00:00:00.007000000',
+      minute      => '2012-12-12 00:03:00.000000000',
+      month       => '2013-04-12 00:00:00.000000000',
+      quarter     => '2015-03-12 00:00:00.000000000',
+      second      => '2012-12-12 00:00:05.000000000',
+      week        => '2013-02-20 00:00:00.000000000',
+      year        => '2018-12-12 00:00:00.000000000',
    },
 
    pluck_sql_prefix => \[ 'EXTRACT(SECOND FROM TO_TIMESTAMP("me"."a_date"))' ],
@@ -41,9 +53,9 @@ A::ResultSet::DateMethods1->run_tests(Oracle => {
       second       => \[ 'EXTRACT(SECOND FROM TO_TIMESTAMP("a_date"))' ],
       minute       => \[ 'EXTRACT(MINUTE FROM TO_TIMESTAMP("a_date"))' ],
       hour         => \[ 'EXTRACT(HOUR FROM TO_TIMESTAMP("a_date"))' ],
-      day_of_month => \[ 'EXTRACT(DAY FROM "a_date")' ],
-      month        => \[ 'EXTRACT(MONTH FROM "a_date")' ],
-      year         => \[ 'EXTRACT(YEAR FROM "a_date")' ],
+      day_of_month => \[ 'EXTRACT(DAY FROM TO_TIMESTAMP("a_date"))' ],
+      month        => \[ 'EXTRACT(MONTH FROM TO_TIMESTAMP("a_date"))' ],
+      year         => \[ 'EXTRACT(YEAR FROM TO_TIMESTAMP("a_date"))' ],
    },
 });
 
