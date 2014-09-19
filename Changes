@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Fix a strictness error in a deprecated module (Thanks Niko Tyni!)
 
 2.033000  2016-07-03 22:02:03-07:00 America/Los_Angeles
  - Add ::Schema::Verifier::ColumnInfo (Thanks Wes Malone!) (Closes GH#67)

@@ -4,6 +4,7 @@ package DBIx::Class::Helper::ResultSet::VirtualView;
 
 use strict;
 use warnings;
+use vars qw($VERSION);
 
 use parent 'DBIx::Class::ResultSet';
 
