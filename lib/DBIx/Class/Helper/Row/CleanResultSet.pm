@@ -3,7 +3,7 @@ package DBIx::Class::Helper::Row::CleanResultSet;
 use strict;
 use warnings;
 
-# ABSTRACT: Shortcut for C<< ->resultset >>
+# ABSTRACT: Get an unfiltered ResultSet from the row
 
 sub clean_rs { return shift->result_source->resultset }
 
