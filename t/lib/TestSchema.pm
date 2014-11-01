@@ -15,6 +15,7 @@ __PACKAGE__->load_namespaces(
 __PACKAGE__->load_components(qw(
    Helper::Schema::LintContents
    Helper::Schema::QuoteNames
+   Helper::Schema::DidYouMean
 ));
 
 sub upgrade_directory { './t/lib' }
