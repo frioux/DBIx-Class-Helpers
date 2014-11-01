@@ -11,6 +11,7 @@ requires 'DBIx::Introspector' => 0.001002;
 requires 'Module::Runtime';
 requires 'Try::Tiny';
 requires 'Safe::Isa';
+requires 'Text::Brew';
 
 on test => sub {
    requires 'Test::More' => 0.94;

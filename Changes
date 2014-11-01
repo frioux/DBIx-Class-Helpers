@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add ::Helper::Schema::DidYouMean to help with typos when calling ->resultset
 
 2.023007  2014-09-16 19:48:34-05:00 America/Chicago
  - Fix ::Helper::ResultSet::DateMethods1 for Oracle (thanks Alexander Hartmaier!)
