@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.024000  2014-11-02 09:02:44-06:00 America/Chicago
  - Add ::Helper::Schema::DidYouMean to help with typos when calling ->resultset
 
 2.023007  2014-09-16 19:48:34-05:00 America/Chicago
