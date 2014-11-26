@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.024001  2014-11-25 19:16:41-06:00 America/Chicago
  - Fix ::DidYouMean to override source instead of resultset (Thanks ribasushi
    for the bug report!)
 
