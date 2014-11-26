@@ -9,7 +9,7 @@ use Text::Brew 'distance';
 use Try::Tiny;
 use namespace::clean;
 
-sub resultset {
+sub source {
    my ($self, @rest) = @_;
 
    my $method = $self->next::can;
