@@ -1,10 +1,11 @@
 #!/bin/bash
 
-docker run --rm -p 3306:3306 -P \
-   -e MYSQL_DATABASE=docker    \
-   -e MYSQL_USER=docker        \
-   -e MYSQL_PASSWORD=docker    \
-   --name mysql_test orchardup/mysql > /dev/null 2>&1 &
+docker run --rm -p 3306:3306 -P  \
+   -e MYSQL_DATABASE=docker      \
+   -e MYSQL_ROOT_PASSWORD=docker \
+   -e MYSQL_USER=docker          \
+   -e MYSQL_PASSWORD=docker      \
+   --name mysql_test mysql:5.5 > /dev/null 2>&1 &
 
 export DBIITEST_MYSQL_DSN='dbi:mysql:database=docker;host=127.0.0.1;port=3306'
 export DBIITEST_MYSQL_PASSWORD=docker
