@@ -1,0 +1,12 @@
+{
+   "lib/DBIx/Class/Helper/*.pm": {
+      "alternate": "t/{}.t",
+      "make": "perl -Ilib t/{}.t",
+      "type": "helper"
+   },
+   "t/*.t": {
+      "alternate": "lib/DBIx/Class/Helper/{}.pm",
+      "type": "test"
+   },
+   "*": {"make": "perl -Ilib"}
+}
