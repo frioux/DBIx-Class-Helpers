@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add ::Helper::ResultSet::Errors to help when calling Result methods on an RS
 
 2.024001  2014-11-25 19:16:41-06:00 America/Chicago
  - Fix ::DidYouMean to override source instead of resultset (Thanks ribasushi
