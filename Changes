@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.025000  2015-02-20 22:50:47-06:00 America/Chicago
  - Add ::Helper::ResultSet::Errors to help when calling Result methods on an RS
 
 2.024001  2014-11-25 19:16:41-06:00 America/Chicago
