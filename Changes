@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.025001  2015-02-28 09:53:36-06:00 America/Chicago
  - fix ::RS::Errors test on Windows
 
 2.025000  2015-02-20 22:50:47-06:00 America/Chicago
