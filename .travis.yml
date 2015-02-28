@@ -19,12 +19,17 @@ before_install:
    - build-perl
    - perl -V
 
+   - sudo /etc/init.d/mysql restart
    - mysql -e 'create database dbii_test;'
    - export DBIITEST_MYSQL_DSN='dbi:mysql:database=dbii_test;host=127.0.0.1'
    - export DBIITEST_MYSQL_USER=root
+
+   - sudo /etc/init.d/postgresql restart
    - psql -c 'create database dbii_test;' -U postgres
    - export DBIITEST_PG_DSN='dbi:Pg:database=dbii_test;host=127.0.0.1'
    - export DBIITEST_PG_USER=postgres
+
+   - /bin/sync
 
 install:
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=c HARNESS_TIMER=1
