@@ -6,7 +6,7 @@ use warnings;
 use lib 't/lib';
 use Test::More;
 use Test::Deep;
-use Test::Exception;
+use Test::Fatal 'lives_ok';
 use List::Util 'first';
 
 use TestSchema;

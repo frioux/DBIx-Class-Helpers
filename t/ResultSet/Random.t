@@ -5,7 +5,6 @@ use warnings;
 
 use lib 't/lib';
 use Test::More;
-use Test::Exception;
 
 use TestSchema;
 my $schema = TestSchema->deploy_or_connect();

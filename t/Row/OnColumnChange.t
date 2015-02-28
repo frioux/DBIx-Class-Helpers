@@ -6,15 +6,15 @@ use warnings;
 use lib 't/lib';
 use Test::More;
 use Test::Deep;
-use Test::Exception;
+use Test::Fatal 'exception', 'dies_ok';;
 
 use TestSchema;
 use TestSchema::Result::Bar;
 my $schema = TestSchema->deploy_or_connect();
 $schema->prepopulate;
 
-throws_ok(
-   sub {
+like(
+   exception {
       TestSchema::Result::Bar->after_column_change(
          foo_id => {
             method => sub { 1; }

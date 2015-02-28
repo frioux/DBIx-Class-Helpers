@@ -18,6 +18,6 @@ on test => sub {
    requires 'Test::Deep' => 0;
    requires 'Test::Roo' => 1.003;
    requires 'DBD::SQLite' => 0;
-   requires 'Test::Exception' => 0;
+   requires 'Test::Fatal' => 0.006;
    requires 'DateTime::Format::SQLite' => 0;
 };

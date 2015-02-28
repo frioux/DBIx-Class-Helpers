@@ -5,7 +5,7 @@ use warnings;
 
 use lib 't/lib';
 use Test::More;
-use Test::Exception;
+use Test::Fatal qw( lives_ok dies_ok );;
 use Test::Deep;
 
 use DBIx::Class::Helpers::Util ':all';
