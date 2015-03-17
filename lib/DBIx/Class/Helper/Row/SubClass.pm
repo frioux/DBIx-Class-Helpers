@@ -1,9 +1,11 @@
 package DBIx::Class::Helper::Row::SubClass;
 
+# ABSTRACT: Convenient subclassing with DBIx::Class
+
 use strict;
 use warnings;
 
-# ABSTRACT: Convenient subclassing with DBIx::Class
+use parent 'DBIx::Class::Row';
 
 use DBIx::Class::Helpers::Util qw{get_namespace_parts assert_similar_namespaces};
 use DBIx::Class::Candy::Exports;

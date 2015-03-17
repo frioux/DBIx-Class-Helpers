@@ -3,9 +3,10 @@ package DBIx::Class::Helper::ResultSet::Shortcut::LimitedPage;
 use strict;
 use warnings;
 
-use base qw(
+use parent qw(
   DBIx::Class::Helper::ResultSet::Shortcut::Rows
   DBIx::Class::Helper::ResultSet::Shortcut::Page
+  DBIx::Class::ResultSet
 );
 
 sub limited_page {

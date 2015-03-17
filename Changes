@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Correctly set a parent class for all helpers
 
 2.025001  2015-02-28 09:53:36-06:00 America/Chicago
  - fix ::RS::Errors test on Windows

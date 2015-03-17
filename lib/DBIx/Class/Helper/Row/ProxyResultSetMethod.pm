@@ -1,11 +1,12 @@
 package DBIx::Class::Helper::Row::ProxyResultSetMethod;
 
+# ABSTRACT: Efficiently reuse ResultSet methods from results with fallback
+
 use strict;
 use warnings;
 
-# ABSTRACT: Efficiently reuse ResultSet methods from results with fallback
+use parent 'DBIx::Class::Helper::Row::SelfResultSet', 'DBIx::Class::Row';
 
-use base 'DBIx::Class::Helper::Row::SelfResultSet', 'Class::Accessor::Grouped';
 use Sub::Name ();
 
 use DBIx::Class::Candy::Exports;
@@ -55,7 +56,7 @@ ResultSet:
 
  package MyApp::Schema::ResultSet::Foo;
 
- use base 'DBIx::Class::ResultSet';
+ use parent 'DBIx::Class::ResultSet';
 
  __PACKAGE__->load_components(qw(
     Helper::ResultSet::CorrelateRelationship
@@ -75,7 +76,7 @@ Result:
 
  package MyApp::Schema::Result::Foo;
 
- use base 'DBIx::Class::Core';
+ use parent 'DBIx::Class::Core';
 
  __PACKAGE__->load_components(qw( Helper::Row::ProxyResultSetMethod ));
 

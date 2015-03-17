@@ -1,11 +1,13 @@
 package DBIx::Class::Helper::Row::NumifyGet;
 
+# ABSTRACT: Force numeric "context" on numeric columns
+
 use strict;
 use warnings;
 
-use Try::Tiny;
+use parent 'DBIx::Class::Row';
 
-# ABSTRACT: Force numeric "context" on numeric columns
+use Try::Tiny;
 
 sub get_column {
    my ($self, $col) = @_;

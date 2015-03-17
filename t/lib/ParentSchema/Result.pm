@@ -1,6 +1,6 @@
 package ParentSchema::Result;
 
-use base 'DBIx::Class::Core';
+use parent 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('Helper::Row::RelationshipDWIM');
 

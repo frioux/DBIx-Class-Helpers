@@ -5,6 +5,8 @@ package DBIx::Class::Helper::ResultSet::NoColumns;
 use strict;
 use warnings;
 
+use parent 'DBIx::Class::ResultSet';
+
 sub no_columns { $_[0]->search(undef, { columns => [] }) }
 
 1;

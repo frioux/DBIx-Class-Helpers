@@ -5,7 +5,7 @@ package DBIx::Class::Helper::ResultSet::Shortcut;
 use strict;
 use warnings;
 
-use base (qw(
+use parent (qw(
    DBIx::Class::Helper::ResultSet::Shortcut::AddColumns
    DBIx::Class::Helper::ResultSet::Shortcut::Columns
    DBIx::Class::Helper::ResultSet::Shortcut::Distinct

@@ -1,9 +1,11 @@
 package DBIx::Class::Helper::Row::CleanResultSet;
 
+# ABSTRACT: Get an unfiltered ResultSet from the row
+
 use strict;
 use warnings;
 
-# ABSTRACT: Get an unfiltered ResultSet from the row
+use parent 'DBIx::Class::Row';
 
 sub clean_rs { return shift->result_source->resultset }
 

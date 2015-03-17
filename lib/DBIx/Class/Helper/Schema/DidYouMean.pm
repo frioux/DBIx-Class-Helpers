@@ -5,6 +5,8 @@ package DBIx::Class::Helper::Schema::DidYouMean;
 use strict;
 use warnings;
 
+use parent 'DBIx::Class::Schema';
+
 use Text::Brew 'distance';
 use Try::Tiny;
 use namespace::clean;

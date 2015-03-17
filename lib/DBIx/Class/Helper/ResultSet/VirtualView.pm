@@ -1,9 +1,11 @@
 package DBIx::Class::Helper::ResultSet::VirtualView;
 
+# ABSTRACT: Clean up your SQL namespace (DEPRECATED)
+
 use strict;
 use warnings;
 
-# ABSTRACT: Clean up your SQL namespace (DEPRECATED)
+use parent 'DBIx::Class::ResultSet';
 
 sub as_virtual_view {
    my $self = shift;

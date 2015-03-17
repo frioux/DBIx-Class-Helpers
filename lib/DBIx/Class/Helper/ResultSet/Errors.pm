@@ -5,6 +5,8 @@ package DBIx::Class::Helper::ResultSet::Errors;
 use strict;
 use warnings;
 
+use parent 'DBIx::Class::ResultSet';
+
 my $std_err = qq{Can't locate object method "%s" via package "%s" } .
               qq{at %s line %d.\n};
 

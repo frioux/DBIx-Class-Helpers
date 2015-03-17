@@ -1,9 +1,11 @@
 package DBIx::Class::Helper::ResultSet::Me;
 
+# ABSTRACT: Define predefined searches more nicely
+
 use strict;
 use warnings;
 
-# ABSTRACT: Define predefined searches more nicely
+use parent 'DBIx::Class::ResultSet';
 
 sub me { join('.', shift->current_source_alias, shift || q{})  }
 

@@ -1,9 +1,11 @@
 package DBIx::Class::Helper::ResultSet::IgnoreWantarray;
 
+# ABSTRACT: Get rid of search context issues
+
 use strict;
 use warnings;
 
-# ABSTRACT: Get rid of search context issues
+use parent 'DBIx::Class::ResultSet';
 
 sub search {
    $_[0]->throw_exception ('->search is *not* a mutator, calling it in void context makes no sense')

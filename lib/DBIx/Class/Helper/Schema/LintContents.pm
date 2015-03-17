@@ -5,6 +5,8 @@ package DBIx::Class::Helper::Schema::LintContents;
 use strict;
 use warnings;
 
+use parent 'DBIx::Class::Schema';
+
 use Scalar::Util 'blessed';
 
 sub null_check_source {

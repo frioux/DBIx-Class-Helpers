@@ -1,11 +1,11 @@
 package DBIx::Class::Helper::Row::StorageValues;
 
+# ABSTRACT: Keep track of stored vs in-memory row values
+
 use strict;
 use warnings;
 
-# ABSTRACT: Keep track of stored vs in-memory row values
-
-use parent 'DBIx::Class';
+use parent 'DBIx::Class::Row';
 
 __PACKAGE__->mk_group_accessors(inherited => '_storage_value_columns');
 __PACKAGE__->mk_group_accessors(inherited => '_storage_values');

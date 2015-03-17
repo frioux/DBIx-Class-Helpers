@@ -1,9 +1,11 @@
 package DBIx::Class::Helper::ResultSet::CorrelateRelationship;
 
+# ABSTRACT: Easily correlate your ResultSets
+
 use strict;
 use warnings;
 
-# ABSTRACT: Easily correlate your ResultSets
+use parent 'DBIx::Class::ResultSet';
 
 sub correlate {
    my ($self, $rel) = @_;
@@ -30,7 +32,7 @@ sub correlate {
 
  package MyApp::Schema::ResultSet::Author;
 
- use base 'DBIx::Class::ResultSet';
+ use parent 'DBIx::Class::ResultSet';
 
  __PACKAGE__->load_components(qw(Helper::ResultSet::CorrelateRelationship));
 
@@ -71,7 +73,7 @@ in L<DBIx::Class>.  Here is an example of how you might do that:
 
  package MyApp::Schema::ResultSet::Author;
 
- use base 'DBIx::Class::ResultSet';
+ use parent 'DBIx::Class::ResultSet';
 
  __PACKAGE__->load_components(qw(Helper::ResultSet::CorrelateRelationship));
 

@@ -1,5 +1,7 @@
 package DBIx::Class::Helper::ResultSet;
 
+# ABSTRACT: All the ResultSet Helpers in one place
+
 use parent qw{
    DBIx::Class::Helper::ResultSet::AutoRemoveColumns
    DBIx::Class::Helper::ResultSet::CorrelateRelationship
@@ -13,8 +15,6 @@ use parent qw{
    DBIx::Class::Helper::ResultSet::SetOperations
    DBIx::Class::Helper::ResultSet::Shortcut
 };
-
-# ABSTRACT: All the ResultSet Helpers in one place
 
 1;
 
@@ -37,7 +37,7 @@ non-custom ResultSets.  Example:
  use strict;
  use warnings;
 
- use base 'DBIx::Class::ResultSet';
+ use parent 'DBIx::Class::ResultSet';
 
  __PACKAGE__->load_components('Helper::ResultSet');
 
@@ -45,7 +45,7 @@ non-custom ResultSets.  Example:
 
  package My::App::Schema;
 
- use base 'DBIx::Class::Schema';
+ use parent 'DBIx::Class::Schema';
 
  My::App::Schema->load_namespaces(
     default_resultset_class => 'ResultSet',

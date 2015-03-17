@@ -5,6 +5,8 @@ package DBIx::Class::Helper::ResultSet::ResultClassDWIM;
 use strict;
 use warnings;
 
+use parent 'DBIx::Class::ResultSet';
+
 sub result_class {
    my ($self, $result_class) = @_;
 

@@ -1,11 +1,13 @@
 package DBIx::Class::Helper::ResultSet::Explain;
 
+# ABSTRACT: Get query plan for a ResultSet
+
 use strict;
 use warnings;
 
-use DBIx::Introspector;
+use parent 'DBIx::Class::ResultSet';
 
-# ABSTRACT: Get query plan for a ResultSet
+use DBIx::Introspector;
 
 sub _introspector {
    my $d = DBIx::Introspector->new(drivers => '2013-12.01');

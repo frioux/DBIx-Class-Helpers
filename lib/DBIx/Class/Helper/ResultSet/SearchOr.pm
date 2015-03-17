@@ -5,6 +5,8 @@ package DBIx::Class::Helper::ResultSet::SearchOr;
 use strict;
 use warnings;
 
+use parent 'DBIx::Class::ResultSet';
+
 use List::Util 'first';
 use Carp::Clan;
 use namespace::clean;
@@ -31,7 +33,7 @@ sub search_or {
 
  package MyApp::Schema::ResultSet::Tests;
 
- use base 'DBIx::Class::ResultSet';
+ use parent 'DBIx::Class::ResultSet';
 
  __PACKAGE__->load_components(qw(Helper::ResultSet::IgnoreWantarray Helper::ResultSet::SearchOr));
 

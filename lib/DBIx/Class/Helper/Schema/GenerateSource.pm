@@ -5,6 +5,8 @@ package DBIx::Class::Helper::Schema::GenerateSource;
 use strict;
 use warnings;
 
+use parent 'DBIx::Class::Schema';
+
 use Scalar::Util 'blessed';
 
 sub _schema_class { blessed($_[0]) || $_[0] }

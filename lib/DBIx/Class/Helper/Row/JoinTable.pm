@@ -3,7 +3,7 @@ package DBIx::Class::Helper::Row::JoinTable;
 use strict;
 use warnings;
 
-# ABSTRACT: Easily set up join tables with DBIx::Class
+use parent 'DBIx::Class::Row';
 
 use DBIx::Class::Helpers::Util 'get_namespace_parts';
 use Lingua::EN::Inflect ();

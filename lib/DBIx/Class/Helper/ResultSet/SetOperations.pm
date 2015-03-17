@@ -1,9 +1,11 @@
 package DBIx::Class::Helper::ResultSet::SetOperations;
 
+# ABSTRACT: Do set operations with DBIx::Class
+
 use strict;
 use warnings;
 
-# ABSTRACT: Do set operations with DBIx::Class
+use parent 'DBIx::Class::ResultSet';
 
 # cribbed from perlfaq4
 sub _compare_arrays {

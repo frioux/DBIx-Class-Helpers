@@ -5,6 +5,8 @@ package DBIx::Class::Helper::Schema::DateTime;
 use strict;
 use warnings;
 
+use parent 'DBIx::Class::Schema';
+
 sub datetime_parser { return shift->storage->datetime_parser }
 
 sub parse_datetime { return shift->datetime_parser->parse_datetime(@_) }
