@@ -1,0 +1,11 @@
+#!/usr/bin/env perl
+
+use 5.20.1;
+use warnings;
+
+use experimental 'postderef';
+
+use DBIx::Class::Optional::Dependencies;
+say $_ for map keys DBIx::Class::Optional::Dependencies->req_list_for($_)->%*,
+   qw(deploy rdbms_pg rdbms_oracle rdbms_mysql rdbms_mssql_odbc)
+
