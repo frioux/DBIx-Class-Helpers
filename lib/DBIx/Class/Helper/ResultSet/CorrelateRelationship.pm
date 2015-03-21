@@ -5,24 +5,10 @@ package DBIx::Class::Helper::ResultSet::CorrelateRelationship;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
+use DBIx::Class::Helper::ResultSet::Util
+   correlate => { -as => 'corr' };
 
-sub correlate {
-   my ($self, $rel) = @_;
-
-   my $source = $self->result_source;
-   my $rel_info = $source->relationship_info($rel);
-
-   return $source->related_source($rel)->resultset
-      ->search(scalar $source->_resolve_condition(
-         $rel_info->{cond},
-         "${rel}_alias",
-         $self->current_source_alias,
-         $rel
-      ), {
-         alias => "${rel}_alias",
-      })
-}
+sub correlate { corr(@_) }
 
 1;
 
