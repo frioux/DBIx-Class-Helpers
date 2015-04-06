@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.025003  2015-04-06 16:28:20-05:00 America/Chicago
  - Make ::OnColumnChange always allow mutating values before update
  - Fix documented args for `after_column_change`
  - Document ::OnColumnChange semantics a little bit more clearly
