@@ -334,3 +334,12 @@ If used in conjunction with L<DBIx::Class::Candy> this component will export:
 =item after_column_change
 
 =back
+
+=head1 NO SURPRISE RACE CONDITIONS
+
+One thing that should be made totally clear is that the column change callbacks
+are in effect B<< only once >> in a given update.  If you expect to be able to
+do something weird like calling one of the callbacks which changes a value with
+an accessor which calls a callback etc etc, you probably just need to write some
+code to do that yourself.  This helper is specifically made with the aim of
+reacting to changes immediately before they hit the database.
