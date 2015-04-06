@@ -248,7 +248,7 @@ C<< $self, $old_value, $new_value >>.
  );
 
 Note: the arguments passed to C<method> will be
-C<< $self, $old_value, $new_value >>.
+C<< $self, $new_value, $new_value >>. (Because the old value has been changed.)
 
 =method around_column_change
 
