@@ -86,7 +86,9 @@ sub update {
 
    my $inner = $self->next::can;
 
-   my $final = sub { $self->$inner($args) };
+   my $final = $self->on_column_change_allow_override_args
+      ? sub { $self->$inner        }
+      : sub { $self->$inner($args) };
 
    for ( reverse @around ) {
       my $fn = $_->{method};
@@ -124,6 +126,8 @@ sub update {
    $ret
 }
 
+sub on_column_change_allow_override_args { 0 }
+
 1;
 
 =pod
@@ -148,6 +152,7 @@ sub update {
        keep_storage_value => 1,
     },
  );
+ sub on_column_change_allow_override_args { 1 }
 
  __PACKAGE__->before_column_change(
    amount => {
@@ -186,6 +191,7 @@ or with L<DBIx::Class::Candy>:
     data_type          => 'float',
     keep_storage_value => 1,
  };
+ sub on_column_change_allow_override_args { 1 }
 
  before_column_change amount => {
     method   => 'bank_transfer',
@@ -282,6 +288,38 @@ a time when I've needed around yet, but it seems like there is a use-case.
 Also Note: you don't get to change the args to C<$next>.  If you think you
 should be able to, you probably don't understand what this component is for.
 That or you know something I don't (equally likely.)
+
+=method on_column_change_allow_override_args
+
+This is a method that allows a user to circumvent a strange bug in the initial
+implementation.  Basically, if the user wanted, she could use
+L</before_column_change> to override the value of a given column before
+C<update> gets called, thus replacing the value.  Unfortunately this worked in
+the case of accessors setting the value, but not if the user had used an
+argument to C<update>.  To be clear, if you want the following to actually
+replace the value:
+
+ __PACKAGE__->before_column_change(
+    name => {
+       method   => sub {
+          my ($self, $old, $new) = @_;
+
+          $self->name(uc $new);
+       },
+    },
+ );
+
+you will need to define this in your result class:
+
+ sub on_column_change_allow_override_args { 1 }
+
+If for some reason you need the old style, a default of false is already set.
+If you are painted in the corner and need both, you can create an accessor and
+set it yourself to change the behavior:
+
+ __PACKAGE__->mk_group_accessors(inherited => 'on_column_change_allow_override_args');
+ ...
+ $obj->on_column_change_allow_override_args(1); # works the new way
 
 =head1 CANDY EXPORTS
 

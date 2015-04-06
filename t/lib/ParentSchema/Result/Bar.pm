@@ -14,6 +14,11 @@ column foo_id => {
    keep_storage_value => 1,
 };
 
+column test_flag => {
+   keep_storage_value => 1,
+   is_nullable => 1,
+};
+
 primary_key 'id';
 
 belongs_to foo => '::Foo', 'foo_id';

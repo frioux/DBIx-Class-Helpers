@@ -108,4 +108,27 @@ dies_ok(
     'after_column_change method triggered when updating via relationship accessor',
 );
 
+TestSchema::Result::Bar->before_column_change(
+   test_flag => {
+      method   => sub {
+         my ($self, $old, $new) = @_;
+
+         $self->test_flag($new + 1);
+      },
+   },
+);
+
+subtest 'old style' => sub {
+   is $bar->test_flag, undef, 'test_flag not yet set';
+   $bar->update({ test_flag => 1 });
+   is $bar->test_flag, 1, 'test_flag could not be overridden with before_column_change';
+};
+
+subtest 'new style' => sub {
+   TestSchema::Result::Bar->on_column_change_allow_override_args(1);
+   is $bar->test_flag, 1, 'test_flag not yet set';
+   $bar->update({ test_flag => 2 });
+   is $bar->test_flag, 3, 'test_flag could be overridden with before_column_change';
+};
+
 done_testing;

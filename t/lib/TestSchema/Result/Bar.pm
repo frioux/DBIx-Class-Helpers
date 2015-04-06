@@ -10,6 +10,7 @@ use DBIx::Class::Candy
       Helper::Row::CleanResultSet
     )];
 
+__PACKAGE__->mk_group_accessors(inherited => 'on_column_change_allow_override_args');
 our @events;
 
 subclass;

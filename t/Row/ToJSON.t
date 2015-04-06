@@ -17,7 +17,7 @@ SIMPLE_JSON: {
          $schema->resultset('Bar')->search(undef, { order_by => 'id' })->all
       ];
 
-   cmp_deeply($datas, [{
+   cmp_deeply($datas, [map superhashof($_), {
          id => 1,
          foo_id => 1,
       },{
