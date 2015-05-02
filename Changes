@@ -2,6 +2,7 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
  - Add new ::Schema::Verifier framework
+ - ... including inaugural ::Verifier::C3
 
 2.025003  2015-04-06 16:28:20-05:00 America/Chicago
  - Make ::OnColumnChange always allow mutating values before update
