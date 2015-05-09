@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add ::Verifier::Parent
 
 2.026000  2015-05-02 00:27:28-05:00 America/Chicago
  - Add new ::Schema::Verifier framework
