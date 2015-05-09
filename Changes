@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.027000  2015-05-08 19:35:13-05:00 America/Chicago
  - Add ::Verifier::Parent
 
 2.026000  2015-05-02 00:27:28-05:00 America/Chicago
