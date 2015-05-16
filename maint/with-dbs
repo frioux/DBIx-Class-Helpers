@@ -17,9 +17,7 @@ export DBIITEST_PG_DSN='dbi:Pg:database=postgres;host=127.0.0.1;port=5432;user=p
 export DBIITEST_PG_PASSWORD=postgres
 export DBIITEST_PG_USER=postgres
 
-# this takes too long to start for this to be comfortable
-# docker run --rm -p 49160:22 -p 49161:1521 -P --name ora_test wnameless/oracle-xe-11g > /dev/null 2>&1 &
-
+# make sure to maint/run-oracle for the following to work
 export DBIITEST_ORACLE_DSN='dbi:Oracle:xe'
 export DBIITEST_ORACLE_PASSWORD=oracle
 export DBIITEST_ORACLE_USER=system
