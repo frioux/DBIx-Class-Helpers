@@ -19,6 +19,7 @@ use parent (qw(
    DBIx::Class::Helper::ResultSet::Shortcut::ResultsExist
    DBIx::Class::Helper::ResultSet::Shortcut::Rows
    DBIx::Class::Helper::ResultSet::Shortcut::Page
+   DBIx::Class::Helper::ResultSet::Shortcut::Search
 ));
 
 1;
