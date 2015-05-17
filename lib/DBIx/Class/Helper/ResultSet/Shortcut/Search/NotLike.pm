@@ -5,10 +5,6 @@ use warnings;
 
 use parent 'DBIx::Class::Helper::ResultSet::Shortcut::Search::Base';
 
-#--------------------------------------------------------------------------#
-# not_like
-#--------------------------------------------------------------------------#
-
 =head2 not_like($column || \@columns, $cond)
 
  $rs->not_like('lyrics', '%zebra%');

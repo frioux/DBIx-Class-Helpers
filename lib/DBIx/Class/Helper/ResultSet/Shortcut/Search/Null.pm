@@ -5,10 +5,6 @@ use warnings;
 
 use parent 'DBIx::Class::Helper::ResultSet::Shortcut::Search::Base';
 
-#--------------------------------------------------------------------------#
-# null
-#--------------------------------------------------------------------------#
-
 =head2 null(@columns || \@columns)
 
  $rs->null('status');

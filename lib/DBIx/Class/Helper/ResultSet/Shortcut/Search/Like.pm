@@ -5,10 +5,6 @@ use warnings;
 
 use parent 'DBIx::Class::Helper::ResultSet::Shortcut::Search::Base';
 
-#--------------------------------------------------------------------------#
-# like
-#--------------------------------------------------------------------------#
-
 =head2 like($column || \@columns, $cond)
 
  $rs->like('lyrics', '%zebra%');

@@ -5,10 +5,6 @@ use warnings;
 
 use parent 'DBIx::Class::Helper::ResultSet::Shortcut::Search::Base';
 
-#--------------------------------------------------------------------------#
-# not_null
-#--------------------------------------------------------------------------#
-
 =head2 not_null(@columns || \@columns)
 
  $rs->not_null('status');
