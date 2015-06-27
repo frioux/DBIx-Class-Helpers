@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.029000  2015-06-27 14:16:31-07:00 America/Los_Angeles
  - Add ::ResultSet::OneRow (Thanks Aran Deltac!)
 
 2.028000  2015-05-30 17:06:01-05:00 America/Chicago
