@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add ::ResultSet::OneRow (Thanks Aran Deltac!)
 
 2.028000  2015-05-30 17:06:01-05:00 America/Chicago
  - Add ::Verifier::RelationshipColumnName (Thanks for the idea mcsnolte!)
