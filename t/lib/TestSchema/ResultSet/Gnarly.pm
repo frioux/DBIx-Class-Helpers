@@ -5,7 +5,16 @@ use warnings;
 # intentionally not using TestSchema::ResultSet
 use parent 'DBIx::Class::ResultSet';
 
-__PACKAGE__->load_components(qw{ Helper::ResultSet::Me Helper::ResultSet::ResultClassDWIM Helper::ResultSet::CorrelateRelationship Helper::ResultSet::SearchOr Helper::ResultSet::NoColumns Helper::ResultSet::Explain  Helper::ResultSet::Errors Helper::ResultSet::OneRow });
+__PACKAGE__->load_components(qw{
+   Helper::ResultSet::CorrelateRelationship
+   Helper::ResultSet::Errors
+   Helper::ResultSet::Explain
+   Helper::ResultSet::Me
+   Helper::ResultSet::NoColumns
+   Helper::ResultSet::OneRow
+   Helper::ResultSet::ResultClassDWIM
+   Helper::ResultSet::SearchOr
+});
 
 sub with_id_plus_one {
    my $self = shift;

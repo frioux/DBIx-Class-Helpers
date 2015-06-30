@@ -4,6 +4,7 @@ use DBIx::Class::Candy
    -components => [qw(
       Helper::Row::ToJSON
       Helper::Row::ProxyResultSetMethod
+      Helper::Row::OnColumnMissing
    )];
 
 table 'Gnarly';
@@ -27,5 +28,8 @@ proxy_resultset_method id_plus_two => {
    resultset_method => 'id_plus_two',
    slot             => 'plus2',
 };
+
+our $MISSING = 'warn';
+sub on_column_missing { $MISSING }
 
 1;
