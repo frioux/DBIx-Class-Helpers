@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 docker run --rm -p 3306:3306 -P  \
    -e MYSQL_DATABASE=docker      \
@@ -23,7 +23,7 @@ export DBIITEST_ORACLE_PASSWORD=oracle
 export DBIITEST_ORACLE_USER=system
 
 # stupid databases
-sleep 5
+sleep ${DBIITEST_STARTUP:-5}
 
 "$@"
 
