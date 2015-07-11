@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.030001  2015-07-10 22:38:58-07:00 America/Los_Angeles
  - Make ::Schema::Verifier aggregate errors instead of dying on first one
 
 2.030000  2015-07-01 10:11:42-07:00 America/Los_Angeles
