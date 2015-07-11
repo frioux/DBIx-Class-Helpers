@@ -1,0 +1,3 @@
+#!/bin/dash
+
+PERL5LIB="$(pwd)/lib" maint/with-dbs dzil release
