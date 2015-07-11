@@ -1,5 +1,7 @@
 package DBIx::Class::Helper::Row::JoinTable;
 
+# ABSTRACT: Easily set up join tables with DBIx::Class
+
 use strict;
 use warnings;
 

@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add abstract to ::Row::JoinTable (Thanks Gregor Herrmann!)
+   (Closes GH#49)
 
 2.030001  2015-07-10 22:38:58-07:00 America/Los_Angeles
  - Make ::Schema::Verifier aggregate errors instead of dying on first one
