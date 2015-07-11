@@ -8,19 +8,55 @@ use warnings;
 use MRO::Compat;
 use mro 'c3';
 
+use Try::Tiny;
+use namespace::clean;
+
 use base 'DBIx::Class::Schema';
 
 sub result_verifiers {
    return ()
 }
 
+our $_FATAL = 1;
+our @_ERRORS;
+
 sub register_source {
    my ($self, $name, $rclass) = @_;
 
-   $self->$_($rclass->result_class, $rclass->resultset_class)
-      for $self->result_verifiers;
+   unless ($_FATAL) {
+      $self->$_($rclass->result_class, $rclass->resultset_class)
+         for $self->result_verifiers;
+   } else {
+      for ($self->result_verifiers) {
+         try {
+            $self->$_($rclass->result_class, $rclass->resultset_class)
+         } catch {
+            push @_ERRORS, $_
+         }
+      }
+   }
 
    $self->next::method($name, $rclass);
+}
+
+sub load_namespaces {
+   local $_FATAL = 1;
+
+   shift->next::method(@_);
+
+   my @e = @_ERRORS;
+   @_ERRORS = ();
+   die sort @e if @e;
+}
+
+sub load_classes {
+   local $_FATAL = 1;
+
+   shift->next::method(@_);
+
+   my @e = @_ERRORS;
+   @_ERRORS = ();
+   die sort @e if @e;
 }
 
 1;
@@ -61,3 +97,12 @@ You must implement C<result_verifiers> in your subclass of C<::Verifier>.  Each
 verifier gets called on the schema and gets each result and resultset together
 as arguments.  You can use this to validate almost anything about the results
 and resultsets of a schema; contributions are warmly welcomed.
+
+=head1 MORE ERRORS
+
+Initially I kept this module simple, but after using it in production at
+L<ZipRecruiter|https://www.ziprecruiter.com> I found that showing the user the
+first error that occured and then giving up was pretty annoying.  Now
+C<Schema::Verifier> wraps both L<DBIx::Class::Schema/load_namespaces> and
+L<DBIx::Class::Schema/load_classes> and shows all the exceptions encoutered as a
+list at the end of loading all the results.

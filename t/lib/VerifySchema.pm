@@ -8,11 +8,16 @@ use mro 'c3';
 
 use parent 'DBIx::Class::Schema';
 
+# ensure that we can see both errors for a single check
 sub result_verifiers {
    (sub {
       my ($s, $result, $set) = @_;
 
-      die 'Derp' if $set->isa('Herp');
+      die "Derp: $set" if $set->isa('Herp');
+   }, sub {
+      my ($s, $result, $set) = @_;
+
+      die "Herp: $set" if $set->isa('Herp');
    }, shift->next::method)
 }
 
