@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Clarify docs for ::ResultSet::OneRow (Thanks for the tips Aran Deltac!)
+   (Closes GH#48)
  - Add abstract to ::Row::JoinTable (Thanks Gregor Herrmann!)
    (Closes GH#49)
 

@@ -31,10 +31,26 @@ sub one_row { shift->search(undef, { rows => 1})->next }
 
 =head1 DESCRIPTION
 
-This component codifies a "more correct" version of
-L<DBIx::Class::ResultSet/first>.  Fundamentally the difference is that when you
-use C<one_row> you are guaranteed to exhaust the underlying cursor; depending on
-your database this can resolve weird issues.
+This component codifies an alternate version of L<DBIx::Class::ResultSet/first>.
+In practical use, C<first> allows a user to do something like the following:
+
+ my $rs = $schema->resultset('Foo')->search({ name => 'bar' });
+ my $first = $rs->first;
+ my @rest;
+ while (my $row = $rs->next) {
+    push @rest, $row
+ }
+
+Problematically, if you call C<first> without the while loop afterwards B<and>
+you got back more than one row, you are leaving a cursor open.  Depending on
+your database this could increase memory usage or cause errors with later
+queries.
+
+Fundamentally the difference is that when you use C<one_row> you are guaranteed
+to exhaust the underlying cursor.
+
+Generally speaking, unless you are doing something unusual, C<one_row> is a good
+default.
 
 =head1 METHODS
 
