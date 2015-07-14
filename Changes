@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.030002  2015-07-14 13:43:47-07:00 America/Los_Angeles
  - Clarify docs for ::ResultSet::OneRow (Thanks for the tips Aran Deltac!)
    (Closes GH#48)
  - Add abstract to ::Row::JoinTable (Thanks Gregor Herrmann!)
