@@ -33,7 +33,7 @@ sub one_row { shift->search(undef, { rows => 1})->next }
 
 This component codifies a "more correct" version of
 L<DBIx::Class::ResultSet/first>.  Fundamentally the difference is that when you
-use C<one_row> you are garaunteed to exhaust the underlying cursor; depending on
+use C<one_row> you are guaranteed to exhaust the underlying cursor; depending on
 your database this can resolve weird issues.
 
 =head1 METHODS
