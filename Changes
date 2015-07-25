@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.031000  2015-07-25 01:20:40-07:00 America/Los_Angeles
  - Add ::ResultSet::Bare (Closes GH#53)
 
 2.030002  2015-07-14 13:43:47-07:00 America/Los_Angeles
