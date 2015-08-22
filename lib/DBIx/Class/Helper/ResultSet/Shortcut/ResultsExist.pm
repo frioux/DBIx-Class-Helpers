@@ -12,7 +12,11 @@ sub results_exist {
       ->result_source
       ->resultset
       ->search({ -exists => $self->as_query })
-      ->first
+      ->search(undef, {
+         columns => { exists => \1 },
+         rows => 1,
+      })
+      ->get_column('exists')
 }
 
 1;
