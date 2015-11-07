@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add ::ResultClass::Tee
 
 2.031000  2015-07-25 01:20:40-07:00 America/Los_Angeles
  - Add ::ResultSet::Bare (Closes GH#53)

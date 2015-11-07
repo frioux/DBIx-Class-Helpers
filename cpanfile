@@ -12,6 +12,7 @@ requires 'Module::Runtime';
 requires 'Try::Tiny';
 requires 'Safe::Isa';
 requires 'Text::Brew';
+requires 'Moo' => 2;
 
 on test => sub {
    requires 'Test::More' => 0.94;
