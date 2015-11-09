@@ -23,6 +23,7 @@ has inner_classes => (
 sub inflate_result {
    my ($self, @rest) = @_;
 
+   die "is this being called?";
    [ map scalar use_module($_)->inflate_result(@rest), @{$self->inner_classes} ]
 }
 
