@@ -910,14 +910,6 @@ Available units
 
 =head2 C<Oracle>
 
-B<< ORACLE USERS BEWARE >>: I run all the tests on all of the databases
-B<except> C<Oracle>.  If you have time to help make
-L<dockerprove|https://github.com/frioux/DBIx-Class-Helpers/blob/master/dockerprove>
-and/or L<travisci|https://github.com/frioux/DBIx-Class-Helpers/blob/master/.travis.yml>
-test against C<Oracle> I'll gladly take those patches.  For hints look at
-L<https://index.docker.io/u/wnameless/oracle-xe-11g/> and
-L<https://github.com/dbsrgits/dbix-class/commit/003e97c53e065e7497a4946c29d5a94e7cf34389>.
-
 =over
 
 =item * L</utc_now> - L<sys_extract_utc(SYSTIMESTAMP)|http://docs.oracle.com/cd/B19306_01/server.102/b14200/functions167.htm>
