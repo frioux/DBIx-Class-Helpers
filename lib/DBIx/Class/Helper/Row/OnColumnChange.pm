@@ -5,7 +5,9 @@ package DBIx::Class::Helper::Row::OnColumnChange;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Helper::Row::StorageValues', 'DBIx::Class::Row';
+use parent 'DBIx::Class';
+
+__PACKAGE__->load_components('Helper::Row::StorageValues', 'Row');
 
 use List::Util 'first';
 use DBIx::Class::Candy::Exports;

@@ -5,21 +5,23 @@ package DBIx::Class::Helper::ResultSet::Shortcut;
 use strict;
 use warnings;
 
-use parent (qw(
-   DBIx::Class::Helper::ResultSet::Shortcut::AddColumns
-   DBIx::Class::Helper::ResultSet::Shortcut::Columns
-   DBIx::Class::Helper::ResultSet::Shortcut::Distinct
-   DBIx::Class::Helper::ResultSet::Shortcut::GroupBy
-   DBIx::Class::Helper::ResultSet::Shortcut::HasRows
-   DBIx::Class::Helper::ResultSet::Shortcut::HRI
-   DBIx::Class::Helper::ResultSet::Shortcut::Limit
-   DBIx::Class::Helper::ResultSet::Shortcut::OrderByMagic
-   DBIx::Class::Helper::ResultSet::Shortcut::Prefetch
-   DBIx::Class::Helper::ResultSet::Shortcut::LimitedPage
-   DBIx::Class::Helper::ResultSet::Shortcut::ResultsExist
-   DBIx::Class::Helper::ResultSet::Shortcut::Rows
-   DBIx::Class::Helper::ResultSet::Shortcut::Page
-   DBIx::Class::Helper::ResultSet::Shortcut::Search
+use parent 'DBIx::Class::ResultSet';
+
+__PACKAGE__->load_components(qw(
+   Helper::ResultSet::Shortcut::AddColumns
+   Helper::ResultSet::Shortcut::Columns
+   Helper::ResultSet::Shortcut::Distinct
+   Helper::ResultSet::Shortcut::GroupBy
+   Helper::ResultSet::Shortcut::HasRows
+   Helper::ResultSet::Shortcut::HRI
+   Helper::ResultSet::Shortcut::Limit
+   Helper::ResultSet::Shortcut::OrderByMagic
+   Helper::ResultSet::Shortcut::Prefetch
+   Helper::ResultSet::Shortcut::LimitedPage
+   Helper::ResultSet::Shortcut::ResultsExist
+   Helper::ResultSet::Shortcut::Rows
+   Helper::ResultSet::Shortcut::Page
+   Helper::ResultSet::Shortcut::Search
 ));
 
 1;

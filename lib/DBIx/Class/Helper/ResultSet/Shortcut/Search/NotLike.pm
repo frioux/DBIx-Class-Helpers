@@ -3,7 +3,9 @@ package DBIx::Class::Helper::ResultSet::Shortcut::Search::NotLike;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Helper::ResultSet::Shortcut::Search::Base';
+use parent 'DBIx::Class::ResultSet';
+
+__PACKAGE__->load_components('Helper::ResultSet::Shortcut::Search::Base');
 
 =head2 not_like($column || \@columns, $cond)
 

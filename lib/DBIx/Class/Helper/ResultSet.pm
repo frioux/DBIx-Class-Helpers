@@ -2,18 +2,20 @@ package DBIx::Class::Helper::ResultSet;
 
 # ABSTRACT: All the ResultSet Helpers in one place
 
-use parent qw{
-   DBIx::Class::Helper::ResultSet::AutoRemoveColumns
-   DBIx::Class::Helper::ResultSet::CorrelateRelationship
-   DBIx::Class::Helper::ResultSet::IgnoreWantarray
-   DBIx::Class::Helper::ResultSet::Me
-   DBIx::Class::Helper::ResultSet::NoColumns
-   DBIx::Class::Helper::ResultSet::Random
-   DBIx::Class::Helper::ResultSet::RemoveColumns
-   DBIx::Class::Helper::ResultSet::ResultClassDWIM
-   DBIx::Class::Helper::ResultSet::SearchOr
-   DBIx::Class::Helper::ResultSet::SetOperations
-   DBIx::Class::Helper::ResultSet::Shortcut
+use parent 'DBIx::Class::ResultSet';
+
+__PACKAGE__->load_components(qw{
+   Helper::ResultSet::AutoRemoveColumns
+   Helper::ResultSet::CorrelateRelationship
+   Helper::ResultSet::IgnoreWantarray
+   Helper::ResultSet::Me
+   Helper::ResultSet::NoColumns
+   Helper::ResultSet::Random
+   Helper::ResultSet::RemoveColumns
+   Helper::ResultSet::ResultClassDWIM
+   Helper::ResultSet::SearchOr
+   Helper::ResultSet::SetOperations
+   Helper::ResultSet::Shortcut
 };
 
 1;

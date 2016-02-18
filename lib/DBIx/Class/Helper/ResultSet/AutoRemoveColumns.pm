@@ -5,7 +5,9 @@ package DBIx::Class::Helper::ResultSet::AutoRemoveColumns;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Helper::ResultSet::RemoveColumns', 'DBIx::Class::ResultSet';
+use parent 'DBIx::Class::ResultSet';
+
+__PACKAGE__->load_components('Helper::ResultSet::RemoveColumns');
 
 __PACKAGE__->mk_group_accessors(inherited => '_fetchable_columns');
 

@@ -3,11 +3,12 @@ package DBIx::Class::Helper::ResultSet::Shortcut::LimitedPage;
 use strict;
 use warnings;
 
-use parent qw(
-  DBIx::Class::Helper::ResultSet::Shortcut::Rows
-  DBIx::Class::Helper::ResultSet::Shortcut::Page
-  DBIx::Class::ResultSet
-);
+use parent 'DBIx::Class::ResultSet';
+
+__PACKAGE__->load_components(qw(
+  Helper::ResultSet::Shortcut::Rows
+  Helper::ResultSet::Shortcut::Page
+));
 
 sub limited_page {
   my $self = shift;
