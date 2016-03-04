@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Fix simple deletion and updates for ::DateMethods1
+   (Thanks for the report Wes Malone and Erland Injerd, and the help to fix the
+   actual bug ribasushi!)
 
 2.032000  2015-11-07 10:34:14-08:00 America/Los_Angeles
  - Add ::ResultClass::Tee

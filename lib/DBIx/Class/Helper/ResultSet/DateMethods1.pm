@@ -323,6 +323,25 @@ sub _introspector {
 
 use namespace::clean;
 
+
+sub delete {
+   my $self = shift;
+
+   $self = $self->as_subselect_rs
+      if $self->_resolved_attrs->{_DBICH_DM1};
+
+   return $self->next::method(@_);
+}
+
+sub update {
+   my $self = shift;
+
+   $self = $self->as_subselect_rs
+      if $self->_resolved_attrs->{_DBICH_DM1};
+
+   return $self->next::method(@_);
+}
+
 sub utc {
    my ($self, $datetime) = @_;
 
@@ -345,7 +364,7 @@ sub dt_before {
 
    return $self->search(\[
       "$l_sql < $r_sql", @l_args, @r_args
-   ]);
+   ], { _DBICH_DM1 => 1 });
 }
 
 sub dt_on_or_before {
@@ -356,7 +375,7 @@ sub dt_on_or_before {
 
    $self->search(\[
       "$l_sql <= $r_sql", @l_args, @r_args
-   ]);
+   ], { _DBICH_DM1 => 1 });
 }
 
 sub dt_on_or_after {
@@ -367,7 +386,7 @@ sub dt_on_or_after {
 
    return $self->search(\[
       "$l_sql >= $r_sql", @l_args, @r_args
-   ]);
+   ], { _DBICH_DM1 => 1 });
 }
 
 sub dt_after {
@@ -378,7 +397,7 @@ sub dt_after {
 
    return $self->search(\[
       "$l_sql > $r_sql", @l_args, @r_args
-   ]);
+   ], { _DBICH_DM1 => 1 });
 }
 
 my $d;
