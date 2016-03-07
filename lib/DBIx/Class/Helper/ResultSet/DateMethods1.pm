@@ -330,7 +330,7 @@ sub delete {
    $self = $self->as_subselect_rs
       if $self->_resolved_attrs->{_DBICH_DM1};
 
-   return $self->next::method;
+   return $self->next::method(@_);
 }
 
 sub update {
@@ -339,7 +339,7 @@ sub update {
    $self = $self->as_subselect_rs
       if $self->_resolved_attrs->{_DBICH_DM1};
 
-   return $self->next::method;
+   return $self->next::method(@_);
 }
 
 sub utc {
