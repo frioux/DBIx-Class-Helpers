@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.032001  2016-04-13 22:01:03-07:00 America/Los_Angeles
  - Fix simple deletion and updates for ::DateMethods1
    (Thanks for the report Wes Malone and Erland Injerd, and the help to fix the
    actual bug ribasushi!)
