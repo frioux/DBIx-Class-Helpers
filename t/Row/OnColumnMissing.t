@@ -34,9 +34,8 @@ ok($row->id, 'row loaded');
 
 {
    local $TestSchema::Result::Gnarly::MISSING = 'nothing';
-   $row->literature;
-
-   ok 1, 'nothing?';
+   is ($row->literature, undef, 'undef in scalar context');
+   is_deeply ([$row->literature], [undef], 'undef in list context');
 };
 
 {

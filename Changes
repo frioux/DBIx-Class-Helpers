@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Fix variation in list context when using ::OnColumnMissing
+   (Thanks to David Farrell for the bug report!)
+   (Closes GH#63)
 
 2.032001  2016-04-13 22:01:03-07:00 America/Los_Angeles
  - Fix simple deletion and updates for ::DateMethods1

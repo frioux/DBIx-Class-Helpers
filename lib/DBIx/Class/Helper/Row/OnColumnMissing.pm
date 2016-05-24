@@ -24,7 +24,7 @@ sub get_column {
          $action = "on_column_missing_$action" unless ref $action;
          $action = $self->can($action);
       }
-      $self->$action($column_name)
+      scalar $self->$action($column_name)
    }
 }
 
