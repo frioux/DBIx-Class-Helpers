@@ -177,3 +177,13 @@ For the same reason, the following will also not work:
      }
    });
  }
+
+=head1 SEE ALSO
+
+=over
+
+=item * L<Introducing DBIx::Class::Helper::ResultSet::CorrelateRelationship|https://blog.afoolishmanifesto.com/posts/introducing-dbix-class-helper-resultset-correlaterelationship/>
+
+=item * L<Set-based DBIx::Class Advent Article|http://www.perladvent.org/2012/2012-12-21.html>
+
+=back
