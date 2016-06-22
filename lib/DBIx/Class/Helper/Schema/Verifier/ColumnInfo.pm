@@ -10,20 +10,43 @@ use mro 'c3';
 
 use base 'DBIx::Class::Helper::Schema::Verifier';
 
-my @allowed_keys = qw(
+my @allowed_keys = (
+# defaults from ::ResultSource
+qw(
    accessor
-   data_type
-   size
-   is_nullable
-   is_auto_increment
-   is_numeric
-   is_foreign_key
-   default_value
-   sequence
-   retrieve_on_insert
    auto_nextval
+   data_type
+   default_value
    extra
-);
+   is_auto_increment
+   is_foreign_key
+   is_nullable
+   is_numeric
+   retrieve_on_insert
+   sequence
+   size
+),
+# ::InflateColumn::DateTime
+qw(
+   floating_tz_ok
+   inflate_datetime
+   locale
+   timezone
+),
+# ::InflateColumn::File and ::InflateColumn::FS
+qw(
+   file_column_path
+   fs_column_path
+   fs_new_on_update
+   is_file_column
+   is_fs_column
+),
+# ::Helpers
+qw(
+   is_serializable
+   keep_storage_value
+   remove_column
+) );
 
 sub allowed_column_keys { @allowed_keys }
 
