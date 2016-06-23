@@ -23,5 +23,7 @@ primary_key 'id';
 
 belongs_to foo => '::Foo', 'foo_id';
 has_many  foos => '::Foo', 'bar_id';
+might_have might_have_foo => '::Foo', 'bar_id';
+has_one has_one_foo => '::Foo', 'bar_id';
 
 1;

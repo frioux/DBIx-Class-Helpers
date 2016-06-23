@@ -15,6 +15,8 @@ my $r = $schema->resultset('Bar')->result_class;
 
 ok $r->has_relationship('foo'), 'has Foo';
 ok $r->has_relationship('foos'), 'has foos';
+ok $r->has_relationship('might_have_foo'), 'might have Foo';
+ok $r->has_relationship('has_one_foo'), 'has one Foo';
 
 done_testing;
 
