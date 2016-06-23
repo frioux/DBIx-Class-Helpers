@@ -25,6 +25,10 @@ __PACKAGE__->load_components(qw(
    Helper::Schema::Verifier
 ));
 
+# so ::Verifier::load_classes gets tested too
+__PACKAGE__->load_classes({
+   ParentSchema => [qw/ Result::Foo Result::Bar /],
+});
 __PACKAGE__->load_namespaces;
 
 'zomg';
