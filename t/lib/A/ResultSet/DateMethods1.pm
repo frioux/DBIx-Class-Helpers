@@ -1,7 +1,7 @@
 package A::ResultSet::DateMethods1;
 
 use Test::Roo;
-use Test::Deep;
+use Test::Deep 'cmp_deeply';
 use DateTime;
 use Test::Fatal;
 
