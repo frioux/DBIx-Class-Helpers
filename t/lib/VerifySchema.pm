@@ -23,6 +23,7 @@ sub result_verifiers {
 
 __PACKAGE__->load_components(qw(
    Helper::Schema::Verifier
+   Helper::Schema::Verifier::Parent
 ));
 
 # so ::Verifier::load_classes gets tested too
