@@ -10,7 +10,7 @@ use Sub::Exporter::Progressive -setup => {
       qw(
          get_namespace_parts is_load_namespaces is_not_load_namespaces
          assert_similar_namespaces order_by_visitor
-         normalize_connect_info
+         normalize_connect_info as
       ),
     ],
   };
@@ -137,6 +137,14 @@ sub normalize_connect_info {
    }
 
    return \%all;
+}
+
+sub as {
+   my ($query, $name) = @_;
+
+   die if $sql =~ / ^ \s* \( .+ \) \s+ AS \s+ \w+ $ /x;
+   my ($sql, @args) = @$$query;
+   return \[ "$sql AS $name", @args ]
 }
 
 1;
