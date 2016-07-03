@@ -36,7 +36,7 @@ sub proxy_resultset_method {
          $self->{_column_data}{$slot} = undef;
          $self->set_column(
             $slot,
-            $_[0]->self_rs
+            $self->self_rs
                ->search(undef, { columns => [] })
                ->$rs_method
                ->get_column($slot)
