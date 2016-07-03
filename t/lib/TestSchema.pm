@@ -36,7 +36,7 @@ sub deploy_or_connect {
    return $schema;
 }
 
-sub connect {
+sub connection {
    my $self = shift;
 
    if (@_) {
