@@ -39,7 +39,7 @@ sub get_storage_value { $_[0]->_storage_values->{$_[1]} }
 sub new {
    my $class = shift;
    my $ret = $class->next::method(@_);
-   $ret->store_storage_values;
+   $ret->_storage_values({});
    $ret;
 }
 

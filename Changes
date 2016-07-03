@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Uninserted rows do not set their storage value anymore
+   (Thanks for the report Wes Malone!) (Closes GH#69)
 
 2.032002  2016-05-24 10:00:16-07:00 America/Los_Angeles
  - Fix variation in list context when using ::OnColumnMissing

@@ -26,10 +26,10 @@ my $new = $schema->resultset('Bar')->new({
    foo_id => 1,
 });
 is($new->foo_id, 1, 'new row of course has set values');
-is($new->get_storage_value('foo_id'), 1, 'and storage values are set');
+is($new->get_storage_value('foo_id'), undef, 'and storage values are unset');
 $new->foo_id(2);
 is($new->foo_id, 2, 'updated row has new value');
-is($new->get_storage_value('foo_id'), 1, 'but storage values are unchanged');
+is($new->get_storage_value('foo_id'), undef, 'but storage values are unchanged');
 $new->insert;
 is($new->get_storage_value('foo_id'), 2, 'storage value updated after insert');
 
