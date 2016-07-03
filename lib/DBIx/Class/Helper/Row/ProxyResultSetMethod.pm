@@ -27,16 +27,24 @@ sub proxy_resultset_method {
    no strict 'refs';
    my $method = $self . '::' . $name;
    *{$method} = Sub::Name::subname $method, sub {
+      my ($self) = @_;
       use strict 'refs';
 
-      # boo.  The accessor checks that there's an actual column defined, so we
-      # skip it so we can cache results.
-      $_[0]->{_column_data}{$slot} = $_[0]->self_rs
-         ->search(undef, { columns => [] })
-         ->$rs_method
-         ->get_column($slot)
-         ->next unless $_[0]->has_column_loaded($slot);
-      return $_[0]->get_column($slot)
+      unless ($self->has_column_loaded($slot)) {
+         # boo.  The accessor checks that there's an actual column defined, so we
+         # skip it so we can cache results.
+         $self->{_column_data}{$slot} = undef;
+         $self->set_column(
+            $slot,
+            $_[0]->self_rs
+               ->search(undef, { columns => [] })
+               ->$rs_method
+               ->get_column($slot)
+               ->next,
+         );
+      }
+
+      return $self->get_column($slot)
    }
 }
 
