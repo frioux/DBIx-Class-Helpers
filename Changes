@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Add ::Schema::Verifier::ColumnInfo (Thanks Wes Malone!) (Closes GH#67)
  - Uninserted rows do not set their storage value anymore
    (Thanks for the report Wes Malone!) (Closes GH#69)
 
