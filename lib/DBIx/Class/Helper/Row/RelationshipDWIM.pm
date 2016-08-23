@@ -69,7 +69,7 @@ Result class:
 
  # Define various class bits here
 
- # succint relationship definition yeah!
+ # succinct relationship definition yeah!
 
  __PACKAGE__->has_many(friends => '::Person', 'foo_id');
 

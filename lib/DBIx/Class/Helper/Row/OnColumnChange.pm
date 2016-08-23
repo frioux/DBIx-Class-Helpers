@@ -221,7 +221,7 @@ C<keep_storage_value> out of the column definition it will just pass C<undef>
 in as the $old_value.  Also note the C<txn_wrap> option.  This allows you to
 specify that you want the call to C<update> and the call to the method you
 requested to be wrapped in a transaction.  If you end up calling more than
-one method due to multple column change methods and more than one specify
+one method due to multiple column change methods and more than one specify
 C<txn_wrap> it will still only wrap once.
 
 I've gone to great lengths to ensure that order is preserved, so C<before>

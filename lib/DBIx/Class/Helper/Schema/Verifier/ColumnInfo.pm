@@ -105,7 +105,7 @@ hopefully helpful message pointing out the error.
 It's entirely possible that you would like to use some non-default config keys,
 especially if you use some column-extension components. Override this method in
 your schema and append your new keys to the list returned by the superclass
-call.  The overriden method must return a list of keys.
+call.  The overridden method must return a list of keys.
 
  sub allowed_column_keys {
    my $self = shift;

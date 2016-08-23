@@ -82,7 +82,7 @@ sub load_classes {
 
 =head1 DESCRIPTION
 
-C<DBIx::Class::Helper::Schema::Verifier> is a miniscule framework to assist in
+C<DBIx::Class::Helper::Schema::Verifier> is a minuscule framework to assist in
 creating schemata that are to your very own exacting specifications.  It is
 inspired by my own travails in discovering that C<< use mro 'c3' >> is both
 required and barely documented in much Perl code.  As time goes by I expect to
@@ -102,7 +102,7 @@ and resultsets of a schema; contributions are warmly welcomed.
 
 Initially I kept this module simple, but after using it in production at
 L<ZipRecruiter|https://www.ziprecruiter.com> I found that showing the user the
-first error that occured and then giving up was pretty annoying.  Now
+first error that occurred and then giving up was pretty annoying.  Now
 C<Schema::Verifier> wraps both L<DBIx::Class::Schema/load_namespaces> and
 L<DBIx::Class::Schema/load_classes> and shows all the exceptions encoutered as a
 list at the end of loading all the results.
