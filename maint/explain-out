@@ -15,5 +15,7 @@ if ($engine eq 'SQLite') {
    $s->deploy;
    print Dumper($s->resultset('Gnarly')->explain)
 } else {
+   require DBIx::RetryConnect;
+   DBIx::RetryConnect->import($engine);
    print Dumper(A::Util::connect($engine, $engine)->resultset('Gnarly')->explain)
 }

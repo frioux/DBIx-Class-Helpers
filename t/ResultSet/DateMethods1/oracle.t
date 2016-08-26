@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use lib 't/lib';
+use DBIx::RetryConnect 'Oracle';
 use A::ResultSet::DateMethods1;
 
 local $SIG{__WARN__} = sub {

@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use lib 't/lib';
+use DBIx::RetryConnect 'Pg';
 use A::ResultSet::DateMethods1;
 
 A::ResultSet::DateMethods1->run_tests(Pg => {

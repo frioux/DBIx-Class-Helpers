@@ -22,4 +22,5 @@ on test => sub {
    requires 'Test::Fatal' => 0.006;
    requires 'DateTime::Format::SQLite' => 0;
    requires 'aliased' => 0.34;
+   requires 'DBIx::RetryConnect' => 0;
 };

@@ -22,10 +22,7 @@ export DBIITEST_ORACLE_DSN='dbi:Oracle:xe'
 export DBIITEST_ORACLE_PASSWORD=oracle
 export DBIITEST_ORACLE_USER=system
 
-# stupid databases
-sleep ${DBIITEST_STARTUP:-5}
-
 "$@"
 
-docker stop mysql_test
-docker stop pg_test
+docker rm -f mysql_test
+docker rm -f pg_test

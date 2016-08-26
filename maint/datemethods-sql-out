@@ -34,6 +34,8 @@ if ($engine eq 'SQLite') {
    my $rs = $s->resultset('HasDateOps');
    print "# $engine\n" . ${eval($code)->as_query}->[0]
 } else {
+   require DBIx::RetryConnect;
+   DBIx::RetryConnect->import($engine);
    my $rs = A::Util::connect($engine, $engine)->resultset('HasDateOps');
    print "# $engine\n" . ${eval($code)->as_query}->[0]
 }

@@ -10,7 +10,14 @@ has [qw(on_connect_call engine)] => ( is => 'ro' );
 has storage_type => (
    is => 'ro',
    lazy => 1,
-   default => sub { shift->engine }
+   default => sub {
+      my $engine = shift->engine;
+
+      require DBIx::RetryConnect;
+      DBIx::RetryConnect->import($engine);
+
+      $engine
+   }
 );
 
 sub connected { A::Util::connected($_[0]->engine, $_[0]->on_connect_call) }
