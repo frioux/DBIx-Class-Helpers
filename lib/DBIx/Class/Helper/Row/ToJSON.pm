@@ -50,7 +50,7 @@ sub TO_JSON {
    my $columns_info = $self->columns_info($self->serializable_columns);
 
    return {
-      map +($_ => $self->$_),
+      map {my $col=$_;$_ => UNIVERSAL::can($self->$_,'columns')?{map +(%{UNIVERSAL::can($self->$col->$_,'TO_JSON')?$self->$col->$_->TO_JSON:{$_,$self->$col->$_}}),$self->$_->columns}:$self->$_}
       map +($columns_info->{$_}{accessor} || $_),
           keys %$columns_info
    };
