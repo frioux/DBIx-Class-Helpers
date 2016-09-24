@@ -77,4 +77,16 @@ ACCESSOR_CLASS: {
    }], 'accessor fields with TO_JSON works');
 }
 
+RELATIONSHIPS_JSON: {
+	my $data = $schema->resultset('Foo2Bar')->find({foo_id=>2})->TO_JSON();
+	cmp_deeply($data,{
+		'test_flag' => undef,
+		'id' => 2,
+		'foo_id' => {
+                	'bar_id' => 2,
+			'id' => 2
+		}
+	},'Belongs 2 fields JSON');
+}
+
 done_testing;
