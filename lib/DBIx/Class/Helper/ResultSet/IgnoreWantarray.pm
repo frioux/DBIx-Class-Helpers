@@ -7,7 +7,7 @@ use warnings;
 
 use parent 'DBIx::Class::ResultSet';
 
-sub search {
+sub search :DBIC_method_is_indirect_sugar{
    $_[0]->throw_exception ('->search is *not* a mutator, calling it in void context makes no sense')
       if !defined wantarray && (caller)[0] !~ /^\QDBIx::Class::/;
 
