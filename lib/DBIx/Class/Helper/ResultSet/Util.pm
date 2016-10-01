@@ -11,21 +11,38 @@ use Sub::Exporter::Progressive -setup => {
    ],
 };
 
+
+my $recent_dbic;
 sub correlate {
    my ($rs, $rel) = @_;
 
    my $source = $rs->result_source;
-   my $rel_info = $source->relationship_info($rel);
+
+   $recent_dbic = $source->can('resolve_relationship_condition') ? 1 : 0
+      if not defined $recent_dbic;
 
    return $source->related_source($rel)->resultset
-      ->search(scalar $source->_resolve_condition(
-         $rel_info->{cond},
-         "${rel}_alias",
-         $rs->current_source_alias,
-         $rel
-      ), {
-         alias => "${rel}_alias",
-      })
+      ->search(
+
+         ($recent_dbic
+
+            ? $source->resolve_relationship_condition(
+               rel_name => $rel,
+               foreign_alias => "${rel}_alias",
+               self_alias => $rs->current_source_alias,
+            )->{condition}
+
+            : scalar $source->_resolve_condition(
+               $source->relationship_info($rel)->{cond},
+               "${rel}_alias",
+               $rs->current_source_alias,
+               $rel
+            )
+
+         ),
+
+         { alias => "${rel}_alias" }
+      );
 }
 
 1;
