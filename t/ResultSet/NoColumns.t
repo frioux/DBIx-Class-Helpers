@@ -15,6 +15,13 @@ my $rs = $schema->resultset('Gnarly')->no_columns->search(undef, {
    result_class => '::HRI',
 });
 
-cmp_deeply([$rs->all], [ { }, { }, { } ], 'no columns selected');
+{
+   local $SIG{__WARN__} = sub {
+      warn @_
+         unless $_[0] =~ /ResultSets with an empty selection are deprecated/;
+   };
+
+   cmp_deeply([$rs->all], [ { }, { }, { } ], 'no columns selected');
+}
 
 done_testing;
