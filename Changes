@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.033002  2016-10-31 16:03:23-07:00 America/Los_Angeles
  - Fix ::ProxyResultSetMethod to work when calling ->update
    (Thanks for the report Ryan Voots!)
  - Fix a number of warnings induced by upcoming DBIC (Thanks ribasushi!)
