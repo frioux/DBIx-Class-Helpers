@@ -44,5 +44,17 @@ subtest 'copy result without any proxy defined' => sub {
    is $bcopy->id, 100, 'id is correctly overridden';
 };
 
+subtest 'update result' => sub {
+   my $g2 = $schema->resultset('Gnarly')->search({
+      id => 2
+   })->single;
+
+   is($g2->id_plus_one, 3, 'basic');
+
+   $g2->update({ literature => 'Expiration Date' });
+
+   ok 1, q(Update didn't explode);
+};
+
 done_testing;
 

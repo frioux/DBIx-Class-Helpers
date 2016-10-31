@@ -54,6 +54,12 @@ sub copy {
    shift->next::method(@_);
 }
 
+sub update {
+   delete local @{$_[0]->{_dirty_columns}}{@{$_[0]->_proxy_slots||[]}};
+
+   shift->next::method(@_);
+}
+
 1;
 
 =pod
