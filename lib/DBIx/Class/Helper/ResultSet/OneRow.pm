@@ -7,7 +7,14 @@ use warnings;
 
 use parent 'DBIx::Class::ResultSet';
 
-sub one_row { shift->search(undef, { rows => 1})->next }
+sub one_row {
+  my ($self) = @_;
+  if (my $cache = $self->get_cache) {
+    return $cache->[0];
+  } else {
+    return $self->search(undef, { rows => 1})->next;
+  }
+}
 
 1;
 
