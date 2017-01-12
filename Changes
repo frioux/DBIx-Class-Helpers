@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Allow easily subclassing types to be skipped in ::ToJSON
+   (Thanks Paul Williams!) (closes GH#79 and GH#80)
 
 2.033003  2017-03-12 12:14:51-07:00 America/Los_Angeles
  - Stop depending on String::CamelCase (closes GH#81)
