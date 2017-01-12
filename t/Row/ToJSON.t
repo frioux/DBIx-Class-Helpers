@@ -77,4 +77,22 @@ ACCESSOR_CLASS: {
    }], 'accessor fields with TO_JSON works');
 }
 
+SERIALIZE_ALL_DATA_TYPES: {
+   my $datas = [
+      map $_->TO_JSON,
+         $schema->resultset('SerializeAll')->search(undef, { order_by => 'id' })->all
+      ];
+
+   cmp_deeply($datas, [{
+         id => 1,
+         text_column => 'frew',
+      },{
+         id => 2,
+         text_column => 'frioux',
+      },{
+         id => 3,
+         text_column => 'frooh',
+   }], 'serialize all data types with TO_JSON');
+}
+
 done_testing;

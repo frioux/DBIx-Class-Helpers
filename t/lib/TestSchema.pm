@@ -123,6 +123,13 @@ sub prepopulate {
       [2,'cc','dd'],
       [3,'ee','ff'],
    ]);
+
+   $self->populate(SerializeAll => [
+      [qw{id text_column}],
+      [1,'frew'],
+      [2,'frioux'],
+      [3,'frooh'],
+   ]);
 }
 
 'kitten eater';
