@@ -9,7 +9,6 @@ use parent 'DBIx::Class::Row';
 
 use DBIx::Class::Helpers::Util 'get_namespace_parts';
 use Lingua::EN::Inflect ();
-use String::CamelCase ();
 use DBIx::Class::Candy::Exports;
 
 export_methods [qw(
@@ -22,6 +21,18 @@ export_methods [qw(
    add_join_columns
 )];
 
+my $decamelize = sub {
+   my $s = shift;
+   $s =~ s{([^a-zA-Z]?)([A-Z]*)([A-Z])([a-z]?)}{
+      my $fc = pos($s)==0;
+      my ($p0,$p1,$p2,$p3) = ($1,lc$2,lc$3,$4);
+      my $t = $p0 || $fc ? $p0 : '_';
+      $t .= $p3 ? $p1 ? "${p1}_$p2$p3" : "$p2$p3" : "$p1$p2";
+      $t;
+   }ge;
+   $s;
+};
+
 sub _pluralize {
    my $self = shift;
    my $original = shift or return;
@@ -33,9 +44,9 @@ sub _defaults {
    my ($self, $params) = @_;
 
    $params->{namespace}           ||= [ get_namespace_parts($self) ]->[0];
-   $params->{left_method}         ||= String::CamelCase::decamelize($params->{left_class});
-   $params->{right_method}        ||= String::CamelCase::decamelize($params->{right_class});
-   $params->{self_method}         ||= String::CamelCase::decamelize($self);
+   $params->{left_method}         ||= $decamelize->($params->{left_class});
+   $params->{right_method}        ||= $decamelize->($params->{right_class});
+   $params->{self_method}         ||= $decamelize->($self);
    $params->{left_method_plural}  ||= $self->_pluralize($params->{left_method});
    $params->{right_method_plural} ||= $self->_pluralize($params->{right_method});
    $params->{self_method_plural}  ||= $self->_pluralize($params->{self_method});
@@ -312,8 +323,8 @@ If used in conjunction with L<DBIx::Class::Candy> this component will export:
 
 =head2 NOTE
 
-This module uses L<String::CamelCase> to default the method names and uses
-L<Lingua::EN::Inflect> for pluralization.
+This module uses (an internal fork of) L<String::CamelCase> to default the
+method names and uses L<Lingua::EN::Inflect> for pluralization.
 
 =head1 CHANGES BETWEEN RELEASES
 
