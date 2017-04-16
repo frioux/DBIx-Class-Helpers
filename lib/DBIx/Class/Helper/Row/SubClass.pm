@@ -57,7 +57,7 @@ sub set_table {
 
  use parent 'DBIx::Class';
 
- __PACKAGE__->load_components('Core');
+ __PACKAGE__->load_components(qw{Helper::Row::SubClass Core});
 
  __PACKAGE__->table('Bar');
 
@@ -75,24 +75,43 @@ sub set_table {
 
  use parent 'ParentSchema::Result::Bar';
 
- __PACKAGE__->load_components(qw{Helper::Row::SubClass Core});
-
  __PACKAGE__->subclass;
 
 or with L<DBIx::Class::Candy>:
+
+ # define parent class
+ package ParentSchema::Result::Bar;
+
+ use DBIx::Class::Candy
+    -components => ['Helper::Row::SubClass'];
+
+ table 'Bar'; # or use -autotable => v1, but see below
+
+ primary_column 'id';
+ column 'foo_id';
+
+ belongs_to  foo => 'ParentSchema::Result::Foo', 'foo_id';
 
  # define subclass
  package MySchema::Result::Bar;
 
  use DBIx::Class::Candy
-    -base => 'ParentSchema::Result::Bar',
-    -components => ['Helper::Row::SubClass'];
+    -base => 'ParentSchema::Result::Bar';
 
  subclass;
 
 =head1 DESCRIPTION
 
 This component is to allow simple subclassing of L<DBIx::Class> Result classes.
+
+You can load the C<::Helper::Row::Subclass> component in your parent class or
+your child classes individually.
+
+B<NB:> if your parent class is defined above the C<::Result> level (and
+therefore won't have a table deployed for it by default), you still need to set
+the table.  (Any value such as 'Dummy' will do.  L<DBIx::Class::Candy>'s
+C<autotable> functionality won't work in this case, so you should omit that and
+set the C<table> manually.)
 
 =head1 METHODS
 
