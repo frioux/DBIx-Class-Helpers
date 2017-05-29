@@ -14,9 +14,6 @@ A::ResultSet::DateMethods1->run_tests(SQLite => {
    plucked_minute => '09',
    plucked_second => '08',
 
-   connect_info => [ 'dbi:SQLite::memory:' ],
-
-
    add_sql_prefix => \[ 'DATETIME("me"."a_date", ? || ?)', 1, ' seconds' ],
 
    add_sql_by_part => {

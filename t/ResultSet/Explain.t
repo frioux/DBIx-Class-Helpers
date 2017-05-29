@@ -23,10 +23,7 @@ top_test basic => sub {
    }
 };
 
-run_me(SQLite => {
-   engine => 'SQLite',
-   connect_info => [ 'dbi:SQLite::memory:'],
-});
+run_me(SQLite => { engine => 'SQLite' });
 run_me(Pg     => { engine => 'Pg'     });
 run_me(mysql  => { engine => 'mysql'  });
 

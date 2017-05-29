@@ -15,16 +15,6 @@ has storage_type => (
 
 sub connected { A::Util::connected($_[0]->engine, $_[0]->on_connect_call) }
 
-has connect_info => (
-   is => 'ro',
-   lazy => 1,
-   default => sub {
-      my $self = shift;
-
-      A::Util::connect_info($self->engine, $self->on_connect_call)
-   },
-);
-
 sub env_vars { A::Util::env(shift->engine) }
 
 has schema => (

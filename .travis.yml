@@ -31,6 +31,8 @@ before_install:
    - export DBIITEST_PG_DSN='dbi:Pg:database=dbii_test;host=127.0.0.1'
    - export DBIITEST_PG_USER=postgres
 
+   - export DBIITEST_SQLITE_DSN='dbi:SQLite::memory:'
+
    - /bin/sync
 
 install:
