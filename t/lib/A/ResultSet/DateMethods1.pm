@@ -294,7 +294,13 @@ test add => sub {
                })->get_column('v')->next;
             };
             ok !$e, "live $part" or diag "exception: $e";
-            is($v, $self->_merged_add_sql_by_part_result->{$part}, "suspected $part");
+            my $expected = $self->_merged_add_sql_by_part_result->{$part};
+
+            if (ref $expected && ref $expected eq 'Regexp') {
+               like($v, $expected, "suspected $part");
+            } else {
+               is($v, $expected, "suspected $part");
+            }
          }
 
          cmp_deeply(
