@@ -69,6 +69,7 @@ A::ResultSet::DateMethods1->run_tests(mysql => {
 
    add_sql_by_part_result => {
       microsecond => '2012-12-12 00:00:00.000007',
+      second      => '2012-12-12 00:00:05.000000',
       quarter     => '2014-12-12 00:00:00',
       week        => '2013-02-13 00:00:00',
    },
