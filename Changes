@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Fix ::RemoveColumns and ::AutoRemoveColumns to not wreak havoc when select/as
+   is used (Thanks Vladimir Melnik for test and ribasushi for hint at fix!)
  - Allow easily subclassing types to be skipped in ::ToJSON
    (Thanks Paul Williams!) (closes GH#79 and GH#80)
 

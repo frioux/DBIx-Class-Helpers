@@ -12,7 +12,7 @@ sub _resolved_attrs {
 
    my $attrs  = $self->{attrs}; # not copying on purpose...
 
-   if ( !$attrs->{columns} && $attrs->{remove_columns} ) {
+   if ( !$attrs->{columns} && !$attrs->{select} && $attrs->{remove_columns} ) {
       my %rc = map { $_ => 1 } @{$attrs->{remove_columns}};
       $attrs->{columns} = [
          grep { !$rc{$_} } $self->result_source->columns
