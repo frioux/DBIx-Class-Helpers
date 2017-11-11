@@ -12,6 +12,9 @@ perl:
    - "blead"
 
 matrix:
+  include:
+    - perl: 5.18
+      env: COVERAGE=1
   allow_failures:
     - perl: "blead"
 
@@ -35,12 +38,13 @@ before_install:
 
 install:
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=c HARNESS_TIMER=1
-   - cpanm --quiet --notest Devel::Cover::Report::Coveralls SQL::Translator DBD::Pg DBD::mysql DateTime::Format::Pg DateTime::Format::MySQL
+   - cpanm --quiet --notest SQL::Translator DBD::Pg DBD::mysql DateTime::Format::Pg DateTime::Format::MySQL
    - cpanm --quiet --notest --installdeps .
+   - if [ "$COVERAGE" ]; then cpanm --quiet --notest Devel::Cover::Report::Coveralls; fi
    - perl -Ilib -It/lib -MTestSchema -e'TestSchema->generate_ddl'
 
 script:
-   - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine prove -lrsv t
-   - cover
+   - if [ "$COVERAGE" ]; then PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine prove -lrsv t; else prove -lrsv t; fi
+   - if [ "$COVERAGE" ]; then cover; fi
 after_success:
-  - cover -report coveralls
+   - if [ "$COVERAGE" ]; then cover -report coveralls; fi
