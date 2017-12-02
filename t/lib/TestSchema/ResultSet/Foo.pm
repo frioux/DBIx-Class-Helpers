@@ -10,6 +10,7 @@ __PACKAGE__->load_components(qw{
    Helper::ResultSet::Union
    Helper::ResultSet::Random
    Helper::ResultSet::ResultClassDWIM
+   Helper::ResultSet::ResultsExist
    Helper::ResultSet::Shortcut
 });
 

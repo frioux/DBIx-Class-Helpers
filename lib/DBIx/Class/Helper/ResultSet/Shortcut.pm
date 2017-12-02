@@ -163,6 +163,9 @@ Uses C<EXISTS> SQL function to check if the query would return anything.
 Possibly lighter weight than the much more common C<< foo() if $rs->count >>
 idiom.
 
+Note that this is no longer a simple shortcut and has been promoted to a full
+helper, see L<DBIx::Class::Helper::ResultSet::ResultsExist>.
+
 =method null(@columns || \@columns)
 
  $rs->null('status');
