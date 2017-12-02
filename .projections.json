@@ -8,5 +8,8 @@
       "alternate": "lib/DBIx/Class/Helper/{}.pm",
       "type": "test"
    },
-   "*": {"make": "perl -Ilib"}
+   "*": {
+      "make": "perl -Ilib",
+      "path": ["lib", "t/lib"]
+   }
 }
