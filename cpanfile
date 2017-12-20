@@ -12,6 +12,9 @@ requires 'Try::Tiny';
 requires 'Safe::Isa';
 requires 'Text::Brew';
 requires 'Moo' => 2;
+requires 'Hash::Merge';
+requires 'Scalar::Util';
+requires 'Types::SQL';
 
 on test => sub {
    requires 'Test::More' => 0.94;
