@@ -46,4 +46,20 @@ is_deeply(
    "Correlated-existence works",
 );
 
+
+use A::Util;
+
+for my $engine (qw(Pg mysql)) {
+   my $s = A::Util::connect($engine);
+
+   subtest $engine => sub {
+      plan skip_all => 'no availabe engine: ' . $engine
+         unless A::Util::connected($engine);
+      ok( !$s->resultset('Gnarly')->results_exist, 'no results yet');
+
+      $s->resultset('Gnarly')->create({ id => 1, name => "frew" });
+      ok( $s->resultset('Gnarly')->results_exist, 'results');
+   };
+}
+
 done_testing;

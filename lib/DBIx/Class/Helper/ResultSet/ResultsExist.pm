@@ -25,20 +25,20 @@ sub results_exist_as_query {
 sub results_exist {
    my $self = shift;
 
-   my $storage = $self->result_source->schema->storage;
-   my( $sql, @bind ) = @${ $self->results_exist_as_query };
-
-   # ugly as fuck but meh - DBIC has to do this too in places
-   $sql =~ s/\A \s* \( \s* (.+) \s* \) \s* \z/$1/sx;
-
-   my( undef, $sth ) = $storage->dbh_do( _dbh_execute =>
-      $sql,
-      \@bind,
-      $storage->_dbi_attrs_for_bind( undef, \@bind ),
-   );
+   my( undef, $sth ) = $self->result_source
+                             ->schema
+                              ->storage
+                               ->_select(
+                                  $self->results_exist_as_query,
+                                  \'*',
+                                  {},
+                                  {}
+                               );
 
    my $rv = $sth->fetchall_arrayref;
-   $rv->[0][0];
+   $rv->[0][0] ? 1 : 0;
 }
 
 1;
+
+# XXX docs

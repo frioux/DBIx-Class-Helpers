@@ -13,6 +13,7 @@ __PACKAGE__->load_components(qw{
    Helper::ResultSet::NoColumns
    Helper::ResultSet::OneRow
    Helper::ResultSet::ResultClassDWIM
+   Helper::ResultSet::ResultsExist
    Helper::ResultSet::SearchOr
 });
 
