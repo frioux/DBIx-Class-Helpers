@@ -1,4 +1,4 @@
-package inc::Dist::Zilla::Plugin::DBICSgen;
+package Dist::Zilla::Plugin::DBICSgen;
 
 use strict;
 use warnings;
@@ -17,20 +17,14 @@ has schema => (
    required => 1,
 );
 
-has lib => (
-   is       => 'rw',
-   isa      => 'ArrayRef',
-   default  => sub { [qw{lib}] },
-);
-
-sub mvp_multivalue_args { qw(lib) }
+has lib => ( is => 'rw' );
 
 unlink $_ for glob 't/lib/*.sql';
 
 sub gather_files {
    my $self = shift;
 
-   lib->import(@{$self->lib});
+   lib->import(split q(,), $self->lib);
 
    my $schema = $self->schema;
    use_module($schema);
