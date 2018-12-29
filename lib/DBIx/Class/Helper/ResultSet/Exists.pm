@@ -32,12 +32,11 @@ sub _handle_exists {
         }
     );
 
-    my ( $sql, @bind ) = @${ $exists_subq->as_query };
-    return $self->search_rs( \[ "$exists $sql", @bind ] );
+    return $self->search_rs({ $exists => $exists_subq->as_query });
 }
 
-sub exists { shift->_handle_exists( 'EXISTS', @_ ) }
-sub not_exists { shift->_handle_exists( 'NOT EXISTS', @_ ) }
+sub exists { shift->_handle_exists( -exists => @_ ) }
+sub not_exists { shift->_handle_exists( -not_exists => @_ ) }
 
 1;
 
