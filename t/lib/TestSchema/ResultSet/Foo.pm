@@ -7,6 +7,7 @@ use parent 'TestSchema::ResultSet';
 __PACKAGE__->load_components(qw{
    Helper::ResultSet::Bare
    Helper::ResultSet::RemoveColumns
+   Helper::ResultSet::Exists
    Helper::ResultSet::Union
    Helper::ResultSet::Random
    Helper::ResultSet::ResultClassDWIM
