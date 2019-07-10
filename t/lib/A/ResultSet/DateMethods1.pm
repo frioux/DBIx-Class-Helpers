@@ -18,13 +18,14 @@ sub _dt {
 
 has [qw(
    add_sql_by_part_skip add_sql_by_part_result
+   subtract_sql_by_part_skip subtract_sql_by_part_result
    pluck_sql_by_part_skip pluck_sql_by_part_result
 )] => (
    is => 'ro',
    default => sub { {} },
 );
 
-has [map "${_}_sql_by_part", qw(pluck add)] => (
+has [map "${_}_sql_by_part", qw(pluck add subtract)] => (
    is => 'ro',
    default => sub { {} },
 );
@@ -37,7 +38,7 @@ sub skip_reason {
 }
 
 has [qw(
-   utc_now stringified_date add_sql_prefix sub_sql pluck_sql_prefix
+   utc_now stringified_date add_sql_prefix subtract_sql_prefix sub_sql pluck_sql_prefix
 )] => (is => 'ro');
 
 has plucked_minute => (
@@ -85,6 +86,20 @@ sub _merged_add_sql_by_part_result {
       second => '2012-12-12 00:00:05',
       year   => '2018-12-12 00:00:00',
       %{$self->add_sql_by_part_result},
+   }
+}
+
+sub _merged_subtract_sql_by_part_result {
+   my $self = shift;
+
+   return +{
+      day    => '2012-12-11 00:00:00',
+      hour   => '2012-12-11 22:00:00',
+      minute => '2012-12-11 23:57:00',
+      month  => '2012-08-12 00:00:00',
+      second => '2012-12-11 23:59:55',
+      year   => '2006-12-12 00:00:00',
+      %{$self->subtract_sql_by_part_result},
    }
 }
 
@@ -377,6 +392,129 @@ test add => sub {
          is($added->hour => 11, 'added hour');
          is($added->minute => 11, 'added minute');
          is($added->second => 12, 'added second');
+      };
+   }
+};
+
+test subtract => sub {
+   my $self = shift;
+
+   $self->pop_rs_1 if $self->connected;
+
+   SKIP: {
+      skip $self->engine  . q(doesn't set subtract_sql_prefix) unless $self->subtract_sql_prefix;
+
+      my %offset = (
+         day => 1,
+         hour => 2,
+         minute => 3,
+         month => 4,
+         second => 5,
+         year => 6,
+      );
+      my $i = 1 + scalar keys %offset;
+      for my $part (sort keys %{$self->subtract_sql_by_part}) {
+         my $query = $self->rs->dt_SQL_subtract(
+            { -ident => 'a_date' },
+            $part,
+            $offset{$part} || $i++,
+         );
+
+         SKIP: {
+            skip $self->skip_reason, 1 unless $self->connected;
+            skip $self->subtract_sql_by_part_skip->{$part}, 1
+               if $self->subtract_sql_by_part_skip->{$part};
+
+            my $v;
+            my $e = exception {
+               $v = $self->rs->search({ id => 1 }, {
+                  columns => { v => $query },
+               })->get_column('v')->next;
+            };
+            ok !$e, "live $part" or diag "exception: $e";
+            my $expected = $self->_merged_subtract_sql_by_part_result->{$part};
+
+            if (ref $expected && ref $expected eq 'Regexp') {
+               like($v, $expected, "suspected $part");
+            } else {
+               is($v, $expected, "suspected $part");
+            }
+         }
+
+         cmp_deeply(
+            $query,
+            $self->subtract_sql_by_part->{$part},
+            "unit: $part",
+         );
+      }
+
+      cmp_deeply(
+         $self->rs->dt_SQL_subtract({ -ident => '.a_date' }, 'second', 1),
+         $self->subtract_sql_prefix,
+         'vanilla subtract',
+      );
+   }
+
+   SKIP: {
+      skip $self->skip_reason, 1 unless $self->connected;
+
+      my $dt = DateTime->new(
+         time_zone => 'UTC',
+         year => 2013,
+         month => 12,
+         day => 11,
+         hour => 10,
+         minute => 9,
+         second => 8,
+      );
+
+      $self->rs->delete;
+      $self->rs->create({ id => 1, a_date => $self->rs->utc($dt) });
+
+      subtest column => sub {
+         my $subtracted = $self->rs->search(undef, {
+            rows => 1,
+            columns => { foo =>
+               $self->rs->dt_SQL_subtract(
+                  $self->rs->dt_SQL_subtract(
+                     $self->rs->dt_SQL_subtract({ -ident => '.a_date' }, 'minute', 2),
+                        second => 4,
+                  ), hour => 1,
+               ),
+            },
+            result_class => 'DBIx::Class::ResultClass::HashRefInflator',
+         })->first->{foo};
+         $subtracted = $self->parse_datetime($subtracted);
+
+         is($subtracted->year => 2013, 'subtracted year');
+         is($subtracted->month => 12, 'subtracted month');
+         is($subtracted->day => 11, 'subtracted day');
+         is($subtracted->hour => 9, 'subtracted hour');
+         is($subtracted->minute => 7, 'subtracted minute');
+         is($subtracted->second => 4, 'subtracted second');
+      };
+
+      subtest bindarg => sub {
+         my $subtracted = $self->rs->search(undef, {
+            rows => 1,
+            columns => { foo =>
+               $self->rs->dt_SQL_subtract(
+                  $self->rs->dt_SQL_subtract(
+                     $self->rs->dt_SQL_subtract($dt, 'minute', 2),
+                        second => 4,
+                  ), hour => 1,
+               ),
+            },
+            result_class => 'DBIx::Class::ResultClass::HashRefInflator',
+         })->first->{foo};
+         $subtracted = $self->parse_datetime($subtracted);
+
+         is($subtracted->year => 2013, 'subtracted year');
+         is($subtracted->month => 12, 'subtracted month');
+         is($subtracted->day => 11, 'subtracted day');
+         is($subtracted->hour => 9, 'subtracted hour');
+         is($subtracted->minute => 7, 'subtracted minute');
+         is($subtracted->second => 4, 'subtracted second');
       };
    }
 };
