@@ -73,6 +73,27 @@ A::ResultSet::DateMethods1->run_tests(mysql => {
       quarter     => '2014-12-12 00:00:00',
       week        => '2013-02-13 00:00:00',
    },
+
+   subtract_sql_prefix => \[ 'DATE_SUB(`me`.`a_date`, INTERVAL ? SECOND)', 1 ],
+
+   subtract_sql_by_part => {
+      day         => \[ 'DATE_SUB(`a_date`, INTERVAL ? DAY)',         1 ],
+      hour        => \[ 'DATE_SUB(`a_date`, INTERVAL ? HOUR)',        2 ],
+      microsecond => \[ 'DATE_SUB(`a_date`, INTERVAL ? MICROSECOND)', 7 ],
+      minute      => \[ 'DATE_SUB(`a_date`, INTERVAL ? MINUTE)',      3 ],
+      month       => \[ 'DATE_SUB(`a_date`, INTERVAL ? MONTH)',       4 ],
+      quarter     => \[ 'DATE_SUB(`a_date`, INTERVAL ? QUARTER)',     8 ],
+      second      => \[ 'DATE_SUB(`a_date`, INTERVAL ? SECOND)',      5 ],
+      week        => \[ 'DATE_SUB(`a_date`, INTERVAL ? WEEK)',        9 ],
+      year        => \[ 'DATE_SUB(`a_date`, INTERVAL ? YEAR)',        6 ],
+   },
+
+   subtract_sql_by_part_result => {
+      microsecond => '2012-12-11 23:59:59.999993',
+      second      => qr/^2012-12-11 23:59:55/,
+      quarter     => '2010-12-12 00:00:00',
+      week        => '2012-10-10 00:00:00',
+   },
 });
 
 done_testing;

@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - Added dt_SQL_subtract to ::DateMethods1
+   (Thanks Thomas Klausner!) (closes GH#96)
 
 2.033004  2018-01-26 09:33:20-08:00 America/Los_Angeles
  - Fix ::RemoveColumns and ::AutoRemoveColumns to not wreak havoc when select/as
