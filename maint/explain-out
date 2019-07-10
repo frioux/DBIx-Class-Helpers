@@ -15,5 +15,10 @@ if ($engine eq 'SQLite') {
    $s->deploy;
    print Dumper($s->resultset('Gnarly')->explain)
 } else {
-   print Dumper(A::Util::connect($engine, $engine)->resultset('Gnarly')->explain)
+    eval {
+        print Dumper(A::Util::connect($engine, $engine)->resultset('Gnarly')->explain)
+    };
+    if ($@) {
+        print "Problem during maint/explain-out, but probably not fatal: $@";
+    }
 }

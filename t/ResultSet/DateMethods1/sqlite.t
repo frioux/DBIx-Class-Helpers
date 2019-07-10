@@ -28,6 +28,17 @@ A::ResultSet::DateMethods1->run_tests(SQLite => {
       year   => \[ 'DATETIME("a_date", ? || ?)', 6, ' years' ],
    },
 
+   subtract_sql_prefix => \[ q{DATETIME("me"."a_date", '-' || ? || ?)}, 1, ' seconds' ],
+
+   subtract_sql_by_part => {
+      day    => \[ q{DATETIME("a_date", '-' || ? || ?)}, 1, ' days' ],
+      hour   => \[ q{DATETIME("a_date", '-' || ? || ?)}, 2, ' hours' ],
+      minute => \[ q{DATETIME("a_date", '-' || ? || ?)}, 3, ' minutes' ],
+      month  => \[ q{DATETIME("a_date", '-' || ? || ?)}, 4, ' months' ],
+      second => \[ q{DATETIME("a_date", '-' || ? || ?)}, 5, ' seconds' ],
+      year   => \[ q{DATETIME("a_date", '-' || ? || ?)}, 6, ' years' ],
+   },
+
    pluck_sql_prefix => \[ q<STRFTIME('%S', "me"."a_date")> ],
 
    pluck_sql_by_part => {
