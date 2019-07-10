@@ -428,6 +428,12 @@ sub dt_SQL_add {
    );
 }
 
+sub dt_SQL_subtract {
+   my ($self, $thing, $unit, $amount) = @_;
+
+   $self->dt_SQL_add($thing, $unit, -1 * $amount);
+}
+
 sub dt_SQL_pluck {
    my ($self, $thing, $part) = @_;
 
@@ -549,6 +555,10 @@ Takes two values, each an expression of L</TYPES>.
 Takes three arguments: a date conforming to L</TYPES>, a unit, and an amount.
 The idea is to add the given unit to the datetime.  See your L</IMPLEMENTATION>
 for what units are accepted.
+
+=method dt_SQL_subtract
+
+Same as L<dt_SQL_add>, but subtracts the amount.
 
 =method dt_SQL_pluck
 
