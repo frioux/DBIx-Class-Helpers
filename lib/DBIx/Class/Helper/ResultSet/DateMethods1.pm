@@ -90,6 +90,20 @@ sub _introspector {
             ];
          }
       });
+
+      $d->decorate_driver_unconnected(MSSQL => datesubtract_sql => sub {
+         sub {
+            my ($date_sql, $unit, $amount_sql) = @_;
+
+            my ($d_sql, @d_args) = @{$date_sql};
+            my ($a_sql, @a_args) = @{$amount_sql};
+
+            return [ # no idea if this works..
+               "DATEADD($diff_part_map{$unit}, -1 * CAST($a_sql AS int), $d_sql)",
+               @a_args, @d_args,
+            ];
+         }
+      });
    }
 
    SQLITE: {
@@ -122,7 +136,6 @@ sub _introspector {
          }
       });
 
-
       my %diff_part_map = (
          day                 => 'days',
          hour                => 'hours',
@@ -143,6 +156,22 @@ sub _introspector {
 
             return [
                "DATETIME($d_sql, $a_sql || ?)",
+               @d_args, @a_args, " $diff_part_map{$unit}"
+            ];
+         }
+      });
+
+      $d->decorate_driver_unconnected(SQLite => datesubtract_sql => sub {
+         sub {
+            my ($date_sql, $unit, $amount_sql) = @_;
+
+            my ($d_sql, @d_args) = @{$date_sql};
+            my ($a_sql, @a_args) = @{$amount_sql};
+
+            die "unknown part $unit" unless $diff_part_map{$unit};
+
+            return [
+               "DATETIME($d_sql, '-' || $a_sql || ?)",
                @d_args, @a_args, " $diff_part_map{$unit}"
             ];
          }
@@ -214,6 +243,25 @@ sub _introspector {
             ];
          }
       });
+
+      $d->decorate_driver_unconnected(Pg => datesubtract_sql => sub {
+         sub {
+            my ($date_sql, $unit, $amount_sql) = @_;
+
+            my ($d_sql, @d_args) = @{$date_sql};
+            my ($a_sql, @a_args) = @{$amount_sql};
+
+            @d_args = ([{ dbd_attrs => SQL_TIMESTAMP }, $d_args[0]])
+               if $d_sql eq '?' && @d_args == 1;
+
+            die "unknown part $unit" unless $diff_part_map{$unit};
+
+            return [
+               "($d_sql - $a_sql * interval '1 $diff_part_map{$unit}')",
+               @d_args, @a_args,
+            ];
+         }
+      });
    }
 
    MYSQL: {
@@ -275,6 +323,22 @@ sub _introspector {
             ];
          }
       });
+
+    $d->decorate_driver_unconnected(mysql => datesubtract_sql => sub {
+         sub {
+            my ($date_sql, $unit, $amount_sql) = @_;
+
+            my ($d_sql, @d_args) = @{$date_sql};
+            my ($a_sql, @a_args) = @{$amount_sql};
+
+            die "unknown part $unit" unless $diff_part_map{$unit};
+
+            return [
+               "DATE_SUB($d_sql, INTERVAL $a_sql $diff_part_map{$unit})",
+               @d_args, @a_args,
+            ];
+         }
+      });
    }
 
    ORACLE: {
@@ -313,6 +377,20 @@ sub _introspector {
 
             return [
                "(TO_TIMESTAMP($d_sql) + NUMTODSINTERVAL($a_sql, ?))",
+               @d_args, @a_args, $diff_part_map{$unit}
+            ];
+         }
+      $d->decorate_driver_unconnected(Oracle => datesubtract_sql => sub {
+         sub {
+            my ($date_sql, $unit, $amount_sql) = @_;
+
+            my ($d_sql, @d_args) = @{$date_sql};
+            my ($a_sql, @a_args) = @{$amount_sql};
+
+            die "unknown unit $unit" unless $diff_part_map{$unit};
+
+            return [ # no idea if this works..
+               "(TO_TIMESTAMP($d_sql) - NUMTODSINTERVAL($a_sql, ?))",
                @d_args, @a_args, $diff_part_map{$unit}
             ];
          }
@@ -431,7 +509,18 @@ sub dt_SQL_add {
 sub dt_SQL_subtract {
    my ($self, $thing, $unit, $amount) = @_;
 
-   $self->dt_SQL_add($thing, $unit, -1 * $amount);
+   my $storage = $self->result_source->storage;
+   $storage->ensure_connected;
+
+   $d ||= _introspector();
+
+   return \(
+      $d->get($storage->dbh, undef, 'datesubtract_sql')->(
+         [ _flatten_thing($self, $thing) ],
+         $unit,
+         [ _flatten_thing($self, $amount) ],
+      )
+   );
 }
 
 sub dt_SQL_pluck {
@@ -559,6 +648,9 @@ for what units are accepted.
 =method dt_SQL_subtract
 
 Same as L<dt_SQL_add>, but subtracts the amount.
+
+Only confirmed to work with Postgres and SQLite. Mysql should work, no
+idea about Oracle and MSSQL.
 
 =method dt_SQL_pluck
 
