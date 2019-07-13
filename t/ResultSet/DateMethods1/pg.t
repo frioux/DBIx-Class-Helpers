@@ -37,20 +37,20 @@ A::ResultSet::DateMethods1->run_tests(Pg => {
       week        => '2013-02-27 00:00:00',
    },
 
-   subtract_sql_prefix => \[ q<("me"."a_date" + ? * interval '1 second')>, -1],
+   subtract_sql_prefix => \[ q<("me"."a_date" - ? * interval '1 second')>, 1],
 
    subtract_sql_by_part => {
-      century     => \[ q<("a_date" + ? * interval '1 century')>,      -7  ],
-      day         => \[ q<("a_date" + ? * interval '1 day')>,          -1  ],
-      decade      => \[ q<("a_date" + ? * interval '1 decade')>,       -8  ],
-      hour        => \[ q<("a_date" + ? * interval '1 hour')>,         -2  ],
-      microsecond => \[ q<("a_date" + ? * interval '1 microseconds')>, -9 ],
-      millisecond => \[ q<("a_date" + ? * interval '1 milliseconds')>, -10 ],
-      minute      => \[ q<("a_date" + ? * interval '1 minute')>,       -3  ],
-      month       => \[ q<("a_date" + ? * interval '1 month')>,        -4  ],
-      second      => \[ q<("a_date" + ? * interval '1 second')>,       -5  ],
-      week        => \[ q<("a_date" + ? * interval '1 week')>,         -11 ],
-      year        => \[ q<("a_date" + ? * interval '1 year')>,         -6  ],
+      century     => \[ q<("a_date" - ? * interval '1 century')>,      7  ],
+      day         => \[ q<("a_date" - ? * interval '1 day')>,          1  ],
+      decade      => \[ q<("a_date" - ? * interval '1 decade')>,       8  ],
+      hour        => \[ q<("a_date" - ? * interval '1 hour')>,         2  ],
+      microsecond => \[ q<("a_date" - ? * interval '1 microseconds')>, 9 ],
+      millisecond => \[ q<("a_date" - ? * interval '1 milliseconds')>, 10 ],
+      minute      => \[ q<("a_date" - ? * interval '1 minute')>,       3  ],
+      month       => \[ q<("a_date" - ? * interval '1 month')>,        4  ],
+      second      => \[ q<("a_date" - ? * interval '1 second')>,       5  ],
+      week        => \[ q<("a_date" - ? * interval '1 week')>,         11 ],
+      year        => \[ q<("a_date" - ? * interval '1 year')>,         6  ],
    },
 
    subtract_sql_by_part_result => {
