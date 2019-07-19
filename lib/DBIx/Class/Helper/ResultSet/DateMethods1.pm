@@ -380,6 +380,7 @@ sub _introspector {
                @d_args, @a_args, $diff_part_map{$unit}
             ];
          }
+      });
       $d->decorate_driver_unconnected(Oracle => datesubtract_sql => sub {
          sub {
             my ($date_sql, $unit, $amount_sql) = @_;
