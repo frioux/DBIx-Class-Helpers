@@ -5,14 +5,36 @@ use warnings;
 
 use parent 'DBIx::Class::ResultSet';
 
-sub results_exist {
-   my $self   = shift;
+sub results_exist_as_query {
+   my $self = shift;
 
-   $self
-      ->result_source
-      ->resultset
-      ->search({ -exists => $self->as_query })
-      ->first
+
+   my $reified = $self->search_rs( {}, {
+      columns => { _results_existence_check => \ '42' }
+   } )->as_query;
+
+
+   $$reified->[0] = "( SELECT EXISTS $$reified->[0] )";
+
+
+   $reified;
+}
+
+
+sub results_exist {
+   my $self = shift;
+
+   my( undef, $sth ) = $self->result_source
+                             ->schema
+                              ->storage
+                               ->_select(
+                                  $self->results_exist_as_query,
+                                  \'*',
+                                  {},
+                                  {},
+                               );
+
+   $sth->fetchall_arrayref->[0][0] ? 1 : 0;
 }
 
 1;
