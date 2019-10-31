@@ -159,9 +159,27 @@ calling C<< $rs->count >>.
 
  my $results_exist = $schema->resultset('Bar')->search({...})->results_exist;
 
+ # there is no easily expressable equivalent, so this is not exactly a
+ # shortcut. Nevertheless kept in this class for historical reasons
+
 Uses C<EXISTS> SQL function to check if the query would return anything.
-Possibly lighter weight than the much more common C<< foo() if $rs->count >>
+Usually much less resource intensive the more common C<< foo() if $rs->count >>
 idiom.
+
+=method results_exist_as_query
+
+ ...->search(
+    {},
+    { '+columns' => {
+       subquery_has_members => $some_correlated_rs->results_exist_as_query
+    }},
+ );
+
+ # there is no easily expressable equivalent, so this is not exactly a
+ # shortcut. Nevertheless kept in this class for historical reasons
+
+The query generator behind L</results_exist>. Can be used standalone in
+complex queries returning a boolean result within a larger query context.
 
 =method null(@columns || \@columns)
 
