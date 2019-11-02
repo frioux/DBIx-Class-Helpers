@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.034001  2019-11-02 07:45:22-07:00 America/Los_Angeles
  - Fix results_exist (Thanks Peter Rabbitson!) (closes #54)
 
 2.034000  2019-08-02 10:45:04-07:00 America/Los_Angeles
