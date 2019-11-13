@@ -14,7 +14,7 @@ sub results_exist_as_query {
    } )->as_query;
 
 
-   $$reified->[0] = "( SELECT EXISTS $$reified->[0] )";
+   $$reified->[0] = "( SELECT EXISTS $$reified->[0] ) as forty_two";
 
 
    $reified;
