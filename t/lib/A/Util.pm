@@ -38,6 +38,7 @@ sub connect_info {
 }
 
 sub connected {
+   return 1 if $_[0] eq 'SQLite';
    !!@{connect_info(@_)}
 }
 

@@ -10,11 +10,13 @@ with 'A::Role::TestConnect';
 
 sub rs { shift->schema->resultset('Gnarly') }
 
+my $ran;
 top_test basic => sub {
    my $self = shift;
    my $rs = $self->rs;
    SKIP: {
       skip 'cannot test without a connection', 1 unless $self->connected;
+      $ran++;
 
       my $s;
       my $e = exception { $s = $rs->explain };
@@ -30,4 +32,5 @@ run_me(SQLite => {
 run_me(Pg     => { engine => 'Pg'     });
 run_me(mysql  => { engine => 'mysql'  });
 
+ok $ran, 'tests were acutally run';
 done_testing;
