@@ -15,8 +15,7 @@ column bar_id => {
 
 primary_key 'id';
 
-belongs_to bar =>  'ParentSchema::Result::Bar', 'bar_id',
-{ is_foreign_key_constraint => 0 };
+belongs_to bar =>  'ParentSchema::Result::Bar', 'bar_id';
 has_many   bars => 'ParentSchema::Result::Bar', 'foo_id';
 
 1;
