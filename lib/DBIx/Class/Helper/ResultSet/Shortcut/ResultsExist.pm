@@ -31,7 +31,7 @@ sub results_exist {
                              ->schema
                               ->storage
                                ->_select(
-                                  $self->results_exist_as_query,
+                                 $query,
                                   \'*',
                                   {},
                                   {},
