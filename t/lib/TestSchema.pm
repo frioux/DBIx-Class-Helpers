@@ -57,7 +57,7 @@ sub generate_ddl {
           ($_ ne 'SQLite'
             ? (
                 add_drop_table => 1,
-                parser_args => { sources => ['HasDateOps', 'Gnarly'] })
+              )
             : ( add_drop_table => 0 )
          )
       },

@@ -16,6 +16,7 @@ column foo_id => {
 
 column test_flag => {
    keep_storage_value => 1,
+   data_type => 'integer',
    is_nullable => 1,
 };
 
