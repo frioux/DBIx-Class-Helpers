@@ -16,6 +16,16 @@ $ maint/dockerprove -lr t
 You can set DBIITEST_STARTUP to 10 or 15 to wait longer for the databases to be
 ready to test against.  Default is 5s.
 
+## Writing Tests
+
+By default, tests will only be run against SQLite. To write tests
+that will run on other DBs, use Test::Roo, and compose in the role
+A::Role::TestConnect. This will lazily connect (and deploy) the
+schema once the schema method is called. To run tests only if
+connected, check the connected method.
+
+For the simplest example of this, take a look at t/ResultSet/Explain.t.
+
 ## Releasing
 
 ```
