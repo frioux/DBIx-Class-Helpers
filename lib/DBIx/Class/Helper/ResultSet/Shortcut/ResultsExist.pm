@@ -14,7 +14,7 @@ sub results_exist_as_query {
    } )->as_query;
 
 
-   $$reified->[0] = "( SELECT EXISTS $$reified->[0] ) as forty_two";
+   $$reified->[0] = "( SELECT EXISTS $$reified->[0] )";
 
 
    $reified;
@@ -23,6 +23,9 @@ sub results_exist_as_query {
 
 sub results_exist {
    my $self = shift;
+
+   my $query = $self->results_exist_as_query;
+   $$query->[0] .= 'as _existence_subq';
 
    my( undef, $sth ) = $self->result_source
                              ->schema
