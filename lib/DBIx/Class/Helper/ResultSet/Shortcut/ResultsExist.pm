@@ -25,7 +25,7 @@ sub results_exist {
    my $self = shift;
 
    my $query = $self->results_exist_as_query;
-   $$query->[0] .= 'as _existence_subq';
+   $$query->[0] .= 'AS _existence_subq';
 
    my( undef, $sth ) = $self->result_source
                              ->schema
