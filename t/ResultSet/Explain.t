@@ -16,7 +16,7 @@ top_test basic => sub {
    my $rs = $self->rs;
    SKIP: {
       skip 'cannot test without a connection', 1 unless $self->connected;
-      $ran++;
+      $ran++ if $self->engine eq 'SQLite';
 
       my $s;
       my $e = exception { $s = $rs->explain };
@@ -32,5 +32,5 @@ run_me(SQLite => {
 run_me(Pg     => { engine => 'Pg'     });
 run_me(mysql  => { engine => 'mysql'  });
 
-ok $ran, 'tests were acutally run';
+ok $ran, 'tests were run against default SQLite';
 done_testing;

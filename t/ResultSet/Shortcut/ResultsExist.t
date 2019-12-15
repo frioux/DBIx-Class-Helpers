@@ -17,7 +17,7 @@ top_test 'basic functionality' => sub {
   SKIP: {
     skip 'cannot test without a connection', 1 unless $self->connected;
 
-    $ran++;
+    $ran++ if $self->engine eq 'SQLite';
     $schema->prepopulate;
 
     my $rs = $schema->resultset( 'Foo' )->search({ id => { '>' => 0 } });
@@ -63,5 +63,5 @@ run_me(SQLite => {
 run_me(Pg     => { engine => 'Pg'     });
 run_me(mysql  => { engine => 'mysql'  });
 
-ok $ran, 'tests were acutally run';
+ok $ran, 'tests were run against default SQLite';
 done_testing;
