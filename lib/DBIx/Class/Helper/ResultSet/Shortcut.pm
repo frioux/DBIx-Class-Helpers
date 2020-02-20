@@ -16,6 +16,7 @@ use parent (qw(
    DBIx::Class::Helper::ResultSet::Shortcut::OrderByMagic
    DBIx::Class::Helper::ResultSet::Shortcut::Prefetch
    DBIx::Class::Helper::ResultSet::Shortcut::LimitedPage
+   DBIx::Class::Helper::ResultSet::Shortcut::RemoveColumns
    DBIx::Class::Helper::ResultSet::Shortcut::ResultsExist
    DBIx::Class::Helper::ResultSet::Shortcut::Rows
    DBIx::Class::Helper::ResultSet::Shortcut::Page
@@ -147,6 +148,13 @@ calling C<< $rs->count >>.
 
  # equivalent to...
  $foo_rs->search(undef, { '+columns' => [qw/ some column names /] });
+
+=method remove_columns
+
+ $foo_rs->remove_columns([qw/ some column names /]);
+
+ # equivalent to...
+ $foo_rs->search(undef, { remove_columns => [qw/ some column names /] });
 
 =method prefetch
 

@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+ - add remove_columns shortcut (Karen Etheridge, GH#100)
 
 2.034002  2019-12-29 06:57:56-08:00 America/Los_Angeles
  - Fix results_exist again (Thanks Veesh Goldman!)
