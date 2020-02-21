@@ -1,3 +1,21 @@
+When contributing, please take care to have sane history.  For simple features
+it should be a single commit.  If you need complex history, add functionality
+per commit in the order such that everything passes tests for each commit.
+
+When submitting a PR, in the commit include a line in the Changes underneath
+{{$NEXT}} of the form:
+
+         - Fix the foobar whatsit (Thanks FullName!)
+
+If there is an existing issue, include it in the line:
+
+         - Create special cat mode (Thanks FullName!) (Closes GH#123)
+
+If, inexplicably, there is an existing issue in RT, prefix the issue number
+with RT:
+
+         - Create standard dog mode (Thanks FullName!) (Closes RT#100123)
+
 ## DDL
 
 To Generate ddl.sql which will allow you to run prove -l use the following command:
