@@ -5,9 +5,7 @@ package DBIx::Class::Helper::ResultSet::IgnoreWantarray;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
-sub search :DBIC_method_is_indirect_sugar{
+sub search {
    $_[0]->throw_exception ('->search is *not* a mutator, calling it in void context makes no sense')
       if !defined wantarray && (caller)[0] !~ /^\QDBIx::Class::/;
 

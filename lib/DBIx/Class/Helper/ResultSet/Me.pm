@@ -5,8 +5,6 @@ package DBIx::Class::Helper::ResultSet::Me;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
 sub me { join('.', shift->current_source_alias, shift || q{})  }
 
 1;

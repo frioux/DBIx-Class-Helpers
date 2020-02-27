@@ -5,8 +5,6 @@ package DBIx::Class::Helper::Row::JoinTable;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Row';
-
 use DBIx::Class::Helpers::Util 'get_namespace_parts';
 use Lingua::EN::Inflect ();
 use DBIx::Class::Candy::Exports;

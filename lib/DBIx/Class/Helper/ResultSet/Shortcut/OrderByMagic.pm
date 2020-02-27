@@ -3,7 +3,7 @@ package DBIx::Class::Helper::ResultSet::Shortcut::OrderByMagic;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Helper::ResultSet::Shortcut::OrderBy', 'DBIx::Class::ResultSet';
+use parent 'DBIx::Class::Helper::ResultSet::Shortcut::OrderBy';
 
 sub order_by {
     my ($self, @order) = @_;

@@ -3,8 +3,6 @@ package DBIx::Class::Helper::ResultSet::Shortcut::ResultsExist;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
 sub results_exist_as_query {
    my $self = shift;
 

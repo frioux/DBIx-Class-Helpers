@@ -5,8 +5,6 @@ package DBIx::Class::Helper::Row::RelationshipDWIM;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Row';
-
 sub default_result_namespace {
    die 'you forgot to set your default_result_namespace'
 }

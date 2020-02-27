@@ -5,8 +5,6 @@ package DBIx::Class::Helper::ResultSet::SetOperations;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
 # cribbed from perlfaq4
 sub _compare_arrays {
    my ($self, $first, $second) = @_;

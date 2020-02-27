@@ -5,8 +5,6 @@ package DBIx::Class::Helper::ResultSet::Explain;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
 use DBIx::Introspector;
 
 sub _introspector {

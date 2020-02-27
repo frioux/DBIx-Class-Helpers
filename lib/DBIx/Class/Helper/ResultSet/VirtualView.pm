@@ -6,8 +6,6 @@ use strict;
 use warnings;
 use vars qw($VERSION);
 
-use parent 'DBIx::Class::ResultSet';
-
 sub as_virtual_view {
    my $self = shift;
 

@@ -5,8 +5,6 @@ package DBIx::Class::Helper::ResultSet::Bare;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
 sub bare { shift->result_source->resultset }
 
 1;

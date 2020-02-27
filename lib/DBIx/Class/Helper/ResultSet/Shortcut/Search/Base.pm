@@ -3,8 +3,6 @@ package DBIx::Class::Helper::ResultSet::Shortcut::Search::Base;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
 #--------------------------------------------------------------------------#
 # _helper_unwrap_columns(@columns)
 #--------------------------------------------------------------------------#

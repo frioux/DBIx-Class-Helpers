@@ -5,7 +5,7 @@ package DBIx::Class::Helper::Row::ProxyResultSetMethod;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Helper::Row::SelfResultSet', 'DBIx::Class::Row';
+use parent 'DBIx::Class::Helper::Row::SelfResultSet','DBIx::Class::AccessorGroup';
 
 use Sub::Name ();
 

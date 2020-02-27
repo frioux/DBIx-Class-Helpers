@@ -5,8 +5,6 @@ package DBIx::Class::Helper::Row::NumifyGet;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Row';
-
 use Try::Tiny;
 
 sub get_column {

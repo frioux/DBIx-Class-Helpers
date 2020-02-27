@@ -5,8 +5,6 @@ package DBIx::Class::Helper::Row::SelfResultSet;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Row';
-
 sub self_rs {
    my ($self) = @_;
 

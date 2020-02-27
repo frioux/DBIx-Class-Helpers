@@ -5,8 +5,6 @@ package DBIx::Class::Helper::Row::OnColumnMissing;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Row';
-
 sub on_column_missing { 'warn' }
 
 sub on_column_missing_die  {  die "Column $_[1] has not been loaded" }

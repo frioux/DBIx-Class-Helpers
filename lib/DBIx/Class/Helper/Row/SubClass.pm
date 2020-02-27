@@ -5,8 +5,6 @@ package DBIx::Class::Helper::Row::SubClass;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Row';
-
 use DBIx::Class::Helpers::Util qw{get_namespace_parts assert_similar_namespaces};
 use DBIx::Class::Candy::Exports;
 

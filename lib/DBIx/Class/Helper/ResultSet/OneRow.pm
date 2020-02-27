@@ -5,8 +5,6 @@ package DBIx::Class::Helper::ResultSet::OneRow;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
 sub one_row { shift->search(undef, { rows => 1})->next }
 
 1;

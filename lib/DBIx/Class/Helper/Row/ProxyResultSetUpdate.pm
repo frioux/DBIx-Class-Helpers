@@ -5,7 +5,7 @@ package DBIx::Class::Helper::Row::ProxyResultSetUpdate;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Helper::Row::SelfResultSet', 'DBIx::Class::Row';
+use parent 'DBIx::Class::Helper::Row::SelfResultSet';
 
 sub update {
   my ($self, $upd) = @_;

@@ -5,7 +5,7 @@ package DBIx::Class::Helper::Row::StorageValues;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::Row';
+use parent 'DBIx::Class::AccessorGroup';
 
 __PACKAGE__->mk_group_accessors(inherited => '_storage_value_columns');
 __PACKAGE__->mk_group_accessors(inherited => '_storage_values');

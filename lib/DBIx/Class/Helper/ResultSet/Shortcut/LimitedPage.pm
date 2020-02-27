@@ -6,7 +6,6 @@ use warnings;
 use parent qw(
   DBIx::Class::Helper::ResultSet::Shortcut::Rows
   DBIx::Class::Helper::ResultSet::Shortcut::Page
-  DBIx::Class::ResultSet
 );
 
 sub limited_page {

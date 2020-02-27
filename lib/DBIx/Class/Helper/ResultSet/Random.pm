@@ -5,8 +5,6 @@ package DBIx::Class::Helper::ResultSet::Random;
 use strict;
 use warnings;
 
-use parent 'DBIx::Class::ResultSet';
-
 use Module::Runtime 'use_module';
 use Try::Tiny;
 
