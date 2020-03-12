@@ -163,7 +163,7 @@ calling C<< $rs->count >>.
  # equivalent to...
  $foo_rs->search(undef, { prefetch => 'bar' });
 
-=method results_exist
+=method results_exist($cond?)
 
  my $results_exist = $schema->resultset('Bar')->search({...})->results_exist;
 
@@ -174,7 +174,9 @@ Uses C<EXISTS> SQL function to check if the query would return anything.
 Usually much less resource intensive the more common C<< foo() if $rs->count >>
 idiom.
 
-=method results_exist_as_query
+The optional C<$cond> argument can be used like in C<search()>.
+
+=method results_exist_as_query($cond?)
 
  ...->search(
     {},

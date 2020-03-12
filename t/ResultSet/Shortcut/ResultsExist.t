@@ -20,11 +20,15 @@ top_test 'basic functionality' => sub {
     $ran++ if $self->engine eq 'SQLite';
     $schema->prepopulate;
 
-    my $rs = $schema->resultset( 'Foo' )->search({ id => { '>' => 0 } });
-    my $rs2 = $schema->resultset( 'Foo' )->search({ id => { '<' => 0 } });
+    my $rs = $schema->resultset( 'Foo' );
+    my $rs_true  = $schema->resultset( 'Foo' )->search({ id => { '>' => 0 } });
+    my $rs_false = $schema->resultset( 'Foo' )->search({ id => { '<' => 0 } });
 
-    ok( $rs->results_exist, 'check rs has some results' );
-    ok(!$rs2->results_exist, 'and check that rs has no results' );
+    ok( $rs_true ->results_exist, 'check rs has some results' );
+    ok(!$rs_false->results_exist, 'and check that rs has no results' );
+
+    ok( $rs->results_exist({ id => { '>' => 0 } }), 'check that query has some results' );
+    ok(!$rs->results_exist({ id => { '<' => 0 } }), 'and check that query has no results' );
 
     is_deeply(
        [
