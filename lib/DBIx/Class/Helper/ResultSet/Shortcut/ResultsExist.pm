@@ -13,9 +13,14 @@ sub results_exist_as_query {
       columns => { _results_existence_check => \ '42' }
    } )->as_query;
 
-
-   $$reified->[0] = "( SELECT EXISTS $$reified->[0] )";
-
+   # Oracle needs special handling:
+   # https://en.wikipedia.org/wiki/DUAL_table#Example_use
+   if( $self->result_source->schema->storage->sqlt_type eq 'Oracle' ) {
+      $$reified->[0] = "( SELECT EXISTS $$reified->[0] FROM dual )";
+   }
+   else {
+      $$reified->[0] = "( SELECT EXISTS $$reified->[0] )";
+   }
 
    $reified;
 }
