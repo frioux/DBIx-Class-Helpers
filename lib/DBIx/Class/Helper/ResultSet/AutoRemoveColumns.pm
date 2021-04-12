@@ -118,9 +118,11 @@ columns to remove you might override this method like this:
  sub _should_column_fetch {
     my ( $self, $column ) = @_;
 
-    my $info = $self->column_info($column);
+    my $info = $self->result_source->column_info($column);
 
-    return !defined $info->{remove_column} || $info->{remove_column};
+    return exists $info->{remove_column}
+        ? $info->{remove_column}
+        : 0;
  }
 
 =method fetchable_columns
