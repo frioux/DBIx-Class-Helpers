@@ -63,4 +63,4 @@ object. In case no rows match, C<undef> is returned as normal.
 
 Thanks to Aran Clary Deltac (BLUEFEET) for initially writing this module, and
 thanks to L<ZipRecruiter|https://www.ziprecruiter.com> for sponsoring that
-initial developmentl
+initial development.
