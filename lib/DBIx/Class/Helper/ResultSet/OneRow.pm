@@ -7,7 +7,7 @@ use warnings;
 
 use parent 'DBIx::Class::ResultSet';
 
-sub one_row { shift->search(undef, { rows => 1})->next }
+sub one_row { shift->search(shift, { rows => 1})->next }
 
 1;
 
@@ -54,13 +54,15 @@ default.
 
 =head1 METHODS
 
-=head2 one_row
+=head2 one_row($cond?)
 
 Limits the ResultSet to a single row, and then returns the matching result
 object. In case no rows match, C<undef> is returned as normal.
+
+The optional C<$cond> argument can be used like in C<search()>.
 
 =head1 THANKS
 
 Thanks to Aran Clary Deltac (BLUEFEET) for initially writing this module, and
 thanks to L<ZipRecruiter|https://www.ziprecruiter.com> for sponsoring that
-initial developmentl
+initial development.

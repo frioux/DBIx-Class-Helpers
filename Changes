@@ -3,6 +3,8 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
  - fix example code for sub _should_column_fetch in
    ::ResultSet::AutoRemoveColumns (closes GH#106)
+ - Add support for query condition to one_row() in
+   Helper::ResultSet::OneRow (Daniel Böhmer, GH#109)
 
 2.036000  2020-03-28 14:16:39-07:00 America/Los_Angeles
  - fix remove_columns shortcut to add the 'remove_columns' attribute
