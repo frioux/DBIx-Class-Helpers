@@ -16,6 +16,16 @@ my $rs = $schema->resultset('Foo');
 cmp_deeply
    [$rs->prefetch('bar')->all],
    [$rs->search(undef,{prefetch => 'bar' })->all],
-   'prefetch works the same';
+   'prefetch works the same with scalar';
+
+cmp_deeply
+   [$rs->prefetch(['bar','bars'])->all],
+   [$rs->search(undef,{prefetch => ['bar','bars'] })->all],
+   'prefetch works the same with arrayref';
+
+cmp_deeply
+   [$rs->prefetch('bar','bars')->all],
+   [$rs->search(undef,{prefetch => ['bar','bars'] })->all],
+   'prefetch works the same with list';
 
 done_testing;
