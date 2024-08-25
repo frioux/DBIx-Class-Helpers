@@ -6,7 +6,7 @@ use Carp::Clan;
 carp 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 3;
 croak 'This module is deprecated!  Please use the namespaced version instead!' if $VERSION >= 4;
 
-# ABSTRACT: (DEPRECATED) Get rid of search context issues
+# ABSTRACT: (DEPRECATED) Do unions with DBIx::Class
 
 1;
 
