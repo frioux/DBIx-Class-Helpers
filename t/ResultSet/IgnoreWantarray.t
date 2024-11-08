@@ -8,6 +8,8 @@ use Test::More;
 use Test::Fatal;
 
 use TestSchema;
+TestSchema::ResultSet->load_components('Helper::ResultSet::IgnoreWantarray');
+
 my $schema = TestSchema->deploy_or_connect();
 $schema->prepopulate;
 
