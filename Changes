@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.037000  2024-11-08 09:31:50-06:00 America/Chicago
  - fix example code for sub _should_column_fetch in
    ::ResultSet::AutoRemoveColumns (closes GH#106)
  - Add support for query condition to one_row() in
