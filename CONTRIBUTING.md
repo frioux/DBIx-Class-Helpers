@@ -1,9 +1,11 @@
+## Contributing
+
 When contributing, please take care to have sane history.  For simple features
 it should be a single commit.  If you need complex history, add functionality
 per commit in the order such that everything passes tests for each commit.
 
 When submitting a PR, in the commit include a line in the Changes underneath
-{{$NEXT}} of the form:
+`{{$NEXT}}` of the form:
 
          - Fix the foobar whatsit (Thanks FullName!)
 
@@ -18,8 +20,11 @@ with RT:
 
 ## DDL
 
-To Generate ddl.sql which will allow you to run prove -l use the following command:
+To Generate ddl.sql which will allow you to run `prove -l` use the following command:
+
+```
 perl -Ilib -It/lib -MTestSchema -E'TestSchema->generate_ddl; my $t = TestSchema->connect; $t->deploy'
+```
 
 Eventually that will be migrated into it's own Dzil plugin, but for now that should work
 
@@ -31,7 +36,7 @@ To run tests against all major supported databases use:
 $ maint/dockerprove -lr t
 ```
 
-You can set DBIITEST_STARTUP to 10 or 15 to wait longer for the databases to be
+You can set `DBIITEST_STARTUP` to 10 or 15 to wait longer for the databases to be
 ready to test against.  Default is 5s.
 
 ## Writing Tests
