@@ -11,7 +11,7 @@ sub self_rs {
    my ($self) = @_;
 
    my $rs = $self->result_source->resultset;
-   return $rs->search( $self->ident_condition( $rs->current_source_alias ) );
+   return $rs->search_rs( $self->ident_condition( $rs->current_source_alias ) );
 }
 
 1;

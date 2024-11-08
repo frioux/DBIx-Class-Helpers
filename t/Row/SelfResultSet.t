@@ -23,6 +23,11 @@ subtest 'single pk column' => sub {
       subtest 'Bar.id: ' . $_->id => sub {
          is ($_->self_rs->count, 1, 'single row in self_rs');
          is ($_->self_rs->single->id, $_->id, 'id matches');
+
+         my $scalar = $_->self_rs;
+         isa_ok $scalar, 'DBIx::Class::ResultSet', 'scalar context';
+         my ($list) = $_->self_rs;
+         isa_ok $list, 'DBIx::Class::ResultSet', 'list context';
       };
    }
 };
